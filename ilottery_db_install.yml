@@ -8,8 +8,43 @@
     - init
 
   tasks:
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_ilotterydb"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
     - set_fact:
-        db_folder: "ilottery-db"
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: STOP
+  hosts: ilottery_db
+  become: true
+  gather_facts: no
+  tags:
+    - stop
+
+  tasks:
+    - debug:
+        msg: "No services to stop"
+
+- name: INSTALL
+  hosts: ilottery_db
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  tasks:
+    - set_fact:
         db_schemas: 
           - "balancing"
           - "bam-site"
@@ -45,32 +80,6 @@
           - "vouchers" 
           - "vouchers-txstore-plugin" 
 
-
-    - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_{{ db_folder }}"
-      delegate_to: 127.0.0.1
-      run_once: true
-      register: reg_tmpdir
-
-    - set_fact:
-        p_tmpdir: "{{ reg_tmpdir.stdout }}"
-
-
-    - debug: msg="Created directory {{ p_tmpdir }}"
-      delegate_to: 127.0.0.1
-      run_once: true
-
-    - name: Show Connection Infos
-      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
-
-- name: Install DB packages
-  hosts: ilottery_db
-  become: true
-  gather_facts: no
-  tags:
-    - install_packages
-
-  tasks:
     - name: Remove old packages
       yum:
         name: "{{ item }}"
@@ -170,44 +179,41 @@
       with_fileglob:
         - "{{ p_tmpdir }}/dbinstall-properties-subcap.xml.tpl"
 
-- name: Create DB
+- name: DROP_DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - drop_db
+
+  tasks:
+    - name: Running drop
+      shell: |
+        cd /usr/local/gtech/{{ config.siteName }}-database-install
+        ./drop_db_all.sh {{ config.siteName }} {{ stage }} abort true
+      register: drop_run
+
+    - debug: msg="{{ drop_run.stdout }}"
+
+- name: CREATE_DB
   hosts: ilottery_db
   gather_facts: no
   tags:
     - create_db
 
   tasks:
-    - name: Running create, delta scripts
+    - name: Running create
       shell: |
         cd /usr/local/gtech/{{ config.siteName }}-database-install
         ./create_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }}
-        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
       register: create_run
 
     - debug: msg="{{ create_run.stdout }}"
 
-- name: Recreate DB
+- name: UPDATE_DB
   hosts: ilottery_db
   gather_facts: no
   tags:
-    - recreate_db
-
-  tasks:
-    - name: Running drop, create and delta
-      shell: |
-        cd /usr/local/gtech/{{ config.siteName }}-database-install
-        ./drop_db_all.sh {{ config.siteName }} {{ stage }} abort true
-        ./create_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }}
-        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
-      register: recreate_run
-
-    - debug: msg="{{ recreate_run.stdout }}"
-
-- name: Delta install DB
-  hosts: ilottery_db
-  gather_facts: no
-  tags:
-    - delta_install
+    - update_db
 
   tasks:
     - name: Running delta scripts
@@ -232,6 +238,17 @@
       register: export_run
 
     - debug: msg="{{ export_run.stdout }}"
+
+- name: START
+  hosts: cmd_db_remote
+  become: true
+  gather_facts: no
+  tags:
+    - start
+
+  tasks:
+    - debug:
+        msg: "No services to restart"
 
 - name: CLEAN
   hosts: local
