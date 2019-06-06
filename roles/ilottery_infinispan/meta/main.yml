@@ -1,5 +1,5 @@
 ---
 dependencies:
   - { role: ansible_facts }
-#  - { role: ilottery_jboss6_rpm }
+#  - { role: jboss7_rpm }
 
