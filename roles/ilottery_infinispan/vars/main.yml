@@ -1,0 +1,3 @@
+---
+jboss_node_name: "{{ instance_name }}"
+jboss_node_user: "jboss"

@@ -1,0 +1,158 @@
+---
+- set_fact:
+    cq5_packages:
+      - "java-1.8.0-ibm"
+      - "java-1.8.0-ibm-devel"
+      - "CQ-aem6.1-standalone-{{ cq_version }}"
+      - "CQ-aem6.1-standalone-license-{{ license_version }}"
+    cq5_app_packages:
+      - "interactive-portal"
+
+- fail:
+    msg: "runmode variable value in inventory must be publish or author"
+  when: runmode != "publish" and runmode != "author"
+
+- name: Remove cq5 packages
+  when: reinstall_middleware == "true"
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ cq5_packages }}"
+
+- name: Install cq5 packages
+  when: reinstall_middleware == "true"
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ cq5_packages }}"
+
+
+- name: Install templates/sysconfig/cq5 in /etc/sysconfig/cq5
+  when: reinstall_middleware == "true"
+  template:
+    src: "templates/sysconfig/cq5"
+    dest: "/etc/sysconfig/cq5"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Set limits.conf soft nofile
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: nofile
+    value: 32768
+
+- name: Set limits.conf hard nofile
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: nofile
+    value: 32768
+
+- name: Set limits.conf soft nproc
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: nproc
+    value: 32768
+
+- name: Set limits.conf hard nproc
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: nproc
+    value: 32768
+
+- name: Set limits.conf soft memlock
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: memlock
+    value: 1024000
+
+- name: Set limits.conf hard memlock
+  when: reinstall_middleware == "true"
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: memlock
+    value: 1024000
+
+- name: Start cq5 Service
+  systemd:
+    name: "{{ p_service_name }}"
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: Remove cq5 app packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ cq5_app_packages }}"
+
+- name: Install cq5 app packages
+  yum:
+    name: "{{ item }}-{{ config.portal_version }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ cq5_app_packages }}"
+
+- name: Remove ccportal.properties
+  when: runmode == "publish"
+  file:
+    path: "/etc/gtech/ccportal/ccportal.properties"
+    state: absent
+
+
+- name: Create ccportal.properties from inventory
+  when: runmode == "publish"
+  template:
+    src: "templates/publish/ccportal.properties"
+    dest: "/etc/gtech/ccportal/ccportal.properties"
+    mode: 755
+    owner: cq5
+    group: cq5
+
+- name: Remove ccportal_author.properties
+  when: runmode == "author"
+  file:
+    path: "/etc/gtech/ccportal/ccportal_author.properties"
+    state: absent
+
+- name: Create ccportal_author.properties from inventory
+  when: runmode == "author"
+  template:
+    src: "templates/author/ccportal_author.properties"
+    dest: "/etc/gtech/ccportal/ccportal_author.properties"
+    mode: 755
+    owner: cq5
+    group: cq5
+
+- name: "cd /usr/local/gtech/ccportal; ./install-portal-app.sh; ./install-portal-content.sh"
+  when: runmode == "publish"
+  shell: "cd /usr/local/gtech/ccportal; ./install-portal-app.sh; ./install-portal-content.sh"
+  become: true
+  register: install_portal_publish
+
+- debug: msg="{{ install_portal_publish.stdout}}"
+  when: runmode == "publish"
+
+- name: "cd /usr/local/gtech/ccportal; ./install-portal-app-author.sh; ./install-portal-content-author.sh"
+  when: runmode == "author"
+  shell: "cd /usr/local/gtech/ccportal; ./install-portal-app-author.sh; ./install-portal-content-author.sh"
+  become: true
+  register: install_portal_author
+
+- debug: msg="{{ install_portal_author.stdout}}"
+  when: runmode == "author"
+

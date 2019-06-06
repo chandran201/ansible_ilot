@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="com.gtech.translets">
+  <resources>
+    <resource-root path="essdk-translets.jar"/>
+    <resource-root path="{{ config.siteName }}-gtech-translets-jar.jar"/>
+    <resource-root path="{{ config.siteName }}-translets.jar"/>
+  </resources>
+  <dependencies>
+    <module name="org.joda.time" slot="2.1"/>
+    <module name="javax.jms.api"/>
+    <module name="org.apache.commons.lang"/>
+    <module name="org.picketbox"/>
+    <module name="javax.api"/>
+    <module name="javax.servlet.api"/>
+    <module name="javax.resource.api"/>
+    <module name="javax.activation.api"/>
+    <module name="org.apache.xalan"/>
+    <module name="org.apache.log4j"/>
+  </dependencies>
+</module>

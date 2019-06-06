@@ -1,0 +1,12 @@
+CQ_USER="cq5"
+export CQ_PORT={% if runmode == "publish" %}4503{% elif runmode == "author" %}4502{% endif %}
+
+export CQ_RUNMODE='{{ runmode }}'
+export CQ_FILE_SIZE_LIMIT=8192
+export JAVA_HOME=/etc/alternatives/java_sdk_ibm
+export CQ_JVM_OPTS="$CQ_JVM_OPTS -server -Djava.awt.headless=true"
+CQ_JVM_OPTS="$CQ_JVM_OPTS -Xmn820m"
+CQ_JVM_OPTS="$CQ_JVM_OPTS -Xms2048m"
+CQ_JVM_OPTS="$CQ_JVM_OPTS -Xmx2048m"
+CQ_JVM_OPTS="$CQ_JVM_OPTS -Xgcpolicy:gencon -verbose:gc -Xgcthreads2 -Xverbosegclog:/var/log/cq5/gc.log.%seq,7,20000 -Xdisableexplicitgc -Xdisableexcessivegc -Xclassgc -XX:+UseCompressedOops -Xnoloa -Xcompressedrefs"
+CQ_JVM_OPTS="$CQ_JVM_OPTS -Xss256k"

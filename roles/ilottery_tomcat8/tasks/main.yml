@@ -1,0 +1,88 @@
+---
+- set_fact:
+    tomcat8_packages:
+      - "igamingrest-rpm"
+      - "cashier-application-rpm"
+    ig_packages:
+      - "tomcat8"
+      - "jolokia-1.3.3-1"
+      - "nodejs-5.11.1-1nodesource.el7.centos"
+
+
+- name: Remove ig packages packages
+  when: reinstall_middleware == "true"
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ ig_packages }}"
+
+- name: Install ig packages packages
+  when: reinstall_middleware == "true"
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ ig_packages }}"
+
+- name: Remove tomcat8 packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ tomcat8_packages }}"
+
+- name: Install tomcat8 packages
+  yum:
+    name: "{{ item }}-{{ config.portal_version }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ tomcat8_packages }}"
+
+
+- name: Install sysconfig/tomcat8 template
+  template:
+    src: "templates/sysconfig/tomcat8"
+    dest: "/etc/sysconfig/tomcat8"
+    mode: 0644
+    owner: tomcat
+    group: tomcat
+
+- name: Install tomcat8/catalina.properties template
+  template:
+    src: "templates/tomcat8/catalina.properties"
+    dest: "/etc/tomcat8/catalina.properties"
+    mode: 0644
+    owner: tomcat
+    group: tomcat
+
+- name: Install tomcat8/server.xml template
+  template:
+    src: "templates/tomcat8/server.xml"
+    dest: "/etc/tomcat8/server.xml"
+    mode: 0644
+    owner: tomcat
+    group: tomcat
+
+- name: Remove igportal.properties
+  file:
+    path: "/etc/gtech/igportalrest/igportal.properties"
+    state: absent
+
+- name: Create igportal.properties from inventory
+  template:
+    src: "templates/tomcat8/igportal.properties"
+    dest: "/etc/gtech/igportalrest/igportal.properties"
+    mode: 755
+    owner: tomcat
+    group: tomcat
+
+
+
+# ig_tomcat stuff
+- name: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
+  shell: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
+  become: true
+  register: install_tomcat8
+
+- debug: msg="{{ install_tomcat8.stdout}}"

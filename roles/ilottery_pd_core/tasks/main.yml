@@ -1,0 +1,344 @@
+---
+- set_fact:
+    pd_core_packages:
+      - "{{ config.siteName}}-pd-crm-adapter-application-rpm"
+      - "{{ config.siteName}}-geo-compliance-persistence-rpm"
+      - "{{ config.siteName}}-vouchers-application-rpm"
+      - "{{ config.siteName}}-subcap-application-rpm"
+      - "{{ config.siteName}}-txstore-write-application-rpm"
+      - "{{ config.siteName}}-pd-backend-bus-application-rpm"
+    jboss_common_packages:
+      - "esa-id-verification-eap6"
+      - "jolokia-1.3.3-1.x86_64"
+      - "ric_db2driver-4.19.66-3.noarch"
+      - "activemq-adapter-5.15.8-1"
+      - "jbossas-hornetq-native-2.3.25-4.SP11_redhat_1.ep6.el7.x86_64"
+      - "jbossas-jbossweb-native-1.1.34-5.redhat_1.ep6.el7.x86_64"
+      - "jbossas-modules-eap-7.5.7-2.Final_redhat_3.1.ep6.el7.noarch"
+      - "mod_cluster-1.2.11-1.Final_redhat_1.1.ep6.el7.noarch"
+      - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
+      - "apr"
+      - "openssl"
+      - "coreutils"
+
+    pd_core_main_tpls:
+      - "{{ p_tmpdir }}/crm-adapter.properties.tpl"
+      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
+      - "{{ p_tmpdir }}/crm-connector-tvc.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-adapter-internal.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-adapter.xml.tpl"
+      - "{{ p_tmpdir }}/event-processor-jms.properties.tpl"
+      - "{{ p_tmpdir }}/onepay.properties.tpl"
+      - "{{ p_tmpdir }}/playercard.properties.tpl"
+      - "{{ p_tmpdir }}/sms-jndi.properties.tpl"
+      - "{{ p_tmpdir }}/wc-proxy-url.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-vouchers.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-vouchers-internal.xml.tpl"
+      - "{{ p_tmpdir }}/backendbus.properties.tpl"
+    pd_core_main_vouchers_tpls:
+      - "{{ p_tmpdir }}/vouchers.properties.tpl"
+      - "{{ p_tmpdir }}/event-processor-jms.properties.tpl"
+    pd_core_main_subcap_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-subcap.xml.tpl"
+      - "{{ p_tmpdir }}/subcap.properties.tpl"
+    pd_core_main_esa_geocompliance_tpls:
+      - "{{ p_tmpdir }}/geo-compliance-adapter.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-geocompliance-persistence.xml.tpl"
+    pd_core_main_txstore_tpls:
+      - "{{ p_tmpdir }}/txstore.properties.tpl"
+      - "{{ p_tmpdir }}/txstore-lottery-plugin.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
+
+
+- name: Install jboss common packages
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ jboss_common_packages }}"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ pd_core_packages }}"
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ pd_core_packages }}"
+
+- name: Fetch templates
+  fetch:
+    src: "{{ item.src}}"
+    dest: "{{ item.dest }}"
+    flat: yes
+  become: false
+  run_once: true
+  with_items:
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/crm-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/crm-connector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/esa-configuration-adapter-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config//event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/onepay.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/playercard.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/sms-jndi.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config//wc-proxy-url.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/vouchers.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/esa-configuration-vouchers.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/esa-configuration-vouchers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/geo-compliance-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/esa-configuration-geocompliance-persistence.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/txstore-lottery-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
+
+
+- name: Create /etc/gtech/pd/config/pd-core/main/esa-geocompliance folder
+  file:
+    path: /etc/gtech/pd/config/pd-core/main/esa-geocompliance
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-core/main/subcap folder
+  file:
+    path: /etc/gtech/pd/config/pd-core/main/subcap
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-core/main/txstore folder
+  file:
+    path: /etc/gtech/pd/config/pd-core/main/txstore
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-core/main/vouchers folder
+  file:
+    path: /etc/gtech/pd/config/pd-core/main/vouchers
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+
+- name: Parsing pd_core_main templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_main_tpls }}"
+
+- name: Parsing pd_core_main_vouchers templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/vouchers/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_main_vouchers_tpls }}"
+
+- name: Parsing pd_core_main_subcap templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_main_subcap_tpls }}"
+
+- name: Parsing pd_core_main_esa_geocompliance templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_main_esa_geocompliance_tpls }}"
+
+- name: Parsing pd_core_main_txstore templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_main_txstore_tpls }}"
+
+ # END products configurations 
+
+- name: Install security limits
+  template:
+    src: "templates/security/limits.conf"
+    dest: "/etc/security/limits.conf"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Create /opt/jboss/modules/system/layers/base/javax/validation/api/1.1.0/ dir
+  file:
+    path: /opt/jboss/modules/system/layers/base/javax/validation/api/1.1.0
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Install /opt/jboss/modules/system/layers/base/javax/validation/api/1.1.0/module.xml template
+  template:
+    src: "templates/jboss/modules/system/layers/base/javax/validation/api/1.1.0/module.xml"
+    dest: "/opt/jboss/modules/system/layers/base/javax/validation/api/1.1.0/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Copying 
+  copy:
+    src: "files/jbossas/jblogrotate.sh"
+    dest: "/etc/jbossas/jblogrotate.sh"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
+  when: enable_logremoval
+  cron:
+    name: "jboss logrotation jblogrotate.sh"
+    minute: "0"
+    hour: "23"
+    user: "root"
+    job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
+
+- name: Setting correct permissions/ownership on various directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+  with_items:
+    - "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}"
+    - "/etc/gtech"
+    - "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global"
+    - "/etc/gtech/pd/config/pd-global/main"
+    - "/etc/gtech/pd/config/{{ instance_name }}/main"
+
+- name: "Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main to /etc/gtech/pd/config/{{ instance_name }}/main"
+  file:
+    src: "/etc/gtech/pd/config/{{ instance_name }}/main"
+    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main"
+    state: link
+
+- name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main to /etc/gtech/pd/config/pd-global/main
+  file:
+    src: "/etc/gtech/pd/config/pd-global/main"
+    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main"
+    state: link
+
+- name: Install /etc/gtech/pd/config/{{ instance_name }}/main/module.xml template
+  template:
+    src: "templates/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
+  template:
+    src: "templates/gtech/pd/config/pd-global/main/module.xml"
+    dest: "/etc/gtech/pd/config/pd-global/main/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+
+- name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar to /usr/share/java/db2jcc4.jar"
+  file:
+    src: "/usr/share/java/db2jcc4.jar"
+    dest: "/usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar"
+    state: link
+
+- name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/jolokia.war to /var/lib/jolokia/jolokia.war"
+  file:
+    src: "/var/lib/jolokia/jolokia.war"
+    dest: "/usr/share/jbossas/{{ instance_name }}/deployments/jolokia.war"
+    state: link
+
+- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
+  file:
+    src: "/usr/lib/jvm/java"
+    dest: "/opt/jdk"
+    state: link
+
+- name: Create hash for jboss mgmt password
+  shell: echo "{{ jboss_management_user }}:ManagementRealm:{{ jboss_management_pass }}" | md5sum | cut -d ' ' -f 1
+  register: md5jbosspwd
+
+- set_fact: 
+    jboss_real_management_pass: "{{ md5jbosspwd.stdout }}"
+
+- name: Install mgmt-users.properties template
+  template:
+    src: "templates/configuration/mgmt-users.properties"
+    dest: "/etc/jbossas/{{ instance_name }}/mgmt-users.properties"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Create hash for jboss ejb password
+  shell: echo "{{ ejbuser }}:ApplicationRealm:{{ ejbpassword }}" | md5sum | cut -d ' ' -f 1
+  register: md5jbossejbpwd
+
+- set_fact:
+    realejbpassword: "{{ md5jbossejbpwd.stdout }}"
+
+- name: Create hash for jboss jms password
+  shell: echo "{{ jms_user }}:ApplicationRealm:{{ jms_pass }}" | md5sum | cut -d ' ' -f 1
+  register: md5jbossjmspwd
+
+- set_fact:
+    realjmspassword: "{{ md5jbossjmspwd.stdout }}"
+
+- name: Create hash for jboss hawtio password
+  shell: echo "{{ hawtio_user }}:ApplicationRealm:{{ hawtio_pass }}" | md5sum | cut -d ' ' -f 1
+  register: md5jbosshawtiopwd
+
+- set_fact:
+    realhawtiopassword: "{{ md5jbosshawtiopwd.stdout }}"
+
+- name: Install application-users.properties template
+  template:
+    src: "templates/configuration/application-users.properties"
+    dest: "/etc/jbossas/{{ instance_name }}/application-users.properties"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Create hash forejb-security-realm secret
+  shell: echo -n "{{ ejbpassword }}" | base64
+  register: forejb_security_realm_secret
+
+- set_fact:
+    real_forejb_security_realm_secret: "{{ forejb_security_realm_secret.stdout }}"
+
+- name: Install jboss configuration templates
+  template:
+    src: "templates/configuration/{{ item }}"
+    dest: "/etc/jbossas/{{ instance_name }}/{{ item }}"
+    mode: 0644
+    owner: jboss
+    group: jboss
+  with_items:
+    - application-roles.properties
+    - application-users.properties
+    - logging.properties
+    - mgmt-groups.properties
+    - mgmt-users.properties
+    - standalone-full-ha.xml

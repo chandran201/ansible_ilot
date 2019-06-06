@@ -1,0 +1,37 @@
+---
+
+- name: Install infinispan package
+  yum:
+    name: "esa-infinispan-server-{{ infinispan_version }}"
+    state: present
+    disable_gpg_check: yes
+
+- name: "Create symlinks /usr/share/infinispan-server to /usr/share/infinispan-server-8.2.2.Final-1"
+  file:
+    src: "/usr/share/infinispan-server-8.2.2.Final-1"
+    dest: "/usr/share/infinispan-server"
+    state: link
+
+- name: "Create symlinks /etc/jbossas/infinispan-server to /usr/share/infinispan-server/standalone/configuration"
+  file:
+    src: "/usr/share/infinispan-server/standalone/configuration"
+    dest: "/etc/jbossas/infinispan-server"
+    state: link
+
+- name: Install jboss configuration template clustered.xml
+  template:
+    src: "templates/configuration/clustered.xml"
+    dest: "/etc/jbossas/infinispan-server/clustered.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Install infinispan-server.conf template
+  template:
+    src: "templates/infinispan-server/infinispan-server.conf"
+    dest: "/etc/infinispan-server/infinispan-server.conf"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+
