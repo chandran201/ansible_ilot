@@ -1,0 +1,83 @@
+---
+
+- name: INIT
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - init
+
+  tasks:
+    - set_fact:
+        p_service_name: "pd-loyalty"
+
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_{{ p_service_name }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
+    - set_fact:
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: STOP
+  hosts: ilottery_pd_loyalty
+  become: true
+  gather_facts: no
+  tags:
+    - stop
+
+  tasks:
+    - name: Stop Service
+      systemd:
+        name: "{{ p_service_name }}"
+        state: stopped
+      ignore_errors: yes
+
+- name: INSTALL
+  hosts: ilottery_pd_loyalty
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  roles:
+    - role: os_config
+    - role: ilottery_pd_loyalty
+      jboss_node_port_offset: 1000
+
+- name: START
+  hosts: ilottery_pd_loyalty
+  become: true
+  gather_facts: no
+  tags:
+    - start
+
+  tasks:
+    - name: Start Service
+      systemd:
+        name: "{{ p_service_name }}"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+
+- name: CLEAN
+  hosts: local
+  become: false
+  gather_facts: no
+  tags:
+    - clean
+
+  tasks:
+    - name: Remove local temp directory
+      file:
+        path: "{{ p_tmpdir }}"
+        state: absent
+      when: not g_debug

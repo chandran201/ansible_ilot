@@ -1,0 +1,248 @@
+---
+
+- name: INIT
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - init
+
+  tasks:
+    - set_fact:
+        db_folder: "ilottery-db"
+        db_schemas: 
+          - "balancing"
+          - "bam-site"
+          - "batch"
+          - "bi-adapter"
+          - "dlv-site"
+          - "eventdetector"
+          - "eventdetector-site"
+          - "geo-compliance-persistence"
+          - "gis"
+          - "gis-site"
+          - "gms4-act"
+          - "gms4-bam"
+          - "gms4-cos"
+          - "gms4-dlv"
+          - "gms4-ewl"
+          - "gms4-jem"
+          - "gms4-pd"
+          - "gms4-prov"
+          - "gms4-sms"
+          - "gms4-sys"
+          - "instant-gratz"
+          - "pamGOV"
+          - "pamPAM"
+          - "plm"
+          - "scan-store"
+          - "subcap"
+          - "triggers" 
+          - "txstore" 
+          - "txstore-claimsummary-plugin" 
+          - "txstore-lottery-plugin" 
+          - "utils" 
+          - "vouchers" 
+          - "vouchers-txstore-plugin" 
+
+
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_{{ db_folder }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
+    - set_fact:
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: Install DB packages
+  hosts: ilottery_db
+  become: true
+  gather_facts: no
+  tags:
+    - install_packages
+
+  tasks:
+    - name: Remove old packages
+      yum:
+        name: "{{ item }}"
+        state: removed
+        disable_gpg_check: yes
+      with_items:
+        - "{{ config.siteName }}-database-install"
+        - "ric_esdb5_dbmaint"
+
+    - name: Install new packages
+      yum:
+        name: "{{ item }}"
+        state: present
+        disable_gpg_check: yes
+      with_items:
+        - "{{ config.siteName }}-database-install-{{ config.ilottery_version }}"
+        - "ric_esdb5_dbmaint"
+
+    - name: Fetch templates
+      fetch:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        flat: yes
+      become: false
+      run_once: true
+      with_items:
+        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/config.xml.tpl", dest: "{{ p_tmpdir }}" }
+        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties.xml.tpl", dest: "{{ p_tmpdir }}" }
+        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
+        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
+
+    - name: Remove old folders
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/usr/local/gtech/{{ config.siteName }}-database-install/db-install/scripts-out"
+        - "/usr/local/gtech/{{ config.siteName }}-common-config/env-config"
+        - "/usr/local/gtech/{{ config.siteName }}-database-install/env-config"
+
+    - name: Create new folders
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: ricie
+        mode: 0755
+        recurse: yes
+      with_items:
+        - "/usr/local/gtech/{{ config.siteName }}-database-install"
+        - "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}"
+        - "/usr/local/gtech/{{ config.siteName }}-common-config/env-config/{{ stage }}"
+        - "/var/log/gtech"
+
+
+    - name: Create schema folders
+      file:
+        path: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/{{ item }}"
+        state: directory
+        owner: ricie
+        mode: 0755
+        recurse: yes
+      with_items: "{{ db_schemas }}"
+
+
+    - name: Add config.xml to common-config
+      template:
+        src: "{{ item }}"
+        dest: "/usr/local/gtech/{{ config.siteName }}-common-config/env-config/{{ stage }}/{{ item | basename | regex_replace('\\.tpl$', '')}}"
+        mode: 0644
+        owner: ricie
+      with_fileglob:
+        - "{{ p_tmpdir }}/config.xml.tpl"
+
+    - name: Add dbinstall-properties.xml to all schemas
+      template:
+        src: "{{ p_tmpdir }}/dbinstall-properties.xml.tpl"
+        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/{{ item }}/dbinstall-properties.xml"
+        mode: 0644
+        owner: ricie
+      with_items: "{{ db_schemas }}"
+
+    - name: Add dbinstall-properties-balancing.xml to balancing
+      template:
+        src: "{{ item }}"
+        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/balancing/{{ item | basename | regex_replace('\\.tpl$', '') | regex_replace('-balancing', '')}}"
+        mode: 0644
+        owner: ricie
+      with_fileglob:
+        - "{{ p_tmpdir }}/dbinstall-properties-balancing.xml.tpl"
+
+    - name: Add dbinstall-properties-subcap.xml to subcap
+      template:
+        src: "{{ item }}"
+        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/subcap/{{ item | basename | regex_replace('\\.tpl$', '') | regex_replace('-subcap', '')}}"
+        mode: 0644
+        owner: ricie
+      with_fileglob:
+        - "{{ p_tmpdir }}/dbinstall-properties-subcap.xml.tpl"
+
+- name: Create DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - create_db
+
+  tasks:
+    - name: Running create, delta scripts
+      shell: |
+        cd /usr/local/gtech/{{ config.siteName }}-database-install
+        ./create_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }}
+        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
+      register: create_run
+
+    - debug: msg="{{ create_run.stdout }}"
+
+- name: Recreate DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - recreate_db
+
+  tasks:
+    - name: Running drop, create and delta
+      shell: |
+        cd /usr/local/gtech/{{ config.siteName }}-database-install
+        ./drop_db_all.sh {{ config.siteName }} {{ stage }} abort true
+        ./create_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }}
+        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
+      register: recreate_run
+
+    - debug: msg="{{ recreate_run.stdout }}"
+
+- name: Delta install DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - delta_install
+
+  tasks:
+    - name: Running delta scripts
+      shell: |
+        cd /usr/local/gtech/{{ config.siteName }}-database-install
+        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
+      register: delta_run
+
+    - debug: msg="{{ delta_run.stdout }}"
+
+- name: Export DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - export_db
+
+  tasks:
+    - name: Running export scripts
+      shell: |
+        cd /usr/local/gtech/{{ config.siteName }}-database-install
+        ./delta_db_all_export.sh {{ config.siteName }} {{ stage }} abort true true
+      register: export_run
+
+    - debug: msg="{{ export_run.stdout }}"
+
+- name: CLEAN
+  hosts: local
+  become: false
+  gather_facts: no
+  tags:
+    - clean
+
+  tasks:
+    - name: Remove local temp directory
+      file:
+        path: "{{ p_tmpdir }}"
+        state: absent
+      when: not g_debug
