@@ -143,6 +143,7 @@
     state: link
 
 - name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/essdk-connector.rar to /usr/share/java/essdk-connector.rar"
+  when: install_app == "true"
   file:
     src: "/usr/share/java/essdk-connector.rar"
     dest: "/usr/share/jbossas/{{ instance_name }}/deployments/essdk-connector.rar"
