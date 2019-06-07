@@ -331,4 +331,11 @@
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
-    - standalone-full-ha.xml
+
+- name: Install jboss configuration file
+  template:
+    src: "templates/configuration/standalone-full-ha.xml"
+    dest: "/etc/jbossas/{{ instance_name }}/standalone-automation-pd-admin.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
