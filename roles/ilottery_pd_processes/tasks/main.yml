@@ -8,11 +8,6 @@
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "ric_db2driver-4.19.66-3.noarch"
-      - "activemq-adapter-5.15.8-1"
-      - "jbossas-hornetq-native-2.3.25-4.SP11_redhat_1.ep6.el7.x86_64"
-      - "jbossas-jbossweb-native-1.1.34-5.redhat_1.ep6.el7.x86_64"
-      - "jbossas-modules-eap-7.5.7-2.Final_redhat_3.1.ep6.el7.noarch"
-      - "mod_cluster-1.2.11-1.Final_redhat_1.1.ep6.el7.noarch"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
       - "apr"
       - "openssl"
@@ -54,6 +49,7 @@
   with_items: "{{ jboss_common_packages }}"
 
 - name: Remove application packages
+  when: install_app == "true"
   yum:
     name: "{{ item }}"
     state: removed
@@ -61,6 +57,7 @@
   with_items: "{{ pd_processes_packages }}"
 
 - name: Install application packages from yum repo
+  when: install_app == "true"
   yum:
     name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
@@ -108,6 +105,7 @@
 
 
 - name: Parsing pd-processes main templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-processes/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -115,6 +113,7 @@
   with_fileglob: "{{ pd_processes_main_tpls }}"
 
 - name: Parsing pd-processes balancing templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-processes/main/balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -122,6 +121,7 @@
   with_fileglob: "{{ pd_processes_balancing_tpls }}"
 
 - name: Parsing pd-processes igaming balancing templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-processes/main/igaming-balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -129,6 +129,7 @@
   with_fileglob: "{{ pd_processes_igaming_balancing_tpls }}"
 
 - name: Parsing pd-processes ilottery balancing templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-processes/main/ilottery-balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -136,6 +137,7 @@
   with_fileglob: "{{ pd_processes_ilottery_balancing_tpls }}"
 
 - name: Parsing global-config templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -310,4 +312,11 @@
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
-    - standalone-full-ha.xml
+
+- name: Install jboss configuration file
+  template:
+    src: "templates/configuration/standalone-full-ha.xml"
+    dest: "/etc/jbossas/{{ instance_name }}/standalone-automation-{{ instance_name }}.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss

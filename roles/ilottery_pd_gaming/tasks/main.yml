@@ -17,11 +17,6 @@
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "ric_db2driver-4.19.66-3.noarch"
-      - "activemq-adapter-5.15.8-1"
-      - "jbossas-hornetq-native-2.3.25-4.SP11_redhat_1.ep6.el7.x86_64"
-      - "jbossas-jbossweb-native-1.1.34-5.redhat_1.ep6.el7.x86_64"
-      - "jbossas-modules-eap-7.5.7-2.Final_redhat_3.1.ep6.el7.noarch"
-      - "mod_cluster-1.2.11-1.Final_redhat_1.1.ep6.el7.noarch"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
       - "apr"
       - "openssl"
@@ -83,6 +78,7 @@
   with_items: "{{ jboss_common_packages }}"
 
 - name: Remove application packages
+  when: install_app == "true"
   yum:
     name: "{{ item }}"
     state: removed
@@ -90,6 +86,7 @@
   with_items: "{{ pd_gaming_packages }}"
 
 - name: Install application packages from yum repo
+  when: install_app == "true"
   yum:
     name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
@@ -97,6 +94,7 @@
   with_items: "{{ pd_gaming_packages }}"
 
 - name: Fetch templates
+  when: install_app == "true"
   fetch:
     src: "{{ item.src}}"
     dest: "{{ item.dest }}"
@@ -222,6 +220,7 @@
     mode: 0755
 
 - name: Parsing pd-gaming main templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -229,6 +228,7 @@
   with_fileglob: "{{ pd_gaming_main_tpls }}"
 
 - name: Parsing pd-gaming gis templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/gis/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -236,6 +236,7 @@
   with_fileglob: "{{ pd_gaming_gis_tpls }}"
 
 - name: Parsing pd-gaming este templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/gis/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -243,6 +244,7 @@
   with_fileglob: "{{ pd_gaming_este_tpls }}"
 
 - name: Parsing pd-gaming esa templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/esa/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -250,6 +252,7 @@
   with_fileglob: "{{ pd_gaming_esa_tpls }}"
 
 - name: Parsing pd-gaming txstore templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -257,6 +260,7 @@
   with_fileglob: "{{ pd_gaming_txstore_tpls }}"
 
 - name: Parsing pd-gaming triggers templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/triggers/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -264,6 +268,7 @@
   with_fileglob: "{{ pd_gaming_triggers_tpls }}"
 
 - name: Parsing pd-gaming scan-store templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/scan-store/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -271,6 +276,7 @@
   with_fileglob: "{{ pd_gaming_scan_store_tpls }}"
 
 - name: Parsing pd-gaming esa-locations templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/esa-locations/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -278,6 +284,7 @@
   with_fileglob: "{{ pd_gaming_esa_locations_tpls }}"
 
 - name: Parsing pd-gaming instant-grantz templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-gaming/main/instant-grantz/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -285,6 +292,7 @@
   with_fileglob: "{{ pd_gaming_instant_grantz_tpls }}"
 
 - name: Parsing global-config templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -521,4 +529,11 @@
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
-    - standalone-full-ha.xml
+
+- name: Install jboss configuration file
+  template:
+    src: "templates/configuration/standalone-full-ha.xml"
+    dest: "/etc/jbossas/{{ instance_name }}/standalone-automation-{{ instance_name }}.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss

@@ -7,15 +7,11 @@
       - "{{ config.siteName}}-subcap-application-rpm"
       - "{{ config.siteName}}-txstore-write-application-rpm"
       - "{{ config.siteName}}-pd-backend-bus-application-rpm"
+      - "{{ config.siteName}}-global-config-rpm"
     jboss_common_packages:
       - "esa-id-verification-eap6"
       - "jolokia-1.3.3-1.x86_64"
       - "ric_db2driver-4.19.66-3.noarch"
-      - "activemq-adapter-5.15.8-1"
-      - "jbossas-hornetq-native-2.3.25-4.SP11_redhat_1.ep6.el7.x86_64"
-      - "jbossas-jbossweb-native-1.1.34-5.redhat_1.ep6.el7.x86_64"
-      - "jbossas-modules-eap-7.5.7-2.Final_redhat_3.1.ep6.el7.noarch"
-      - "mod_cluster-1.2.11-1.Final_redhat_1.1.ep6.el7.noarch"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
       - "apr"
       - "openssl"
@@ -48,6 +44,12 @@
       - "{{ p_tmpdir }}/txstore.properties.tpl"
       - "{{ p_tmpdir }}/txstore-lottery-plugin.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
+    global_config_tpls:
+      - "{{ p_tmpdir }}/activemq.properties.tpl"
+      - "{{ p_tmpdir }}/encryption.properties.tpl"
+      - "{{ p_tmpdir }}/hsm.properties.tpl"
+      - "{{ p_tmpdir }}/tivoli.properties.tpl"
+      - "{{ p_tmpdir }}/walletparameters.properties.tpl"
 
 
 - name: Install jboss common packages
@@ -58,6 +60,7 @@
   with_items: "{{ jboss_common_packages }}"
 
 - name: Remove application packages
+  when: install_app == "true"
   yum:
     name: "{{ item }}"
     state: removed
@@ -65,6 +68,7 @@
   with_items: "{{ pd_core_packages }}"
 
 - name: Install application packages from yum repo
+  when: install_app == "true"
   yum:
     name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
@@ -72,6 +76,7 @@
   with_items: "{{ pd_core_packages }}"
 
 - name: Fetch templates
+  when: install_app == "true"
   fetch:
     src: "{{ item.src}}"
     dest: "{{ item.dest }}"
@@ -103,6 +108,11 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/encryption.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/hsm.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/tivoli.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/walletparameters.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 
 - name: Create /etc/gtech/pd/config/pd-core/main/esa-geocompliance folder
@@ -139,6 +149,7 @@
 
 
 - name: Parsing pd_core_main templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-core/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -146,6 +157,7 @@
   with_fileglob: "{{ pd_core_main_tpls }}"
 
 - name: Parsing pd_core_main_vouchers templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-core/main/vouchers/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -153,6 +165,7 @@
   with_fileglob: "{{ pd_core_main_vouchers_tpls }}"
 
 - name: Parsing pd_core_main_subcap templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-core/main/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -160,6 +173,7 @@
   with_fileglob: "{{ pd_core_main_subcap_tpls }}"
 
 - name: Parsing pd_core_main_esa_geocompliance templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-core/main/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -167,11 +181,20 @@
   with_fileglob: "{{ pd_core_main_esa_geocompliance_tpls }}"
 
 - name: Parsing pd_core_main_txstore templates
+  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-core/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_core_main_txstore_tpls }}"
+
+- name: Parsing global-config templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ global_config_tpls }}"
 
  # END products configurations 
 
@@ -341,4 +364,11 @@
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
-    - standalone-full-ha.xml
+
+- name: Install jboss configuration file
+  template:
+    src: "templates/configuration/standalone-full-ha.xml"
+    dest: "/etc/jbossas/{{ instance_name }}/standalone-automation-{{ instance_name }}.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
