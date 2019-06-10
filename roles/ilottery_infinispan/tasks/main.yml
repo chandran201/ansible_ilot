@@ -6,11 +6,21 @@
     state: present
     disable_gpg_check: yes
 
+- name: "Assign infinispan to jboss user"
+  file:
+    state: directory
+    path: "/usr/share/infinispan-server-8.2.2.Final-1"
+    owner: jboss
+    group: jboss
+    recurse: true
+
 - name: "Create symlinks /usr/share/infinispan-server to /usr/share/infinispan-server-8.2.2.Final-1"
   file:
     src: "/usr/share/infinispan-server-8.2.2.Final-1"
     dest: "/usr/share/infinispan-server"
     state: link
+    owner: jboss
+    group: jboss
 
 - name: "Create symlinks /etc/jbossas/infinispan-server to /usr/share/infinispan-server/standalone/configuration"
   file:
