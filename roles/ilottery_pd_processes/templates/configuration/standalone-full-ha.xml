@@ -665,5 +665,10 @@
     <outbound-socket-binding name="mail-smtp">
       <remote-destination host="localhost" port="25"/>
     </outbound-socket-binding>
+    {% for i in internal_web_servers %}
+    <outbound-socket-binding name="remote-mod_cluster{{ loop.index }}">
+      <remote-destination host="{{ i }}" port="6666"/>
+    </outbound-socket-binding>
+    {% endfor %}
   </socket-binding-group>
 </server>
