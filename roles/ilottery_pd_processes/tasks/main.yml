@@ -65,6 +65,7 @@
   with_items: "{{ pd_processes_packages }}"
 
 - name: Fetch templates
+  when: install_app == "true"
   fetch:
     src: "{{ item.src}}"
     dest: "{{ item.dest }}"
