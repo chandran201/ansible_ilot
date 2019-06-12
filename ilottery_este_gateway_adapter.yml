@@ -76,4 +76,3 @@
       file:
         path: "{{ p_tmpdir }}"
         state: absent
-      when: not g_debug
