@@ -8,11 +8,8 @@
     - init
 
   tasks:
-    - set_fact:
-        p_service_name: "cq5"
-
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_{{ p_service_name }}"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_cq5"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -37,7 +34,7 @@
   tasks:
     - name: Stop Service
       systemd:
-        name: "{{ p_service_name }}"
+        name: "cq5"
         state: stopped
       ignore_errors: yes
 
@@ -63,7 +60,7 @@
   tasks:
     - name: Start Service
       systemd:
-        name: "{{ p_service_name }}"
+        name: "cq5"
         state: restarted
         enabled: yes
         daemon_reload: yes
