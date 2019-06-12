@@ -1,0 +1,10 @@
+*.iml
+**/target
+.idea
+**/.settings
+**/.classpath
+**/.project
+*.xml.versionsBackup
+*.tern-project
+*.class
+**/*.swp
