@@ -101,7 +101,7 @@
     - name: Fetch templates
       fetch:
         src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
+        dest: "{{ item.dest }}/"
         flat: yes
       become: false
       run_once: true
