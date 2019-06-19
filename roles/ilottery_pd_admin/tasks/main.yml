@@ -8,6 +8,7 @@
       - "{{ config.siteName}}-balancing-db-cleanup-rpm"
       - "{{ config.siteName}}-batch-admin-application-rpm"
       - "{{ config.siteName}}-global-config-rpm"
+      - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "ric_db2driver-4.19.66-3.noarch"

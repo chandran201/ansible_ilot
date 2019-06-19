@@ -4,6 +4,7 @@
       - "{{ config.loyaltySiteName}}-loyalty-adapter-application-rpm"
       - "{{ config.loyaltySiteName}}-doc-generator-application-rpm"
       - "{{ config.loyaltySiteName}}-raf-adapter-application-rpm"
+      - "{{ config.siteName}}-pd-jboss-modules-rpm"
     global_config_packages:
       - "{{ config.siteName}}-global-config-rpm"
     jboss_common_packages:
