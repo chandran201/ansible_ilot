@@ -88,7 +88,7 @@
 
 - name: Start cq5 Service
   systemd:
-    name: "{{ p_service_name }}"
+    name: "cq5"
     state: restarted
     enabled: yes
     daemon_reload: yes
