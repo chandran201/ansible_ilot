@@ -68,7 +68,7 @@
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/securegateway.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/es-configuration/esa-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
+      #- { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/es-configuration/esa-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/module/esa-configuration-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/encryption.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -100,13 +100,13 @@
     mode: 0644
   with_fileglob: "{{ pd_sec_gateway_tpls }}"
 
-- name: Parsing geo-comliance templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ geo_compliance_tpls }}"
+  #- name: Parsing geo-comliance templates
+  #  when: install_app == "true"
+  #  template:
+  #    src: "{{ item }}"
+  #    dest: "/etc/gtech/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+  #    mode: 0644
+  #  with_fileglob: "{{ geo_compliance_tpls }}"
 
 - name: Parsing global-config templates
   when: install_app == "true"
