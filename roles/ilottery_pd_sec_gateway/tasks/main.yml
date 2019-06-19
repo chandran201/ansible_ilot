@@ -93,7 +93,6 @@
     mode: 0755
 
 - name: "Parsing {{ instance_name }} templates"
-  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/{{ instance_name }}/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
@@ -109,7 +108,6 @@
   #  with_fileglob: "{{ geo_compliance_tpls }}"
 
 - name: Parsing global-config templates
-  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
