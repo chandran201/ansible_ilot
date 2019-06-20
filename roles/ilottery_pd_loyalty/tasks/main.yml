@@ -108,6 +108,14 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/gtech/pd/config/pd-loyalty-global/main folder
+  file:
+    path: /etc/gtech/pd/config/pd-loyalty-global/main
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/raf-adapter folder
   file:
     path: /etc/gtech/pd/config/pd-loyalty/main/raf-adapter
