@@ -99,7 +99,7 @@
 
 - name: Create /etc/gtech/pd/config/pd-processes/main/balancing-plugins folder
   file:
-    path: /etc/gtech/pd/config/pd-processes/main/balancing
+    path: /etc/gtech/pd/config/pd-processes/main/balancing-plugins
     state: directory
     owner: jboss
     group: jboss
