@@ -108,13 +108,14 @@
     group: jboss
     mode: 0755
 
-- name: Create /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main folder
+- name: Create /etc/gtech/pd/config/pd-loyalty-global/main folder
   file:
-    path: /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main
+    path: /etc/gtech/pd/config/pd-loyalty-global/main
     state: directory
     owner: jboss
     group: jboss
     mode: 0755
+
 
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/raf-adapter folder
   file:
@@ -234,11 +235,6 @@
     owner: jboss
     group: jboss
 
-- name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main to /etc/gtech/pd/config/pd-loyalty-global/main"
-  file:
-    src: "/etc/gtech/pd/config/pd-loyalty-global/main"
-    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main"
-    state: link
 
 - name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
   template:
