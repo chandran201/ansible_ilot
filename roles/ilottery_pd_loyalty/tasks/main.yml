@@ -108,9 +108,9 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-loyalty-global/main folder
+- name: Create /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main folder
   file:
-    path: /etc/gtech/pd/config/pd-loyalty-global/main
+    path: /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main
     state: directory
     owner: jboss
     group: jboss
