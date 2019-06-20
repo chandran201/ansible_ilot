@@ -218,6 +218,20 @@
     owner: jboss
     group: jboss
 
+- name: Install /etc/gtech/pd/config/pd-loyalty-global/main/module.xml template
+  template:
+    src: "templates/gtech/pd/config/pd-loyalty-global/main/module.xml"
+    dest: "/etc/gtech/pd/config/pd-loyalty-global/main/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
+- name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main to /etc/gtech/pd/config/pd-loyalty-global/main"
+  file:
+    src: "/etc/gtech/pd/config/pd-loyalty-global/main"
+    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main"
+    state: link
+
 - name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
   template:
     src: "templates/gtech/pd/config/pd-global/main/module.xml"
