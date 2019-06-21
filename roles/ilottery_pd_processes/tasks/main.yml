@@ -114,6 +114,14 @@
     mode: 0644
   with_fileglob: "{{ pd_processes_main_tpls }}"
 
+- name: Parsing pd-processes plm templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-processes/main/plm/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_processes_plm_tpls }}"
+
 - name: Parsing pd-processes balancing templates
   when: install_app == "true"
   template:
