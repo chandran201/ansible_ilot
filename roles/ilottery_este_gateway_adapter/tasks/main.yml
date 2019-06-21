@@ -129,6 +129,7 @@
     - "/etc/gtech/pd/config/{{ instance_name }}/main/esaadapter"
     - "/etc/gtech"
     - "/etc/gtech/este-gateway-adapter"
+    - "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}"
 
 - name: "Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main to /etc/gtech/pd/config/{{ instance_name }}/main"
   file:
