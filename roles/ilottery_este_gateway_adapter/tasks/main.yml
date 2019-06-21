@@ -130,6 +130,20 @@
     - "/etc/gtech"
     - "/etc/gtech/este-gateway-adapter"
 
+- name: "Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main to /etc/gtech/pd/config/{{ instance_name }}/main"
+  file:
+    src: "/etc/gtech/pd/config/{{ instance_name }}/main"
+    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main"
+    state: link
+
+- name: Install /etc/gtech/pd/config/{{ instance_name }}/main/module.xml template
+  template:
+    src: "templates/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+
 
 - name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar to /usr/share/java/db2jcc4.jar"
   file:
