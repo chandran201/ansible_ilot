@@ -215,13 +215,13 @@
     dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main"
     state: link
 
-#- name: "Install /etc/gtech/pd/config/pd-sec-gateway/main/module.xml template"
-#  template:
-#    src: "templates/gtech/pd/config/pd-sec-gateway/main/module.xml"
-#    dest: "/etc/gtech/pd/config/pd-sec-gateway/main/module.xml"
-#    mode: 0644
-#    owner: jboss
-#    group: jboss
+- name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/module.xml template"
+  template:
+    src: "templates/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/module.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
 
 - name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
   template:
