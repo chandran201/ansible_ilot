@@ -202,6 +202,7 @@
     mode: 0755
   with_items:
     - "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}"
+    - "/usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global"
     - "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global"
     - "/etc/gtech/pd/config/pd-global/main"
     - "/etc/gtech/pd/config/{{ instance_name }}/main"
@@ -210,6 +211,12 @@
   file:
     src: "/etc/gtech/pd/config/{{ instance_name }}/main"
     dest: "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main"
+    state: link
+
+- name: "Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main to /etc/gtech/pd/config/pd-loyalty-global/main"
+  file:
+    src: "/etc/gtech/pd/config/pd-loyalty-global/main"
+    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-loyalty-global/main"
     state: link
 
 - name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main to /etc/gtech/pd/config/pd-global/main
