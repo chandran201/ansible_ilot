@@ -67,6 +67,10 @@
     disable_gpg_check: yes
   with_items: "{{ pd_core_packages }}"
 
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
 - name: Install application packages from yum repo
   when: install_app == "true"
   yum:
