@@ -17,6 +17,10 @@
     disable_gpg_check: yes
   with_items: "{{ ig_packages }}"
 
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
 - name: Install ig packages packages
   when: reinstall_middleware == "true"
   yum:
@@ -31,6 +35,10 @@
     state: removed
     disable_gpg_check: yes
   with_items: "{{ tomcat8_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
 
 - name: Install tomcat8 packages
   yum:

@@ -20,6 +20,10 @@
     disable_gpg_check: yes
   with_items: "{{ cq5_packages }}"
 
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
 - name: Install cq5 packages
   when: reinstall_middleware == "true"
   yum:
@@ -99,6 +103,10 @@
     state: removed
     disable_gpg_check: yes
   with_items: "{{ cq5_app_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
 
 - name: Install cq5 app packages
   yum:
