@@ -136,7 +136,7 @@
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/dayend"
     - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/sms/crdsumm/este-trans"
     - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/sms/finsumm"
-    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/tmp"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/tmp"
 
 
 - name: Parsing pd-processes main templates
