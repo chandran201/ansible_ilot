@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    este_gatewat_adapter_packages:
+    este_gateway_adapter_packages:
       - "{{ config.siteName}}-este-gateway-adapter-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
@@ -11,10 +11,10 @@
       - "openssl"
       - "coreutils"
       - "hawtio-no-slf4j-1.4.65-1"
-    este_gatewat_adapter_main_tpls:
+    este_gateway_adapter_main_tpls:
       - "{{ p_tmpdir }}/esa-configuration-este-gateway-adapter.xml.tpl"
       - "{{ p_tmpdir }}/esaadapter.properties.tpl"
-    este_gatewat_adapter_gtech_tpls:
+    este_gateway_adapter_gtech_tpls:
       - "{{ p_tmpdir }}/hist-host.properties.tpl"
       - "{{ p_tmpdir }}/info-host.properties.tpl"
       - "{{ p_tmpdir }}/pay-host.properties.tpl"
@@ -32,7 +32,7 @@
     name: "{{ item }}"
     state: removed
     disable_gpg_check: yes
-  with_items: "{{ este_gatewat_adapter_packages }}"
+  with_items: "{{ este_gateway_adapter_packages }}"
 
 - name: Launch yum clean all
   shell: "yum clean all"
@@ -44,7 +44,7 @@
     name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
     disable_gpg_check: yes
-  with_items: "{{ este_gatewat_adapter_packages }}"
+  with_items: "{{ este_gateway_adapter_packages }}"
 
 - name: Fetch templates
   when: install_app == "true"
@@ -62,21 +62,21 @@
     - { src: "/usr/local/gtech/este-gateway-adapter/{{ config.siteName }}-este-gateway-adapter-env-config/src/main/env-config/este-gateway-adapter/pay-host.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 
-- name: Parsing este-gatewat-adapter main templates
+- name: Parsing este-gateway-adapter main templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/este-gateway-adapter/main/esaadapter{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ este_gatewat_adapter_main_tpls }}"
+  with_fileglob: "{{ este_gateway_adapter_main_tpls }}"
 
-- name: Parsing este-gatewat-adapter gtech templates
+- name: Parsing este-gateway-adapter gtech templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/este-gateway-adapter/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ este_gatewat_adapter_gtech_tpls }}"
+  with_fileglob: "{{ este_gateway_adapter_gtech_tpls }}"
 
  # END products configurations 
 
