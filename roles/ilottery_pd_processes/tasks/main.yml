@@ -109,7 +109,7 @@
     group: jboss
     mode: 0755
 
-- name: "Creating directory structure under {{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}"
+- name: "Creating directory structure under {{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}"
   file:
     path: "{{ item }}"
     state: directory
@@ -117,26 +117,26 @@
     group: root
     mode: 0755
   with_items:
-    - "{{ config.sharedStorePath }}/renaissance/balancing/root"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/autoplt"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/autopht"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/este/wagxfer"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/lottery/claim"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/gms/rstrtdplyr"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/vouchers/out/securepc"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/este/crdsumm/este-trans"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/este/finsumm"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/finxfer"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/txsxfer"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/playerver"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/este/txssumm"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/este/acctsumm"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/este/acctxfer"
-    - "{{ config.sharedStorePath }}/renaissance/application/{{ config.siteID }}/clps/in/este/dayend"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/sms/crdsumm/este-trans"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/clps/in/sms/finsumm"
-    - "{{ config.sharedStorePath }}/renaissance/databalance/{{ config.siteID }}/tmp"
+    - "{{ config.sharedStorePath }}renaissance/balancing/root"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autoplt"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autopht"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/este/wagxfer"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/lottery/claim"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/gms/rstrtdplyr"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/vouchers/out/securepc"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/crdsumm/este-trans"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/finsumm"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/finxfer"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/txsxfer"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/playerver"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/txssumm"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/acctsumm"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/acctxfer"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/dayend"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/sms/crdsumm/este-trans"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/sms/finsumm"
+    - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/tmp"
 
 
 - name: Parsing pd-processes main templates

@@ -160,10 +160,10 @@
     group: root
     mode: 0755
   with_items:
-    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwdesc"
-    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwevent"
-    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwrslt"
-    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/substat"
+    - "{{ config.shareStorePath }}renaissance/application/{{ common.config.siteID }}/clps/in/este/drwdesc"
+    - "{{ config.shareStorePath }}renaissance/application/{{ common.config.siteID }}/clps/in/este/drwevent"
+    - "{{ config.shareStorePath }}renaissance/application/{{ common.config.siteID }}/clps/in/este/drwrslt"
+    - "{{ config.shareStorePath }}renaissance/application/{{ common.config.siteID }}/clps/in/este/substat"
 
 - name: Create /etc/gtech/pd/config/pd-gaming/main/esa-locations folder
   file:
