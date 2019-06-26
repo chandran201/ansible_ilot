@@ -65,7 +65,7 @@
     src: "{{ item }}"
     dest: "/opt/gtech/pd4/batch/conf/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_processes_main_tpls }}"
+  with_fileglob: "{{ batch_tpls }}"
 
  # END products configurations 
 
