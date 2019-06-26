@@ -50,7 +50,13 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/*.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/blacklist.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/jdbc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/pam-jdbc.properties.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/sms-jdbc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/vouchers.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 
 - name: Parsing batch templates
