@@ -33,9 +33,9 @@
     disable_gpg_check: yes
   with_items: "{{ batch_packages }}"
 
-- name: "Create /srv/esshare/renaissance/application/{{ config.siteID }}/crm/out"
+- name: "Create {{ config.shareStorePath }}/renaissance/application/{{ config.siteID }}/crm/out"
   file:
-    path: "/srv/esshare/renaissance/application/{{ config.siteID }}/crm/out"
+    path: "{{ config.shareStorePath }}/renaissance/application/{{ config.siteID }}/crm/out"
     state: directory
     owner: root
     group: root
