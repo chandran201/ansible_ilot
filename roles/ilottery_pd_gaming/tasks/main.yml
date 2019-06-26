@@ -152,6 +152,19 @@
     group: jboss
     mode: 0755
 
+- name: "Creating directory structure under {{ config.shareStorePath }}"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwdesc"
+    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwevent"
+    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/drwrslt"
+    - "{{ config.shareStorePath }}/renaissance/application/{{ common.config.siteID }}/clps/in/este/substat"
+
 - name: Create /etc/gtech/pd/config/pd-gaming/main/esa-locations folder
   file:
     path: /etc/gtech/pd/config/pd-gaming/main/esa-locations
