@@ -476,6 +476,11 @@
         <cluster-connection name="my-cluster" address="jms" connector-name="http-connector" discovery-group="dg-group1"/>
         <jms-queue name="ExpiryQueue" entries="java:/jms/queue/ExpiryQueue"/>
         <jms-queue name="DLQ" entries="java:/jms/queue/DLQ"/>
+        <jms-queue name="estegatewayadapter-pay_responsequeue" entries="queue/este-oa-pay_responsequeue"/>
+        <jms-queue name="estegatewayadapter-hist_responsequeue" entries="queue/este-oa-hist_responsequeue"/>
+        <jms-queue name="estegatewayadapter-info_responsequeue" entries="queue/este-oa-info_responsequeue"/>
+        <jms-queue name="responsequeue" entries="queue/responsequeue"/>
+        <jms-queue name="requestqueue" entries="queue/requestqueue"/>
         <connection-factory name="InVmConnectionFactory" entries="java:/ConnectionFactory" connectors="in-vm"/>
         <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector" ha="true" block-on-acknowledge="true" reconnect-attempts="-1"/>
         <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
