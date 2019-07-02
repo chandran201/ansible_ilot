@@ -26,7 +26,7 @@
     pd_gaming_main_tpls:
       - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
-      - "{{ p_tmpdir }}/event-detector-tcv.properties.tpl"
+      - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-triggers-internal.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-triggers.xml.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
