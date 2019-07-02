@@ -53,7 +53,7 @@
     pd_gaming_esa_locations_tpls:
       - "{{ p_tmpdir }}/esa-configuration-locations.xml.tpl"
       - "{{ p_tmpdir }}/locations-rest-context.xml.tpl"
-    pd_gaming_instant_grantz_tpls:
+    pd_gaming_instant_gratz_tpls:
       - "{{ p_tmpdir }}/esa-configuration-instant-gratz.xml.tpl"
       - "{{ p_tmpdir }}/instant-gratz.properties.tpl"
     pd_gaming_scan_store_tpls:
@@ -181,9 +181,9 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-gaming/main/instant-grantz folder
+- name: Create /etc/gtech/pd/config/pd-gaming/main/instant-gratz folder
   file:
-    path: /etc/gtech/pd/config/pd-gaming/main/instant-grantz
+    path: /etc/gtech/pd/config/pd-gaming/main/instant-gratz
     state: directory
     owner: jboss
     group: jboss
@@ -301,13 +301,13 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_esa_locations_tpls }}"
 
-- name: Parsing pd-gaming instant-grantz templates
+- name: Parsing pd-gaming instant-gratz templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/instant-grantz/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/instant-gratz/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_gaming_instant_grantz_tpls }}"
+  with_fileglob: "{{ pd_gaming_instant_gratz_tpls }}"
 
 - name: Parsing global-config templates
   when: install_app == "true"
