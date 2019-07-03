@@ -107,6 +107,38 @@
         <suffix value=".yyyy-MM-dd"/>
         <append value="true"/>
       </periodic-rotating-file-handler>
+      <periodic-rotating-file-handler name="ALERT_LOG"><level name="{{ alert_log_level }}"/>
+        <encoding value="UTF-8"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        </formatter>
+        <file path="alert.log" relative-to="jboss.server.log.dir"></file>
+        <suffix value=".yyyy-MM-dd"></suffix>
+        <append value="true"></append>
+      </periodic-rotating-file-handler>
+      <periodic-rotating-file-handler name="CONTAINER_LOG"><level name="{{ container_log_level }}"/>
+        <encoding value="UTF-8"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        </formatter>
+        <file path="{{ instance_name }}_container.log" relative-to="jboss.server.log.dir"></file>
+        <suffix value=".yyyy-MM-dd"></suffix>
+        <append value="true"></append>
+      </periodic-rotating-file-handler>
+      <periodic-rotating-file-handler name="VERIFI_LOG"><level name="{{ verifi_log_level }}"/>
+        <encoding value="UTF-8"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        </formatter>
+        <file path="verifi-com.log" relative-to="jboss.server.log.dir"></file>
+        <suffix value=".yyyy-MM-dd"></suffix>
+        <append value="true"></append>
+      </periodic-rotating-file-handler>
+      <periodic-rotating-file-handler name="ONEPAY_LOG"><level name="{{ onepay_log_level }}"/>
+        <encoding value="UTF-8"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        </formatter>
+        <file path="onepay.log" relative-to="jboss.server.log.dir"></file>
+        <suffix value=".yyyy-MM-dd"></suffix>
+        <append value="true"></append>
+      </periodic-rotating-file-handler>
       <logger category="com.arjuna">
         <level name="WARN"/>
       </logger>
@@ -114,6 +146,167 @@
         <level name="DEBUG"/>
       </logger>
       <logger category="sun.rmi">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.apache" use-parent-handlers="false">
+        <level name="ERROR"/>
+        <handlers>
+          <handler name="ALERT_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="org.springframework" use-parent-handlers="false">
+        <level name="ERROR"/>
+        <handlers>
+          <handler name="ALERT_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="org.jboss.deployers" use-parent-handlers="false">
+        <level name="ERROR"/>
+        <handlers>
+          <handler name="ALERT_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="org.jboss.ejb.client.remoting" use-parent-handlers="true">
+        <level name="ERROR"/>
+      </logger>
+      <logger category="org.hibernate.hql.internal.ast.HqlSqlWalker" use-parent-handlers="true">
+        <level name="ERROR"/>
+      </logger>
+      <logger category="org.jboss.jca.core.connectionmanager.pool.strategy.OnePool" use-parent-handlers="true">
+        <level name="ERROR"/>
+      </logger>
+      <logger category="org.springframework.jms" use-parent-handlers="true">
+        <level name="INFO"/>
+      </logger>
+      <logger category="org.hornetq.core.server" use-parent-handlers="true">
+        <level name="INFO"/>
+      </logger>
+      <logger category="org.jboss.serial" use-parent-handlers="true">
+        <level name="INFO"/>
+      </logger>
+      <logger category="org.jboss.seam" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.rhq" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.ajax4jsf.cache" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="facelets.compiler" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.jboss.management" use-parent-handlers="true">
+        <level name="INFO"/>
+      </logger>
+      <logger category="org.jgroups" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.quartz.core.JobRunShell" use-parent-handlers="true">
+        <level name="INFO"/>
+        <handlers>
+          <handler name="CONTAINER_LOG"/>
+          <handler name="ALERT_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="com.gtech" use-parent-handlers="false">
+        <level name="{{ igt_log_level }}"/>
+        <handlers><handler name="CONTAINER_LOG"></handler>
+          <handler name="ALERT_LOG"></handler>
+        </handlers>
+      </logger>
+      <logger category="com.igt" use-parent-handlers="false">
+        <level name="{{ igt_log_level }}"/>
+        <handlers>
+          <handler name="CONTAINER_LOG"/>
+          <handler name="ALERT_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="com.gtech.playerdirect.integration.verifi" use-parent-handlers="true">
+        <level name="{{ verifi_log_level }}"/>
+        <handlers><handler name="ALERT_LOG"/>
+          <handler name="VERIFI_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="com.igt.onepay" use-parent-handlers="true">
+        <level name="{{ onepay_log_level }}"/>
+        <handlers><handler name="ALERT_LOG"/>
+          <handler name="ONEPAY_LOG"/>
+        </handlers>
+      </logger>
+      <logger category="org.springframework.core.env.StandardEnvironment" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.apache.catalina.session" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.beans.factory.xml.PluggableSchemaResolver" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="javax.enterprise.resource.webcontainer.jsf.config" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.apache.coyote.ajp.AjpMessage" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.apache.http.impl.conn.PoolingClientConnectionManager" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.core.io.support.PathMatchingResourcePatternResolver" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.aop.aspectj.AspectJExpressionPointcut" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.beans.factory.support.DefaultListableBeanFactory" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.web.context.support.StandardServletEnvironment" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.core.env.PropertySourcesPropertyResolver" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.context.annotation.ClassPathBeanDefinitionScanner" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.context.annotation.ConfigurationClassEnhancer" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.context.annotation.ConfigurationClassPostProcessor" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.apache.http" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.hibernate.jdbc.AbstractBatcher" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.hibernate.jdbc.ConnectionManager" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.hibernate.engine.loading.CollectionLoadContext" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.jboss.modcluster" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.jboss.as.controller.management-operation" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.hornetq.jms.server" use-parent-handlers="true">
+        <level name="WARN"/>
+      </logger>
+      <logger category="org.jboss.ejb.client.txn" use-parent-handlers="true">
         <level name="WARN"/>
       </logger>
       <root-logger>

@@ -227,70 +227,99 @@
           <handler name="ALERT_LOG"></handler>
         </handlers>
       </logger>
-      <logger category="com.igt" use-parent-handlers="false"><level name="{{ igt_log_level }}"/>
-        <handlers><handler name="CONTAINER_LOG"></handler>
-          <handler name="ALERT_LOG"></handler>
+      <logger category="com.igt" use-parent-handlers="false">
+        <level name="{{ igt_log_level }}"/>
+        <handlers>
+          <handler name="CONTAINER_LOG"/>
+          <handler name="ALERT_LOG"/>
         </handlers>
       </logger>
-      <logger category="com.gtech.playerdirect.integration.verifi" use-parent-handlers="true"><level name="{{ verifi_log_level }}"/>
-        <handlers><handler name="ALERT_LOG"></handler>
-          <handler name="VERIFI_LOG"></handler>
+      <logger category="com.gtech.playerdirect.integration.verifi" use-parent-handlers="true">
+        <level name="{{ verifi_log_level }}"/>
+        <handlers><handler name="ALERT_LOG"/>
+          <handler name="VERIFI_LOG"/>
         </handlers>
       </logger>
-      <logger category="com.igt.onepay" use-parent-handlers="true"><level name="{{ onepay_log_level }}"/>
-        <handlers><handler name="ALERT_LOG"></handler>
-          <handler name="ONEPAY_LOG"></handler>
+      <logger category="com.igt.onepay" use-parent-handlers="true">
+        <level name="{{ onepay_log_level }}"/>
+        <handlers><handler name="ALERT_LOG"/>
+          <handler name="ONEPAY_LOG"/>
         </handlers>
       </logger>
-      <logger category="org.springframework.core.env.StandardEnvironment" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.core.env.StandardEnvironment" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.apache.catalina.session" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.apache.catalina.session" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.beans.factory.xml.PluggableSchemaResolver" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.beans.factory.xml.PluggableSchemaResolver" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="javax.enterprise.resource.webcontainer.jsf.config" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="javax.enterprise.resource.webcontainer.jsf.config" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.apache.coyote.ajp.AjpMessage" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.apache.coyote.ajp.AjpMessage" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.apache.http.impl.conn.PoolingClientConnectionManager" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.apache.http.impl.conn.PoolingClientConnectionManager" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.core.io.support.PathMatchingResourcePatternResolver" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.core.io.support.PathMatchingResourcePatternResolver" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.aop.aspectj.AspectJExpressionPointcut" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.aop.aspectj.AspectJExpressionPointcut" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.beans.factory.support.DefaultListableBeanFactory" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.beans.factory.support.DefaultListableBeanFactory" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.web.context.support.StandardServletEnvironment" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.web.context.support.StandardServletEnvironment" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.core.env.PropertySourcesPropertyResolver" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.core.env.PropertySourcesPropertyResolver" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.context.annotation.ClassPathBeanDefinitionScanner" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.context.annotation.ClassPathBeanDefinitionScanner" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.context.annotation.ConfigurationClassEnhancer" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.context.annotation.ConfigurationClassEnhancer" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.context.annotation.ConfigurationClassPostProcessor" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.context.annotation.ConfigurationClassPostProcessor" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.apache.http" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.apache.http" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.hibernate.jdbc.AbstractBatcher" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.hibernate.jdbc.AbstractBatcher" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.hibernate.jdbc.ConnectionManager" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.hibernate.jdbc.ConnectionManager" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.hibernate.engine.loading.CollectionLoadContext" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.hibernate.engine.loading.CollectionLoadContext" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.jboss.modcluster" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.jboss.modcluster" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.jboss.as.controller.management-operation" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.jboss.as.controller.management-operation" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.hornetq.jms.server" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.hornetq.jms.server" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
-      <logger category="org.jboss.ejb.client.txn" use-parent-handlers="true"><level name="WARN"/>
+      <logger category="org.jboss.ejb.client.txn" use-parent-handlers="true">
+        <level name="WARN"/>
       </logger>
     </subsystem>
     <subsystem xmlns="urn:jboss:domain:cmp:1.1"/>
