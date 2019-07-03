@@ -227,7 +227,7 @@
     - debug: msg="{{ export_run.stdout }}"
 
 - name: START
-  hosts: cmd_db_remote
+  hosts: ilottery_db
   become: true
   gather_facts: no
   tags:
