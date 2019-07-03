@@ -53,6 +53,7 @@
           - "geo-compliance-persistence"
           - "gis"
           - "gis-site"
+          - "gms4-pd"
           - "instant-gratz"
           - "plm"
           - "scan-store"
