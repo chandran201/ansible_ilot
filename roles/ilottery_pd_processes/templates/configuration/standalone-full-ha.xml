@@ -352,9 +352,9 @@
         </drivers>
         {% for datasource, opts in datasources.ilottery.iteritems() %}
         <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.jdbc.url }}</connection-url>
-          <driver>db2jcc4.jar</driver>
+          <driver>ibmdb2</driver>
           <new-connection-sql>SET SCHEMA {{ opts.schema }}</new-connection-sql>
-          <timeout><idle-timeout-minutes>5</idle-timeout-minutes>
+          <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
           </timeout>
           <pool><min-pool-size>25</min-pool-size>
             <max-pool-size>200</max-pool-size>
@@ -368,17 +368,14 @@
             <background-validation>true</background-validation>
             <background-validation-millis>{{ opts.validationmilis }}</background-validation-millis>
           </validation>
-          <connection-property name="enableClientAffinitiesList">1</connection-property>
-          <connection-property name="clientRerouteAlternateServerName">{{ opts.alternateDbHost }}</connection-property>
-          <connection-property name="clientRerouteAlternatePortNumber">{{ opts.alternateDbPort }}</connection-property>
         </datasource>
         {% endfor %}
 
         {% for datasource, opts in datasources.command.iteritems() %}
         <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.commandJdbc.url }}</connection-url>
-          <driver>db2jcc4.jar</driver>
+          <driver>ibmdb2</driver>
           <new-connection-sql>SET SCHEMA {{ opts.schema }}</new-connection-sql>
-          <timeout><idle-timeout-minutes>5</idle-timeout-minutes>
+          <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
           </timeout>
           <pool><min-pool-size>25</min-pool-size>
             <max-pool-size>200</max-pool-size>
@@ -392,9 +389,6 @@
             <background-validation>true</background-validation>
             <background-validation-millis>{{ opts.validationmilis }}</background-validation-millis>
           </validation>
-          <connection-property name="enableClientAffinitiesList">1</connection-property>
-          <connection-property name="clientRerouteAlternateServerName">{{ opts.alternateDbHost }}</connection-property>
-          <connection-property name="clientRerouteAlternatePortNumber">{{ opts.alternateDbPort }}</connection-property>
         </datasource>
         {% endfor %}
       </datasources>

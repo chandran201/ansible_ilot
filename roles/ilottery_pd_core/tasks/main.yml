@@ -11,7 +11,6 @@
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
-      - "ric_db2driver-4.19.66-3.noarch"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
       - "apr"
       - "openssl"
@@ -286,11 +285,10 @@
     group: jboss
 
 
-- name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar to /usr/share/java/db2jcc4.jar"
+- name: "Remove symlink to /usr/share/java/db2jcc4.jar"
   file:
-    src: "/usr/share/java/db2jcc4.jar"
-    dest: "/usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar"
-    state: link
+    path: "/usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar"
+    state: absent
 
 - name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/jolokia.war to /var/lib/jolokia/jolokia.war"
   file:
