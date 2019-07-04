@@ -23,7 +23,7 @@
     pd_admin_balancing_tpls:
       - "{{ p_tmpdir }}/configuration-connect.xml.tpl"
       - "{{ p_tmpdir }}/configuration.xml.tpl"
-      - "{{ p_tmpdir }}/hibernate.cfg.xm.tpl"
+      - "{{ p_tmpdir }}/hibernate.cfg.xml.tpl"
     pd_admin_balancing_db_cleanup_tpls:
       - "{{ p_tmpdir }}/balancing-db-cleanup.properties.tpl"
     pd_admin_batch_tpls:
