@@ -349,6 +349,9 @@
           <driver name="h2" module="com.h2database.h2">
             <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
           </driver>
+          <driver name="ibmdb2" module="com.ibm.db2">
+            <xa-datasource-class>com.ibm.db2.jcc.DB2XADataSource</xa-datasource-class>
+          </driver>
         </drivers>
         {% for datasource, opts in datasources.iteritems() %}
         <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.jdbc.url }}</connection-url>
