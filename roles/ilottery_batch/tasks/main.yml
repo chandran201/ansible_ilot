@@ -41,6 +41,15 @@
     group: root
     mode: 0755
 
+- name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
+  file:
+    path: "{{ config.sharedStorePath }}renaissance"
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0775
+    recurse: true
+
 - name: Fetch templates
   when: install_app == "true"
   fetch:

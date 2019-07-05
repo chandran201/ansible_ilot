@@ -138,6 +138,15 @@
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/tmp"
 
 
+- name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
+  file:
+    path: "{{ config.sharedStorePath }}renaissance"
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0775
+    recurse: true
+
 - name: Parsing pd-processes main templates
   when: install_app == "true"
   template:

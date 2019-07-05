@@ -164,6 +164,15 @@
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/substat"
 
+- name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
+  file:
+    path: "{{ config.sharedStorePath }}renaissance"
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0775
+    recurse: true
+
 - name: Create /etc/gtech/pd/config/pd-gaming/main/esa-locations folder
   file:
     path: /etc/gtech/pd/config/pd-gaming/main/esa-locations
