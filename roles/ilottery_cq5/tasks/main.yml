@@ -146,6 +146,10 @@
     owner: cq5
     group: cq5
 
+- pause:
+    minutes: 5
+    prompt: "Waiting for cq5 to boot completely"
+
 - name: "cd /usr/local/gtech/ccportal; ./install-portal-app.sh; ./install-portal-content.sh"
   when: runmode == "publish"
   shell: "cd /usr/local/gtech/ccportal; ./install-portal-app.sh; ./install-portal-content.sh"
