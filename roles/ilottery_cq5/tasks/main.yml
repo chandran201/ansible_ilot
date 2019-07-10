@@ -1,8 +1,6 @@
 ---
 - set_fact:
     cq5_packages:
-      - "java-1.8.0-ibm"
-      - "java-1.8.0-ibm-devel"
       - "CQ-aem6.1-standalone-{{ cq_version }}"
       - "CQ-aem6.1-standalone-license-{{ license_version }}"
     cq5_app_packages:
