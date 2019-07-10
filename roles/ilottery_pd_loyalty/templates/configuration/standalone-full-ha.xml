@@ -42,6 +42,9 @@
     <extension module="org.wildfly.extension.undertow"/>
     <extension module="org.wildfly.iiop-openjdk"/>
   </extensions>
+  <system-properties>
+    <property name="resteasy.preferJacksonOverJsonB" value="true"/>
+  </system-properties>
   <management>
     <security-realms>
       <security-realm name="ManagementRealm">
