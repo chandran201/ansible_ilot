@@ -1,5 +1,5 @@
 ---
 dependencies:
   - { role: ansible_facts }
-#  - { role: jboss7_rpm }
+  - { role: java_ibm_rpm  }
 
