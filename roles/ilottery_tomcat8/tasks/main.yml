@@ -48,6 +48,7 @@
 
 
 - name: Install sysconfig/tomcat8 template
+  when: reinstall_middleware == "true"
   template:
     src: "templates/sysconfig/tomcat8"
     dest: "/etc/sysconfig/tomcat8"
@@ -56,6 +57,7 @@
     group: tomcat
 
 - name: Install tomcat8/catalina.properties template
+  when: reinstall_middleware == "true"
   template:
     src: "templates/tomcat8/catalina.properties"
     dest: "/etc/tomcat8/catalina.properties"
@@ -64,6 +66,7 @@
     group: tomcat
 
 - name: Install tomcat8/server.xml template
+  when: reinstall_middleware == "true"
   template:
     src: "templates/tomcat8/server.xml"
     dest: "/etc/tomcat8/server.xml"

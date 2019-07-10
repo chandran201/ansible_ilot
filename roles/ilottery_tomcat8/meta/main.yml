@@ -1,1 +1,3 @@
 ---
+dependencies:
+  - { role: java_ibm_rpm }
