@@ -16,10 +16,6 @@
     disable_gpg_check: yes
   with_items: "{{ ig_packages }}"
 
-- name: Launch yum clean all
-  shell: "yum clean all"
-  become: yes
-
 - name: Install ig packages packages
   when: reinstall_tomcat == "true"
   yum:
