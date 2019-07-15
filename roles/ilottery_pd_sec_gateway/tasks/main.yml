@@ -21,7 +21,7 @@
       - "{{ p_tmpdir }}/esa-configuration-geocompliance.xml.tpl"
     geo_compliance_tpls:
       - "{{ p_tmpdir }}/esa-geocompliance.xml.tpl"
-      - "{{ p_tmpdir }}/geo-geocompliance.xml.tpl"
+      - "{{ p_tmpdir }}/geo-compliance.xml.tpl"
     global_config_tpls:
       - "{{ p_tmpdir }}/activemq.properties.tpl"
       - "{{ p_tmpdir }}/encryption.properties.tpl"
