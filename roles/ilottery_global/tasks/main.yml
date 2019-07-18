@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    globa_config_packages:
+    global_config_packages:
       - "{{ config.siteName}}-global-config-rpm"
     global_config_tpls:
       - "{{ p_tmpdir }}/activemq.properties.tpl"
