@@ -36,7 +36,7 @@
         msg: "No services to stop"
 
 - name: INSTALL
-  hosts: ilottery_pd_core,ilottery_pd_sec_gateway,ilottery_pd_admin,ilottery_pd_gaming
+  hosts: ilottery_global
   become: true
   gather_facts: no
   tags:
