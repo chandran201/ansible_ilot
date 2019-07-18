@@ -53,9 +53,6 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
   with_items:
     - "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global"
 
@@ -70,5 +67,3 @@
     src: "templates/gtech/pd/config/pd-global/main/module.xml"
     dest: "/etc/gtech/pd/config/pd-global/main/module.xml"
     mode: 0644
-    owner: root
-    group: root
