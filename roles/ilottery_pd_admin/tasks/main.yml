@@ -7,7 +7,6 @@
       - "{{ config.siteName}}-balancing-application-rpm"
       - "{{ config.siteName}}-balancing-db-cleanup-rpm"
       - "{{ config.siteName}}-batch-admin-application-rpm"
-      - "{{ config.siteName}}-global-config-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
@@ -29,13 +28,6 @@
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
-    global_config_tpls:
-      - "{{ p_tmpdir }}/activemq.properties.tpl"
-      - "{{ p_tmpdir }}/encryption.properties.tpl"
-      - "{{ p_tmpdir }}/hsm.properties.tpl"
-      - "{{ p_tmpdir }}/tivoli.properties.tpl"
-      - "{{ p_tmpdir }}/walletparameters.properties.tpl"
-
 
 - name: Install jboss common packages
   yum:
@@ -82,11 +74,6 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/encryption.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/hsm.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/tivoli.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/walletparameters.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-admin/main folder
   file:
@@ -153,13 +140,6 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_balancing_db_cleanup_tpls }}"
 
-- name: Parsing global-config templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ global_config_tpls }}"
 
  # END products configurations 
 
@@ -224,12 +204,6 @@
     dest: "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main"
     state: link
 
-- name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main to /etc/gtech/pd/config/pd-global/main
-  file:
-    src: "/etc/gtech/pd/config/pd-global/main"
-    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main"
-    state: link
-
 - name: "Install /etc/gtech/pd/config/pd-admin/main/module.xml template"
   template:
     src: "templates/gtech/pd/config/pd-admin/main/module.xml"
@@ -238,19 +212,6 @@
     owner: jboss
     group: jboss
 
-- name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
-  template:
-    src: "templates/gtech/pd/config/pd-global/main/module.xml"
-    dest: "/etc/gtech/pd/config/pd-global/main/module.xml"
-    mode: 0644
-    owner: jboss
-    group: jboss
-
-
-- name: "Remove symlink to /usr/share/java/db2jcc4.jar"
-  file:
-    path: "/usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar"
-    state: absent
 
 - name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/jolokia.war to /var/lib/jolokia/jolokia.war"
   file:

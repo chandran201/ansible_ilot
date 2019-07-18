@@ -33,13 +33,6 @@
     pd_processes_plm_tpls:
       - "{{ p_tmpdir }}/esa-configuration-plm.xml.tpl"
       - "{{ p_tmpdir }}/plm.properties.tpl"
-    global_config_tpls:
-      - "{{ p_tmpdir }}/activemq.properties.tpl"
-      - "{{ p_tmpdir }}/encryption.properties.tpl"
-      - "{{ p_tmpdir }}/hsm.properties.tpl"
-      - "{{ p_tmpdir }}/tivoli.properties.tpl"
-      - "{{ p_tmpdir }}/walletparameters.properties.tpl"
-
 
 - name: Install jboss common packages
   yum:
@@ -93,12 +86,6 @@
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/plm.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/esa-configuration-plm.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/encryption.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/hsm.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/tivoli.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/walletparameters.properties.tpl", dest: "{{ p_tmpdir }}" }
-
 
 - name: Create /etc/gtech/pd/config/pd-processes/main/balancing-plugins folder
   file:
@@ -187,14 +174,6 @@
     mode: 0644
   with_fileglob: "{{ pd_processes_ilottery_balancing_tpls }}"
 
-- name: Parsing global-config templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ global_config_tpls }}"
-
  # END products configurations 
 
 - name: Install security limits
@@ -258,12 +237,6 @@
     dest: "/usr/share/jbossas/modules/com/gtech/pd/config/{{ instance_name }}/main"
     state: link
 
-- name: Create symlinks /usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main to /etc/gtech/pd/config/pd-global/main
-  file:
-    src: "/etc/gtech/pd/config/pd-global/main"
-    dest: "/usr/share/jbossas/modules/com/gtech/pd/config/pd-global/main"
-    state: link
-
 - name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/module.xml template"
   template:
     src: "templates/gtech/pd/config/{{ instance_name }}/main/module.xml"
@@ -271,20 +244,6 @@
     mode: 0644
     owner: jboss
     group: jboss
-
-- name: Install /etc/gtech/pd/config/pd-global/main/module.xml template
-  template:
-    src: "templates/gtech/pd/config/pd-global/main/module.xml"
-    dest: "/etc/gtech/pd/config/pd-global/main/module.xml"
-    mode: 0644
-    owner: jboss
-    group: jboss
-
-
-- name: "Remove symlink to /usr/share/java/db2jcc4.jar"
-  file:
-    path: "/usr/share/jbossas/{{ instance_name }}/deployments/db2jcc4.jar"
-    state: absent
 
 - name: "Create symlinks /usr/share/jbossas/{{ instance_name }}/deployments/jolokia.war to /var/lib/jolokia/jolokia.war"
   file:
