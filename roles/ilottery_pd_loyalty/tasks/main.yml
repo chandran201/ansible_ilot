@@ -5,8 +5,6 @@
       - "{{ config.loyaltySiteName}}-doc-generator-application-rpm"
       - "{{ config.loyaltySiteName}}-raf-adapter-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
-    global_config_packages:
-      - "{{ config.siteName}}-global-config-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
@@ -100,6 +98,13 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/gtech/pd/config/pd-loyalty/main/doc-generator folder
+  file:
+    path: /etc/gtech/pd/config/pd-loyalty/main/doc-generator
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
 
 - name: Parsing pd-loyalty raf-adapter templates
   when: install_app == "true"
@@ -108,6 +113,14 @@
     dest: "/etc/gtech/pd/config/pd-loyalty/main/raf-adapter/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_loyalty_raf_tpls }}"
+
+- name: Parsing pd-loyalty doc-generator templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-loyalty/main/doc-generator/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_loyalty_doc_tpls }}"
 
 - name: Parsing pd-loyalty adapter templates
   when: install_app == "true"
