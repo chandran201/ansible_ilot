@@ -304,7 +304,23 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_instant_gratz_tpls }}"
 
- # END products configurations 
+ # END products configurations
+
+- name: Copying crontab
+  copy:
+    src: "files/cron/share_cleanup"
+    dest: "/etc/cron.d/share_cleanup"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copying share_cleanup.sh
+  template:
+    src: "templates/gtech/share_cleanup.sh"
+    dest: "/etc/gtech/share_cleanup.sh"
+    mode: 0644
+    owner: root
+    group: root
 
 - name: Install security limits
   template:

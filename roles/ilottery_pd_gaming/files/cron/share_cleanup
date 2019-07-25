@@ -1,0 +1,1 @@
+15 23 * * * /etc/gtech/share_cleanup.sh 25 60 60 30 90
