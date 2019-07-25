@@ -143,6 +143,14 @@
 
  # END products configurations 
 
+- name: Copying cron for balancing-db-cleanup
+  copy:
+    src: "files/cron/balancing-db-cleanup"
+    dest: "/etc/cron.d/balancing-db-cleanup"
+    owner: root
+    group: root
+    mode: 0755
+
 - name: Install security limits
   template:
     src: "templates/security/limits.conf"
