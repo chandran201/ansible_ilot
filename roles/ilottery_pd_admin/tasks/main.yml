@@ -44,6 +44,9 @@
     disable_gpg_check: yes
   with_items: "{{ pd_admin_packages }}"
 
+- name: remove jboss autodeploy marker files
+  shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
+
 - name: Launch yum clean all
   shell: "yum clean all"
   become: yes
