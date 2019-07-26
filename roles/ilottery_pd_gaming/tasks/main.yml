@@ -315,13 +315,13 @@
     dest: "/etc/cron.d/share_cleanup"
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
 
 - name: Copying share_cleanup.sh
   template:
     src: "templates/gtech/share_cleanup.sh"
     dest: "/etc/gtech/share_cleanup.sh"
-    mode: 0644
+    mode: 0755
     owner: root
     group: root
 

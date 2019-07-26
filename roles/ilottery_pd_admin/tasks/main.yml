@@ -152,7 +152,7 @@
     dest: "/etc/cron.d/balancing-db-cleanup"
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
 
 - name: Install security limits
   template:
