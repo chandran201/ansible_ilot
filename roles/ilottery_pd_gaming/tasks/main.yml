@@ -13,7 +13,7 @@
       - "{{ config.siteName}}-esa-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
-      - "{{ config.siteName}}-anywhere-random-application-rpm"
+      - "{{ config.siteName}}-anywhere-random-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
