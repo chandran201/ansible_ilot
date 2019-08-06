@@ -10,7 +10,7 @@
       - "{{ config.siteName}}-txstore-read-application-rpm"
       - "{{ config.siteName}}-esa-instant-games-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
-      - "{{ config.siteName}}-esa-locations-rpm"
+      - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
       - "{{ config.siteName}}-anywhere-random-rpm"
@@ -49,9 +49,6 @@
       - "{{ p_tmpdir }}/txstore.properties.tpl"
     pd_gaming_esa_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
-    pd_gaming_esa_locations_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-locations.xml.tpl"
-      - "{{ p_tmpdir }}/locations-rest-context.xml.tpl"
     pd_gaming_instant_gratz_tpls:
       - "{{ p_tmpdir }}/esa-configuration-instant-gratz.xml.tpl"
       - "{{ p_tmpdir }}/instant-gratz.properties.tpl"
@@ -121,8 +118,6 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-instant-games-env-config/src/main/env-config/es-configuration/esa/host.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-locations-env-config/src/main/env-config/esa-locations/esa-configuration-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-locations-env-config/src/main/env-config/esa-locations/locations-rest-context.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -164,9 +159,9 @@
     mode: 0775
     recurse: true
 
-- name: Create /etc/gtech/pd/config/pd-gaming/main/esa-locations folder
+- name: Create /etc/gtech/pd/config/pd-gaming/main/anywhere-locations folder
   file:
-    path: /etc/gtech/pd/config/pd-gaming/main/esa-locations
+    path: /etc/gtech/pd/config/pd-gaming/main/anywhere-locations
     state: directory
     owner: jboss
     group: jboss
@@ -291,14 +286,6 @@
     dest: "/etc/gtech/pd/config/pd-gaming/main/scan-store/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_gaming_scan_store_tpls }}"
-
-- name: Parsing pd-gaming esa-locations templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/esa-locations/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_gaming_esa_locations_tpls }}"
 
 - name: Parsing pd-gaming instant-gratz templates
   when: install_app == "true"
