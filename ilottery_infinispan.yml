@@ -3,7 +3,7 @@
 - name: INIT
   hosts: all
   become: false
-  gather_facts: yes
+  gather_facts: no
   tags:
     - init
 
