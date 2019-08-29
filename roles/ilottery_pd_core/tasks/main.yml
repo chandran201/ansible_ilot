@@ -30,8 +30,8 @@
       - "{{ p_tmpdir }}/esa-configuration-vouchers-internal.xml.tpl"
       - "{{ p_tmpdir }}/backendbus.properties.tpl"
     pd_core_main_vouchers_tpls:
-      - "{{ p_tmpdir }}/vouchers.properties.tpl"
-      - "{{ p_tmpdir }}/event-processor-jms.properties.tpl"
+      - "{{ p_tmpdir }}/vouchers/vouchers.properties.tpl"
+      - "{{ p_tmpdir }}/vouchers/event-processor-jms.properties.tpl"
     pd_core_main_subcap_tpls:
       - "{{ p_tmpdir }}/esa-configuration-subcap.xml.tpl"
       - "{{ p_tmpdir }}/subcap.properties.tpl"
@@ -74,6 +74,15 @@
     disable_gpg_check: yes
   with_items: "{{ pd_core_packages }}"
 
+- name: Create subfolders in local p_tmpdir
+  file:
+    path: "{{ p_tmpdir }}/vouchers"
+    state: directory
+    mode: 0755
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+
 - name: Fetch templates
   when: install_app == "true"
   fetch:
@@ -93,8 +102,8 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/playercard.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/sms-jndi.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config//wc-proxy-url.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/vouchers.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/vouchers.properties.tpl", dest: "{{ p_tmpdir }}/vouchers" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}/vouchers" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/esa-configuration-vouchers.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/esa-configuration-vouchers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
