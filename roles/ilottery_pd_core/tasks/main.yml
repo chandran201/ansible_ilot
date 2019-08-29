@@ -44,6 +44,8 @@
       - "{{ p_tmpdir }}/txstore.properties.tpl"
       - "{{ p_tmpdir }}/txstore-lottery-plugin.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
+    pd_core_proxy_oauth_tpl:
+      - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
 
 
 - name: Install jboss common packages
@@ -118,6 +120,7 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/esa-gateway-config-proxy-oauth.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-core/main/esa-geocompliance folder
   file:
@@ -151,6 +154,13 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/igt/anywhere/proxy-oauth folder
+  file:
+    path: /etc/igt/anywhere/proxy-oauth
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
 
 - name: Parsing pd_core_main templates
   when: install_app == "true"
@@ -192,6 +202,13 @@
     mode: 0644
   with_fileglob: "{{ pd_core_main_txstore_tpls }}"
 
+- name: Parsing pd_core_proxy_oauth templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/igt/anywhere/proxy-oauth/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_proxy_oauth_tpl }}"
 
  # END products configurations 
 

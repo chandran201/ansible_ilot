@@ -59,6 +59,10 @@
       - "{{ p_tmpdir }}/scan-store.properties.tpl"
     pd_gaming_triggers_tpls:
       - "{{ p_tmpdir }}/triggers.properties.tpl"
+    pd_gaming_locations_tpls:
+      - "{{ p_tmpdir }}/esa-gateway-config-locations.xml.tpl"
+    pd_gaming_random_tpls:
+      - "{{ p_tmpdir }}/esa-gateway-config-random.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -128,6 +132,8 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/esa-configuration-triggers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/esa-configuration-triggers.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/triggers.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-locations-env-config/src/main/env-config/esa-gateway-config-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-gaming/main folder
   file:
@@ -231,6 +237,22 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/igt/anywhere/locations folder
+  file:
+    path: /etc/igt/anywhere/locations
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/igt/anywhere/random folder
+  file:
+    path: /etc/igt/anywhere/random
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: Parsing pd-gaming main templates
   when: install_app == "true"
   template:
@@ -295,6 +317,21 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_instant_gratz_tpls }}"
 
+- name: Parsing pd-gaming anywhere-locations templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/igt/anywhere/locations/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_locations_tpls }}"
+
+- name: Parsing pd-gaming anywhere-random templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/igt/anywhere/random/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_random_tpls }}"
  # END products configurations
 
 - name: Copying crontab
