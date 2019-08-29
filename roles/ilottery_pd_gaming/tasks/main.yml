@@ -237,6 +237,22 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/igt/anywhere/locations folder
+  file:
+    path: /etc/igt/anywhere/locations
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/igt/anywhere/random folder
+  file:
+    path: /etc/igt/anywhere/random
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: Parsing pd-gaming main templates
   when: install_app == "true"
   template:
