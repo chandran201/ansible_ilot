@@ -46,6 +46,7 @@
       - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
     pd_core_proxy_oauth_tpl:
       - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
+      - "{{ p_tmpdir }}/oauth-plugins.properties.tpl"
 
 
 - name: Install jboss common packages
@@ -121,6 +122,7 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/esa-gateway-config-proxy-oauth.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/oauth-plugins.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-core/main/esa-geocompliance folder
   file:
