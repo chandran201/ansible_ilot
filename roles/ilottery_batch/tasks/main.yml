@@ -1,7 +1,6 @@
 ---
 - set_fact:
     batch_packages:
-      - "{{ config.siteName}}-batch-install"
       - "{{ config.siteName}}-batch-application-rpm"
     batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
