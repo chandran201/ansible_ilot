@@ -41,7 +41,7 @@
 
 - name: Presetup Check
   hosts: all
-  become: no
+  become: true
   gather_facts: no
 
   tags:
