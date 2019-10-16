@@ -5,16 +5,16 @@
   become: false
   gather_facts: no
   tags:
-    - init
+  - init
 
   tasks:
-    - name: Show Connection Infos
-      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+  - name: Show Connection Infos
+    debug: msg= "ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 
 - name: Presetup Check
   hosts: all
-  become: no
+  become: true
   gather_facts: no
 
   tags:
@@ -32,20 +32,44 @@
   - name: Filesystem OK
     debug:
       msg: "Disk space ok : {{ size }}%"
-    when:  size|int < 80
+    when:   size|int   < 80
 
   - name: Filesystem to be cleaned
     fail:
       msg: "The disk space is almoust full :{{ size }}%"
-    when:  size|int > 80
+    when:  size|int  > 80
+
+- name: Presetup Check
+  hosts: all
+  become: no
+  gather_facts: no
+
+  tags:
+    - marker
+
+  tasks:
+  - name: Check Marker
+    shell: 'DR=/opt/jboss;FAIL=$(test -d $DR && find -L $DR -regex ".+\.failed$");( { test ! -z $FAIL && exit 1; } || exit 0 )'
+    register: marker
+
+  - name: Marker OK
+    debug:
+      msg: "Modules deployed Successfull"
+    when: marker.rc == 0
+
+  - name: Marker Failed
+    fail:
+      msg: "Modules Failed"
+    when: marker.rc == 1
+
 
 - name: CLEAN
   hosts: local
   become: false
   gather_facts: no
   tags:
-    - clean
+  - clean
 
   tasks:
-    - name: Output Sanity
-      shell: "echo Check Disk Space Done"
+  - name: Output Sanity
+    shell: "echo Sanity Check  Done"
