@@ -67,7 +67,7 @@
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: local
+  hosts: all
   become: false
   gather_facts: no
   tags:
@@ -78,3 +78,5 @@
       file:
         path: "{{ p_tmpdir }}"
         state: absent
+      delegate_to: 127.0.0.1
+      run_once: true
