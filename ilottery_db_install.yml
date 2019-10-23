@@ -43,6 +43,9 @@
   tags:
     - install
 
+  roles:
+    - role: beats
+
   tasks:
     - set_fact:
         db_schemas: 
