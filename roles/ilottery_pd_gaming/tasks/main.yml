@@ -41,6 +41,7 @@
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-player.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-quickpicks.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions-internal.xml.tpl"      
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
@@ -115,6 +116,7 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-player.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-quickpicks.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-wagering.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
