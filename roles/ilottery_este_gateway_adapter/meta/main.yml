@@ -2,5 +2,4 @@
 dependencies:
   - { role: ansible_facts }
   - { role: jboss7_rpm }
-  - { role: custom_facts }
   - { role: beats }

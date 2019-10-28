@@ -45,6 +45,7 @@
 
   roles:
     - role: beats
+      box: "db"
 
   tasks:
     - set_fact:

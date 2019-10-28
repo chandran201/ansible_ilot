@@ -8,3 +8,4 @@ tcpping_base_port: 7600
 deployment_scanner_interval: 0
 max_connections: 200
 bind_interface: "0.0.0.0"
+box: "pd-admin"
