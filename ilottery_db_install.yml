@@ -39,7 +39,7 @@
 - name: INSTALL
   hosts: ilottery_db
   become: true
-  gather_facts: no
+  gather_facts: yes
   tags:
     - install
 
