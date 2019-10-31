@@ -54,7 +54,7 @@
 
   tasks:
     - debug:
-        msg: "No services to stop"
+        msg: "No services to start"
 
 - name: CLEAN
   hosts: all
