@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: all
+  hosts: ilottery_global
   become: true
   gather_facts: no
   tags:
@@ -46,7 +46,7 @@
     - role: ilottery_global
 
 - name: START
-  hosts: all
+  hosts: ilottery_global
   become: true
   gather_facts: no
   tags:
