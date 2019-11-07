@@ -26,6 +26,7 @@
 
 - name: STOP
   hosts: ilottery_pd_admin
+  serial: 1
   become: true
   gather_facts: no
   tags:
@@ -52,6 +53,7 @@
 
 - name: START
   hosts: ilottery_pd_admin
+  serial: 1
   become: true
   gather_facts: no
   tags:
