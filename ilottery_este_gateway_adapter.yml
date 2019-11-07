@@ -26,6 +26,7 @@
 
 - name: STOP
   hosts: ilottery_este_gateway_adapter
+  serial: 1
   become: true
   gather_facts: no
   tags:
@@ -51,6 +52,7 @@
 
 - name: START
   hosts: ilottery_este_gateway_adapter
+  serial: 1
   become: true
   gather_facts: no
   tags:
