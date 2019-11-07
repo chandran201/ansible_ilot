@@ -26,6 +26,7 @@
     pd_processes_ilottery_balancing_tpls:
       - "{{ p_tmpdir }}/este-plugin.properties.tpl"
       - "{{ p_tmpdir }}/txstore-este-plugin.properties.tpl"
+      - "{{ p_tmpdir }}/txstore-einstants-plugin.properties.tpl"
     pd_processes_igaming_balancing_tpls:
       - "{{ p_tmpdir }}/sms-plugin.properties.tpl"
     pd_processes_balancing_tpls:
@@ -88,6 +89,7 @@
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/igaming-balancing-plugins/sms-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-einstants-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/plm.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/esa-configuration-plm.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
