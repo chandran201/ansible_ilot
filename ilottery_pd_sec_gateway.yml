@@ -41,7 +41,6 @@
 
 - name: INSTALL
   hosts: ilottery_pd_sec_gateway
-  serial: 1
   become: true
   # dont set gather_facts to no, we need ansible_hostname variable
   gather_facts: yes
@@ -55,6 +54,7 @@
 
 - name: START
   hosts: ilottery_pd_sec_gateway
+  serial: 1
   become: true
   gather_facts: no
   tags:
