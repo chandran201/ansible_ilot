@@ -54,6 +54,7 @@
 
 - name: START
   hosts: ilottery_pd_gaming
+  serial: 1
   become: true
   gather_facts: no
   tags:
