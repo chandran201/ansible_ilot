@@ -293,13 +293,6 @@
 - set_fact:
     realjmspassword: "{{ md5jbossjmspwd.stdout }}"
 
-- name: Create hash for jboss hawtio password
-  shell: echo "{{ hawtio_user }}:ApplicationRealm:{{ hawtio_pass }}" | md5sum | cut -d ' ' -f 1
-  register: md5jbosshawtiopwd
-
-- set_fact:
-    realhawtiopassword: "{{ md5jbosshawtiopwd.stdout }}"
-
 - name: Install application-users.properties template
   template:
     src: "templates/configuration/application-users.properties"
