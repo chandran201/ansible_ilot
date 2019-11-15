@@ -569,8 +569,8 @@
       </cache-container>
     </subsystem>
     <subsystem xmlns="urn:jboss:domain:io:3.0">
-      <worker name="default"/>
-      <buffer-pool name="default"/>
+       <worker name="default"  io-threads="128" task-core-threads="8" task-keepalive="20000" task-max-threads="512"/> 
+        <buffer-pool name="default" buffer-size="32768" buffers-per-slice="128" direct-buffers="true"/> 
     </subsystem>
     <subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/>
     <subsystem xmlns="urn:jboss:domain:jca:5.0">
@@ -684,6 +684,7 @@
     <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
     <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
     <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:1.0"/>
+    {% if mod_cluster_installation %}
     <subsystem xmlns="urn:jboss:domain:modcluster:4.0">
       <proxy name="default" advertise="false" advertise-socket="modcluster" excluded-contexts="ROOT,/wildfly-services" listener="ajp" node-timeout="30000" ping="30" proxies="{% for i in internal_web_servers %}remote-mod_cluster{{ loop.index }}{% if not loop.last %} {% endif %}{% endfor %}" socket-timeout="5000">
         <dynamic-load-provider>
@@ -691,6 +692,7 @@
         </dynamic-load-provider>
       </proxy>
     </subsystem>
+    {% endif %}
     <subsystem xmlns="urn:jboss:domain:naming:2.0">
       <remote-naming/>
     </subsystem>
@@ -759,8 +761,8 @@
     <subsystem xmlns="urn:jboss:domain:undertow:7.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other">
       <buffer-cache name="default"/>
       <server name="default-server">
-        <ajp-listener name="ajp" socket-binding="ajp"/>
-        <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
+	<ajp-listener name="ajp" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
+        <http-listener name="default" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
         <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>
@@ -819,10 +821,12 @@
     <outbound-socket-binding name="mail-smtp">
       <remote-destination host="localhost" port="25"/>
     </outbound-socket-binding>
+    {% if mod_cluster_installation %}
     {% for i in internal_web_servers %}
     <outbound-socket-binding name="remote-mod_cluster{{ loop.index }}">
       <remote-destination host="{{ i }}" port="6666"/>
     </outbound-socket-binding>
     {% endfor %}
+    {% endif %}
   </socket-binding-group>
 </server>
