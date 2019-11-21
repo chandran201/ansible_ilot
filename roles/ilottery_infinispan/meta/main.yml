@@ -1,5 +1,0 @@
----
-dependencies:
-  - { role: ansible_facts }
-  - { role: java_ibm_rpm  }
-

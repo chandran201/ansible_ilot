@@ -10,3 +10,4 @@ max_connections: 200
 bind_interface: "0.0.0.0"
 box: "pd-crm"
 jgroups_udp_mcast_port: "46003"
+mod_cluster_installation: true

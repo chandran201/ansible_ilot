@@ -10,3 +10,4 @@ max_connections: 200
 bind_interface: "{{ jboss_listen_ip }}"
 box: "pd-sec-gateway"
 jgroups_udp_mcast_port: "46007"
+mod_cluster_installation: true
