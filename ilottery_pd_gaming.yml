@@ -42,7 +42,7 @@
 - name: INSTALL
   hosts: ilottery_pd_gaming
   become: true
-  gather_facts: no
+  gather_facts: yes
   tags:
     - install
 
