@@ -11,7 +11,7 @@
      # - "{{ config.siteName}}-esa-instant-games-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
-      - "{{ config.siteName}}-scan-store-application-rpm"
+     # - "{{ config.siteName}}-scan-store-application-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
       - "{{ config.siteName}}-anywhere-random-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
