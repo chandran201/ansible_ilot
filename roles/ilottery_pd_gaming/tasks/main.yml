@@ -303,13 +303,13 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_triggers_tpls }}"
 
-- name: Parsing pd-gaming scan-store templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/scan-store/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_gaming_scan_store_tpls }}"
+#- name: Parsing pd-gaming scan-store templates
+#  when: install_app == "true"
+#  template:
+#    src: "{{ item }}"
+#    dest: "/etc/gtech/pd/config/pd-gaming/main/scan-store/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+#    mode: 0644
+#  with_fileglob: "{{ pd_gaming_scan_store_tpls }}"
 
 - name: Parsing pd-gaming instant-gratz templates
   when: install_app == "true"
