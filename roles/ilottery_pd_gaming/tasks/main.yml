@@ -127,7 +127,7 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
    # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store-common-context.xml.tpl", dest: "{{ p_tmpdir }}" }
+   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store-common-context.xml.tpl", dest: "{{ p_tmpdir }}" }
    # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
    # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
    # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
