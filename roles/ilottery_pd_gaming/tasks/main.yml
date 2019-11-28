@@ -8,7 +8,7 @@
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
-      - "{{ config.siteName}}-esa-instant-games-rpm"
+     # - "{{ config.siteName}}-esa-instant-games-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
