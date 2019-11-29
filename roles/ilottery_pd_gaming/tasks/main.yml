@@ -26,8 +26,6 @@
       - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-triggers-internal.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-triggers.xml.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
     pd_gaming_gis_tpls:
       - "{{ p_tmpdir }}/esa-configuration-gis.xml.tpl"
@@ -60,6 +58,8 @@
       - "{{ p_tmpdir }}/scan-store.properties.tpl"
     pd_gaming_triggers_tpls:
       - "{{ p_tmpdir }}/triggers.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-triggers-internal.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-triggers.xml.tpl"
     pd_gaming_locations_tpls:
       - "{{ p_tmpdir }}/esa-gateway-config-locations.xml.tpl"
     pd_gaming_random_tpls:
@@ -131,8 +131,8 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/esa-configuration-triggers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/esa-configuration-triggers.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/triggers.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-locations-env-config/src/main/env-config/esa-gateway-config-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
