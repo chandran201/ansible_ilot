@@ -1,5 +1,5 @@
 ---
 dependencies:
   - { role: ansible_facts }
-  - { role: jboss7_rpm }
+  - { role: jboss7_rpm, jboss_node_javaopts: "{{ pd_sec_gateway_jboss_node_javaopts }}" }
   - { role: beats }
