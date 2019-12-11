@@ -10,17 +10,19 @@
       - "apr"
       - "openssl"
       - "coreutils"
-    pd_sec_gateway_tpls:
+    pd_main_tpls:
+      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
+    pd_main_esa_secure_gateway_tpls:
       - "{{ p_tmpdir }}/cookie-properties.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-secgateway-mobile.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-secgateway-terminal.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-secgateway.xml.tpl"
       - "{{ p_tmpdir }}/securegateway.properties.tpl"
-      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-geocompliance.xml.tpl"
     geo_compliance_tpls:
       - "{{ p_tmpdir }}/esa-geocompliance.xml.tpl"
       - "{{ p_tmpdir }}/geo-compliance.xml.tpl"
+    pd_main_esa_geo_compliance_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-geocompliance.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -61,15 +63,15 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/cookie-properties.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-mobile.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-terminal.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/securegateway.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-secure-gateway/cookie-properties.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-secure-gateway/esa-configuration-secgateway-mobile.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-secure-gateway/esa-configuration-secgateway-terminal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-secure-gateway/esa-configuration-secgateway.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-secure-gateway/securegateway.properties.tpl", dest: "{{ p_tmpdir }}" }
       #- { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/es-configuration/esa-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/es-configuration/esa-geocompliance/geo-compliance.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/module/esa-configuration-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-esa-geo-compliance-env-config/src/main/env-config/module/esa-geocompliance/esa-configuration-geocompliance.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: "Create /etc/gtech/pd/config/{{ instance_name }}/main folder"
   file:
@@ -79,6 +81,13 @@
     group: jboss
     mode: 0755
 
+- name: "Create /etc/gtech/pd/config/{{ instance_name }}/main/esa-secure-gateway folder"
+  file:
+    path: /etc/gtech/pd/config/{{ instance_name }}/main/esa-secure-gateway
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
 
 - name: "Parsing {{ instance_name }} templates"
   when: install_app == "true"
@@ -86,7 +95,7 @@
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/{{ instance_name }}/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_sec_gateway_tpls }}"
+  with_fileglob: "{{ pd_main_tpls }}"
 
 - name: Parsing geo-comliance templates
   when: install_app == "true"
@@ -95,6 +104,22 @@
     dest: "/etc/gtech/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ geo_compliance_tpls }}"
+
+- name: Parsing esa-geocompliance templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_main_esa_geo_compliance_tpls }}"
+
+- name: Parsing esa-secure-gateway templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/esa-secure-gateway/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_main_esa_secure_gateway_tpls }}"
 
  # END products configurations 
 
