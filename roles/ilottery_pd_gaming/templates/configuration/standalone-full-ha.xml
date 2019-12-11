@@ -717,10 +717,10 @@
         </dynamic-load-provider>
       </proxy>
     </subsystem>
+    {% endif %}
     <subsystem xmlns="urn:jboss:domain:naming:2.0">
       <remote-naming/>
     </subsystem>
-    {% endif %}
     <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
     <subsystem xmlns="urn:jboss:domain:remoting:4.0">
       <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
