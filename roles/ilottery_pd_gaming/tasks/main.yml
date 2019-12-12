@@ -149,9 +149,9 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    owner: jboss
+    group: jboss
+    mode: 0775
   with_items:
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent"
