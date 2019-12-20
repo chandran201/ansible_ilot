@@ -23,9 +23,6 @@
       - "coreutils"
       - "hawtio-no-slf4j-1.4.65-1"
     pd_gaming_main_tpls:
-      - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
-      - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
-      - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
     pd_gaming_gis_tpls:
       - "{{ p_tmpdir }}/esa-configuration-gis.xml.tpl"
@@ -64,6 +61,10 @@
       - "{{ p_tmpdir }}/esa-gateway-config-locations.xml.tpl"
     pd_gaming_random_tpls:
       - "{{ p_tmpdir }}/esa-gateway-config-random.xml.tpl"
+    pd_gaming_event_detector_tpls:
+      - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
+      - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
+      - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -118,9 +119,9 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-wagering.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-instant-games-env-config/src/main/env-config/es-configuration/esa/host.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -170,6 +171,14 @@
 - name: Create /etc/gtech/pd/config/pd-gaming/main/anywhere-locations folder
   file:
     path: /etc/gtech/pd/config/pd-gaming/main/anywhere-locations
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-gaming/main/event-detector folder
+  file:
+    path: /etc/gtech/pd/config/pd-gaming/main/event-detector
     state: directory
     owner: jboss
     group: jboss
@@ -334,6 +343,15 @@
     dest: "/etc/igt/anywhere/random/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_gaming_random_tpls }}"
+
+- name: Parsing pd-gaming event-detector templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/event-detector/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_event_detector_tpls }}"
+
  # END products configurations
 
 - name: Copying crontab
