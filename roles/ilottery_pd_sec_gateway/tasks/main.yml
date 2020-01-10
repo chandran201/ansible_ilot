@@ -64,7 +64,7 @@
   with_items:
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/cookie-properties.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-mobile.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-mobile-p2p.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-p2p.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway-terminal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/esa-configuration-secgateway.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ instance_name }}/{{ config.siteName }}-sec-gateway-env-config/src/main/env-config/securegateway.properties.tpl", dest: "{{ p_tmpdir }}" }
