@@ -155,9 +155,17 @@
     mode: 0775
   with_items:
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt"
-    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/substat"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/failed"
 
 - name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
   file:
