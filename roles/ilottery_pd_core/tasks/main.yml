@@ -46,6 +46,7 @@
       - "{{ p_tmpdir }}/pd-crm-adapter/esa-configuration-adapter.xml.tpl"
       - "{{ p_tmpdir }}/pd-crm-adapter/crm-adapter.properties.tpl"
       - "{{ p_tmpdir }}/pd-crm-adapter/event-processor-jms.properties.tpl"
+      - "{{ p_tmpdir }}/pd-crm-adapter/command-connector.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -111,6 +112,7 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/esa-configuration-adapter-internal.xml.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/command-connector.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/vouchers.properties.tpl", dest: "{{ p_tmpdir }}/vouchers" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}/vouchers" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/esa-configuration-vouchers.xml.tpl", dest: "{{ p_tmpdir }}/vouchers" }
