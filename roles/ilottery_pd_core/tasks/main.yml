@@ -4,7 +4,7 @@
       - "{{ config.siteName}}-pd-crm-adapter-application-rpm"
       - "{{ config.siteName}}-geo-compliance-persistence-rpm"
       - "{{ config.siteName}}-vouchers-application-rpm"
-      - "{{ config.siteName}}-subcap-application-rpm"
+        #- "{{ config.siteName}}-subcap-application-rpm"
       - "{{ config.siteName}}-txstore-write-application-rpm"
       - "{{ config.siteName}}-pd-backend-bus-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
@@ -118,8 +118,8 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/esa-configuration-vouchers.xml.tpl", dest: "{{ p_tmpdir }}/vouchers" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/vouchers/esa-configuration-vouchers-internal.xml.tpl", dest: "{{ p_tmpdir}}/vouchers" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
+      #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
+      #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/geo-compliance-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/esa-configuration-geocompliance-persistence.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -138,13 +138,13 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-core/main/subcap folder
-  file:
-    path: /etc/gtech/pd/config/pd-core/main/subcap
-    state: directory
-    owner: jboss
-    group: jboss
-    mode: 0755
+    #- name: Create /etc/gtech/pd/config/pd-core/main/subcap folder
+    #  file:
+    #    path: /etc/gtech/pd/config/pd-core/main/subcap
+    #    state: directory
+    #    owner: jboss
+    #    group: jboss
+    #    mode: 0755
 
 - name: Create /etc/gtech/pd/config/pd-core/main/txstore folder
   file:
@@ -202,13 +202,13 @@
     mode: 0644
   with_fileglob: "{{ pd_core_main_vouchers_tpls }}"
 
-- name: Parsing pd_core_main_subcap templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-core/main/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_core_main_subcap_tpls }}"
+  #- name: Parsing pd_core_main_subcap templates
+  #  when: install_app == "true"
+  #  template:
+  #    src: "{{ item }}"
+  #    dest: "/etc/gtech/pd/config/pd-core/main/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+  #    mode: 0644
+  #  with_fileglob: "{{ pd_core_main_subcap_tpls }}"
 
 - name: Parsing pd_core_main_esa_geocompliance templates
   when: install_app == "true"
