@@ -779,9 +779,9 @@
     <subsystem xmlns="urn:jboss:domain:undertow:7.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other">
       <buffer-cache name="default"/>
       <server name="default-server">
-	<ajp-listener name="ajp" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
-        <http-listener name="default" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
-        <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+	<ajp-listener name="ajp" max-post-size="{{ undertow_req_size | default("31457280") }}" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
+        <http-listener name="default" max-post-size="{{ undertow_req_size | default("31457280") }}" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
+        <https-listener name="https" max-post-size="{{ undertow_req_size | default("31457280") }}" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>
           <http-invoker security-realm="ApplicationRealm"/>
