@@ -723,15 +723,6 @@
     <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
     <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
     <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:1.0"/>
-    {% if mod_cluster_installation %}
-    <subsystem xmlns="urn:jboss:domain:modcluster:4.0">
-      <proxy name="default" advertise="false" advertise-socket="modcluster" excluded-contexts="ROOT,/wildfly-services" listener="ajp" node-timeout="30000" ping="30" proxies="{% for i in internal_web_servers %}remote-mod_cluster{{ loop.index }}{% if not loop.last %} {% endif %}{% endfor %}" socket-timeout="5000">
-        <dynamic-load-provider>
-          <load-metric type="cpu"/>
-        </dynamic-load-provider>
-      </proxy>
-    </subsystem>
-    {% endif %}
     <subsystem xmlns="urn:jboss:domain:naming:2.0">
       <remote-naming/>
     </subsystem>
@@ -860,12 +851,5 @@
     <outbound-socket-binding name="mail-smtp">
       <remote-destination host="localhost" port="25"/>
     </outbound-socket-binding>
-    {% if mod_cluster_installation %}
-    {% for i in internal_web_servers %}
-    <outbound-socket-binding name="remote-mod_cluster{{ loop.index }}">
-      <remote-destination host="{{ i }}" port="6666"/>
-    </outbound-socket-binding>
-    {% endfor %}
-    {% endif %}
   </socket-binding-group>
 </server>
