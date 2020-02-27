@@ -38,13 +38,13 @@
     mode: 0775
 
 - name: Change application log folder permissions
-    file:
-      path: /var/log/subcap/
-      state: directory
-      recurse: yes
-      owner: springboot
-      group: springboot
-      mode: 0775
+  file:
+    path: /var/log/subcap/
+    state: directory
+    recurse: yes
+    owner: springboot
+    group: springboot
+    mode: 0775
     
 - name: Fetch templates
   when: install_app == "true"
