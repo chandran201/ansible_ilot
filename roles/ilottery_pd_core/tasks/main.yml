@@ -55,6 +55,12 @@
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
 
+- name: Cleanup container
+  when: "{{ clean_configs }}" == "false"
+  file:
+    src: "/etc/gtech/pd/config/pd-core/*"
+    state: removed
+
 - name: Remove application packages
   when: install_app == "true"
   yum:
@@ -62,12 +68,6 @@
     state: removed
     disable_gpg_check: yes
   with_items: "{{ pd_core_packages }}"
-
-- name: Cleanup container
-  when: {{ clean_configs }} == "false"
-  file:
-    src: path /to/loquequieroborrar
-    state: removed
 
 - name: remove jboss autodeploy marker files
   shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
