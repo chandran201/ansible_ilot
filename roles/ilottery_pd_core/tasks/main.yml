@@ -58,7 +58,7 @@
 - name: Cleanup container
   when: "{{ clean_configs }}" == "false"
   file:
-    src: "/etc/gtech/pd/config/pd-core/*"
+    path: "/etc/gtech/pd/config/pd-core/*"
     state: removed
 
 - name: Remove application packages
