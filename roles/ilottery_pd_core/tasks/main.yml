@@ -58,8 +58,11 @@
 - name: Cleanup container
   when: clean_configs == "false"
   file:
+    state: "{{ item }}"
     path: "/etc/gtech/pd/config/pd-core/*"
-    state: absent
+  with_items:
+    - absent
+    - directory
 
 - name: Remove application packages
   when: install_app == "true"
