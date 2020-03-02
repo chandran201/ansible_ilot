@@ -56,7 +56,7 @@
   with_items: "{{ jboss_common_packages }}"
 
 - name: Cleanup container
-  when: "{{ clean_configs }}" == "false"
+  when: clean_configs == "false"
   file:
     path: "/etc/gtech/pd/config/pd-core/*"
     state: removed
