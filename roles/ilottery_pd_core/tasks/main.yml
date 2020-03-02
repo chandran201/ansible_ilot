@@ -56,13 +56,11 @@
   with_items: "{{ jboss_common_packages }}"
 
 - name: Cleanup container
-  when: clean_configs == "false"
+  when: clean_configs == "true"
   file:
-    state: "{{ item }}"
+    state: absent
     path: "/etc/gtech/pd/config/pd-core/main"
-  with_items:
-    - absent
-    - directory
+ 
 
 - name: Remove application packages
   when: install_app == "true"
