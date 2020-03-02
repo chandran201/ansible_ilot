@@ -59,7 +59,7 @@
   when: clean_configs == "false"
   file:
     path: "/etc/gtech/pd/config/pd-core/*"
-    state: removed
+    state: absent
 
 - name: Remove application packages
   when: install_app == "true"
