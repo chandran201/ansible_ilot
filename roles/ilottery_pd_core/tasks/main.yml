@@ -59,7 +59,7 @@
   when: clean_configs == "false"
   file:
     state: "{{ item }}"
-    path: "/etc/gtech/pd/config/pd-core/*"
+    path: "/etc/gtech/pd/config/pd-core/main"
   with_items:
     - absent
     - directory
