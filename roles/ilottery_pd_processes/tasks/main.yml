@@ -42,6 +42,12 @@
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
 
+- name: Cleanup container
+  when: clean_configs == "true"
+  file:
+    state: absent
+    path: "/etc/gtech/pd/config/pd-processes/main"
+
 - name: Remove application packages
   when: install_app == "true"
   yum:
