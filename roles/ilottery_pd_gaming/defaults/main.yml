@@ -13,3 +13,4 @@ pd_gaming_jboss_node_javaopts: "-Dorg.apache.tomcat.util.http.Parameters.MAX_COU
 box: "pd-game"
 jgroups_udp_mcast_port: "46004"
 clean_configs: "false"
+install_app: "true"
