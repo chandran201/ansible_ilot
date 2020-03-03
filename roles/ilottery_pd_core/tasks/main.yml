@@ -60,7 +60,7 @@
   file:
     state: absent
     path: "/etc/gtech/pd/config/pd-core/main"
- 
+
 
 - name: Remove application packages
   when: install_app == "true"
