@@ -9,7 +9,6 @@
       - "{{ p_tmpdir }}/subcap.properties.tpl"
 
 - name: Remove application packages
-  when: install_app == "true"
   yum:
     name: "{{ item }}"
     state: removed
@@ -21,7 +20,6 @@
   become: yes
 
 - name: Install application packages from yum repo
-  when: install_app == "true"
   yum:
     name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
@@ -47,7 +45,6 @@
     mode: 0775
     
 - name: Fetch templates
-  when: install_app == "true"
   fetch:
     src: "{{ item.src}}"
     dest: "{{ item.dest }}/"
@@ -61,7 +58,6 @@
     - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Parsing subcap templates
-  when: install_app == "true"
   template:
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
