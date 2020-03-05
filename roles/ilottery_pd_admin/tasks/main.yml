@@ -22,6 +22,7 @@
       - "{{ p_tmpdir }}/hibernate.cfg.xml.tpl"
     pd_admin_balancing_db_cleanup_tpls:
       - "{{ p_tmpdir }}/balancing-db-cleanup.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-balancing.xml.tpl"
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
@@ -80,6 +81,7 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration-connect.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/hibernate.cfg.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/esa-configuration-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
