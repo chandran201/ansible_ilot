@@ -39,6 +39,14 @@
     - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
 
+- name: Create /etc/gtech/pd/config/subcap-internal folder
+  file:
+    path: /etc/gtech/pd/config/subcap-internal
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
 - name: Parsing subcap templates
   template:
     src: "{{ item }}"
