@@ -47,6 +47,14 @@
     group: springboot
     mode: 0755
 
+- name: Create /var/log/subcap-internal/ folder
+  file:
+    path: /var/log/subcap-internal
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
 - name: Parsing subcap templates
   template:
     src: "{{ item }}"
