@@ -88,7 +88,15 @@
     limit_item: memlock
     value: 1024000
 
-- name: Start cq5 Service
+- name: Install fixed start script
+  template:
+    src: "templates/start"
+    dest: "/var/lib/cq5/crx-quickstart/bin/start"
+    mode: 0755
+    owner: cq5
+    group: cq5
+
+    - name: Start cq5 Service
   systemd:
     name: "cq5"
     state: restarted

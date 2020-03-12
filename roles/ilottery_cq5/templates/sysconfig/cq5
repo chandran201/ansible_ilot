@@ -3,7 +3,7 @@ export CQ_PORT={% if runmode == "publish" %}4503{% elif runmode == "author" %}45
 
 export CQ_RUNMODE='{{ runmode }}'
 export CQ_FILE_SIZE_LIMIT=8192
-export JAVA_HOME=/etc/alternatives/java_sdk_ibm
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-ibm
 export CQ_JVM_OPTS="$CQ_JVM_OPTS -server -Djava.awt.headless=true"
 CQ_JVM_OPTS="$CQ_JVM_OPTS -Xmn820m"
 CQ_JVM_OPTS="$CQ_JVM_OPTS -Xms2048m"
