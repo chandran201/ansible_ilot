@@ -96,7 +96,7 @@
     owner: cq5
     group: cq5
 
-    - name: Start cq5 Service
+- name: Start cq5 Service
   systemd:
     name: "cq5"
     state: restarted
