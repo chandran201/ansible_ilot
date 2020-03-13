@@ -38,6 +38,7 @@
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions-internal.xml.tpl"      
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
+      - "{{ p_tmpdir }}/params-gameinfo-context.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
     pd_gaming_txstore_tpls:
