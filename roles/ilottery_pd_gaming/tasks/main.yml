@@ -118,6 +118,7 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/esa-configuration-gis.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/gis.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/params-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-cart.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-favorites.xml.tpl", dest: "{{ p_tmpdir }}" }
