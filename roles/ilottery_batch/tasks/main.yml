@@ -36,13 +36,22 @@
   file:
     path: "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/crm/out"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    owner: jboss
+    group: jboss
+    mode: 0775
 
 - name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
   file:
     path: "{{ config.sharedStorePath }}renaissance"
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0775
+    recurse: true
+
+- name: "Create batch folder"
+  file:
+    path: "/opt/gtech/pd4/batch"
     state: directory
     owner: jboss
     group: jboss

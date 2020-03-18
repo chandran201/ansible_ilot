@@ -112,7 +112,7 @@
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ALERT_LOG"><level name="{{ alert_log_level }}"/>
         <encoding value="UTF-8"/>
-        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="alert.log" relative-to="jboss.server.log.dir"></file>
         <suffix value=".yyyy-MM-dd-HH"></suffix>
@@ -120,7 +120,7 @@
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="CONTAINER_LOG"><level name="{{ container_log_level }}"/>
         <encoding value="UTF-8"/>
-        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="{{ instance_name }}_container.log" relative-to="jboss.server.log.dir"></file>
         <suffix value=".yyyy-MM-dd-HH"></suffix>
@@ -128,7 +128,7 @@
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="VERIFI_LOG"><level name="{{ verifi_log_level }}"/>
         <encoding value="UTF-8"/>
-        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="verifi-com.log" relative-to="jboss.server.log.dir"></file>
         <suffix value=".yyyy-MM-dd-HH"></suffix>
@@ -136,7 +136,7 @@
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ONEPAY_LOG"><level name="{{ onepay_log_level }}"/>
         <encoding value="UTF-8"/>
-        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="onepay.log" relative-to="jboss.server.log.dir"></file>
         <suffix value=".yyyy-MM-dd-HH"></suffix>
@@ -319,7 +319,7 @@
         </handlers>
       </root-logger>
       <formatter name="PATTERN">
-        <pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.cardId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
+        <pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
       </formatter>
       <formatter name="COLOR-PATTERN">
         <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/>
@@ -702,15 +702,6 @@
     <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
     <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
     <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:1.0"/>
-    {% if mod_cluster_installation %}
-    <subsystem xmlns="urn:jboss:domain:modcluster:4.0">
-      <proxy name="default" advertise="false" advertise-socket="modcluster" excluded-contexts="ROOT,/wildfly-services" listener="ajp" node-timeout="30000" ping="30" proxies="{% for i in internal_web_servers %}remote-mod_cluster{{ loop.index }}{% if not loop.last %} {% endif %}{% endfor %}" socket-timeout="5000">
-        <dynamic-load-provider>
-          <load-metric type="cpu"/>
-        </dynamic-load-provider>
-      </proxy>
-    </subsystem>
-    {% endif %}
     <subsystem xmlns="urn:jboss:domain:naming:2.0">
       <remote-naming/>
     </subsystem>
@@ -779,9 +770,9 @@
     <subsystem xmlns="urn:jboss:domain:undertow:7.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other">
       <buffer-cache name="default"/>
       <server name="default-server">
-	<ajp-listener name="ajp" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
-        <http-listener name="default" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
-        <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+	<ajp-listener name="ajp" max-post-size="{{ undertow_req_size | default("31457280") }}" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
+        <http-listener name="default" max-post-size="{{ undertow_req_size | default("31457280") }}" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
+        <https-listener name="https" max-post-size="{{ undertow_req_size | default("31457280") }}" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>
           <http-invoker security-realm="ApplicationRealm"/>
@@ -839,12 +830,5 @@
     <outbound-socket-binding name="mail-smtp">
       <remote-destination host="localhost" port="25"/>
     </outbound-socket-binding>
-    {% if mod_cluster_installation %}
-    {% for i in internal_web_servers %}
-    <outbound-socket-binding name="remote-mod_cluster{{ loop.index }}">
-      <remote-destination host="{{ i }}" port="6666"/>
-    </outbound-socket-binding>
-    {% endfor %}
-    {% endif %}
   </socket-binding-group>
 </server>

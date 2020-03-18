@@ -8,7 +8,7 @@
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
-      - "{{ config.siteName}}-esa-instant-games-rpm"
+      - "{{ config.siteName}}-anywhere-instant-games-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
@@ -23,9 +23,6 @@
       - "coreutils"
       - "hawtio-no-slf4j-1.4.65-1"
     pd_gaming_main_tpls:
-      - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
-      - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
-      - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
     pd_gaming_gis_tpls:
       - "{{ p_tmpdir }}/esa-configuration-gis.xml.tpl"
@@ -41,13 +38,16 @@
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions-internal.xml.tpl"      
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
+      - "{{ p_tmpdir }}/params-gameinfo-context.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
     pd_gaming_txstore_tpls:
       - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
       - "{{ p_tmpdir }}/txstore.properties.tpl"
-    pd_gaming_esa_tpls:
+    pd_gaming_host_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
+    pd_gaming_instant_games_tpls:
+      - "{{ p_tmpdir }}/esa-gateway-config-instant-games.xml.tpl"
     pd_gaming_instant_gratz_tpls:
       - "{{ p_tmpdir }}/esa-configuration-instant-gratz.xml.tpl"
       - "{{ p_tmpdir }}/instant-gratz.properties.tpl"
@@ -64,6 +64,10 @@
       - "{{ p_tmpdir }}/esa-gateway-config-locations.xml.tpl"
     pd_gaming_random_tpls:
       - "{{ p_tmpdir }}/esa-gateway-config-random.xml.tpl"
+    pd_gaming_event_detector_tpls:
+      - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
+      - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
+      - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -71,6 +75,12 @@
     state: present
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
+
+- name: Cleanup container
+  when: clean_configs == "true"
+  file:
+    state: absent
+    path: "/etc/gtech/pd/config/pd-gaming/main"
 
 - name: Remove application packages
   when: install_app == "true"
@@ -108,6 +118,7 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/esa-configuration-gis.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/gis.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/params-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-cart.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-favorites.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -118,12 +129,11 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-wagering.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-instant-games-env-config/src/main/env-config/es-configuration/esa/host.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -136,6 +146,8 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/triggers.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-locations-env-config/src/main/env-config/esa-gateway-config-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/es-configuration/host.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/anywhere-instant-games/esa-gateway-config-instant-games.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-gaming/main folder
   file:
@@ -154,9 +166,17 @@
     mode: 0775
   with_items:
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt"
-    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/substat"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwrslt/failed"
 
 - name: "Give right permissions to {{ config.sharedStorePath }}renaissance"
   file:
@@ -170,6 +190,14 @@
 - name: Create /etc/gtech/pd/config/pd-gaming/main/anywhere-locations folder
   file:
     path: /etc/gtech/pd/config/pd-gaming/main/anywhere-locations
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-gaming/main/event-detector folder
+  file:
+    path: /etc/gtech/pd/config/pd-gaming/main/event-detector
     state: directory
     owner: jboss
     group: jboss
@@ -223,9 +251,9 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/esa folder
+- name: Create /etc/gtech/instant-games folder
   file:
-    path: /etc/gtech/esa
+    path: /etc/gtech/instant-games
     state: directory
     owner: jboss
     group: jboss
@@ -242,6 +270,14 @@
 - name: Create /etc/igt/anywhere/locations folder
   file:
     path: /etc/igt/anywhere/locations
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/igt/anywhere/instant-games folder
+  file:
+    path: /etc/igt/anywhere/instant-games
     state: directory
     owner: jboss
     group: jboss
@@ -279,13 +315,21 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_este_tpls }}"
 
-- name: Parsing pd-gaming esa templates
+- name: Parsing pd-gaming host templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
-    dest: "/etc/gtech/esa/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    dest: "/etc/gtech/instant-games/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_gaming_esa_tpls }}"
+  with_fileglob: "{{ pd_gaming_host_tpls }}"
+
+- name: Parsing pd-gaming instant-games templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/igt/anywhere/instant-games/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_instant_games_tpls }}"
 
 - name: Parsing pd-gaming txstore templates
   when: install_app == "true"
@@ -334,6 +378,15 @@
     dest: "/etc/igt/anywhere/random/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_gaming_random_tpls }}"
+
+- name: Parsing pd-gaming event-detector templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/event-detector/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_event_detector_tpls }}"
+
  # END products configurations
 
 - name: Copying crontab

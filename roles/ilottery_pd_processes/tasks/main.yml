@@ -13,16 +13,9 @@
       - "openssl"
       - "coreutils"
     pd_processes_main_tpls:
-      - "{{ p_tmpdir }}/command-connector.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
-      - "{{ p_tmpdir }}/crm-processes.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-processes.xml.tpl"
-      - "{{ p_tmpdir }}/event-processor-jms.properties.tpl"
-      - "{{ p_tmpdir }}/nickNameOffensiveWordsValidation.properties.tpl"
-      - "{{ p_tmpdir }}/onepay.properties.tpl"
-      - "{{ p_tmpdir }}/playercard.properties.tpl"
-      - "{{ p_tmpdir }}/wc-proxy-url.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-balancing-plugins.xml.tpl"
+      - "{{ p_tmpdir }}/onepay.properties.tpl"
     pd_processes_ilottery_balancing_tpls:
       - "{{ p_tmpdir }}/este-plugin.properties.tpl"
       - "{{ p_tmpdir }}/txstore-este-plugin.properties.tpl"
@@ -35,6 +28,12 @@
       - "{{ p_tmpdir }}/esa-configuration-plm.xml.tpl"
       - "{{ p_tmpdir }}/plm.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
+    pd_crm_processes_tpls:
+      - "{{ p_tmpdir }}/pd-crm-processes/command-connector.properties.tpl"
+      - "{{ p_tmpdir }}/pd-crm-processes/crm-processes.properties.tpl"
+      - "{{ p_tmpdir }}/pd-crm-processes/esa-configuration-processes.xml.tpl"
+      - "{{ p_tmpdir }}/pd-crm-processes/event-processor-jms.properties.tpl"
+      - "{{ p_tmpdir }}/pd-crm-processes/nickNameOffensiveWordsValidation.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -42,6 +41,12 @@
     state: present
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
+
+- name: Cleanup container
+  when: clean_configs == "true"
+  file:
+    state: absent
+    path: "/etc/gtech/pd/config/pd-processes/main"
 
 - name: Remove application packages
   when: install_app == "true"
@@ -66,6 +71,15 @@
     disable_gpg_check: yes
   with_items: "{{ pd_processes_packages }}"
 
+- name: Create pd-crm-processes folder in temp directory
+  file:
+    path: "{{ p_tmpdir }}/pd-crm-processes"
+    state: directory
+    mode: 0755
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+
 - name: Fetch templates
   when: install_app == "true"
   fetch:
@@ -75,15 +89,13 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/command-connector.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/crm-processes.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/esa-configuration-processes.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/nickNameOffensiveWordsValidation.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/onepay.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/playercard.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/wc-proxy-url.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/command-connector.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/nickNameOffensiveWordsValidation.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/crm-processes.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/esa-configuration-processes.xml.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
+    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/esa-configuration-balancing-plugins.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/balancing-plugins/balancing-plugin-common.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/igaming-balancing-plugins/sms-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -102,6 +114,14 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/gtech/pd/config/pd-processes/main/pd-crm-processes folder
+  file:
+    path: /etc/gtech/pd/config/pd-processes/main/pd-crm-processes
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: "Creating directory structure under {{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}"
   file:
     path: "{{ item }}"
@@ -112,11 +132,29 @@
   with_items:
     - "{{ config.sharedStorePath }}renaissance/balancing/root"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autoplt"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autoplt/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autoplt/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autoplt/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autopht"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autopht/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autopht/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/autopht/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/einstantEsteAutopht/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/este/wagxfer"
-    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/lottery/claim"
-    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/gms/rstrtdplyr"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/este/wagxfer/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/este/wagxfer/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/este/wagxfer/failed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/cap/clmsumm"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/cap/clmsumm/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/cap/clmsumm/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/cap/clmsumm/failed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/gms/rstrtdplyr"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/gms/rstrtdplyr/inprocess"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/gms/rstrtdplyr/processed"
+    - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/gms/rstrtdplyr/failed"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/vouchers/out/securepc"
     - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/crdsumm/este-trans"
     - "{{ config.sharedStorePath }}renaissance/databalance/{{ config.siteID }}/clps/in/este/finsumm"
@@ -181,7 +219,15 @@
     mode: 0644
   with_fileglob: "{{ pd_processes_ilottery_balancing_tpls }}"
 
- # END products configurations 
+- name: Parsing pd-crm-processes templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-processes/main/pd-crm-processes/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_crm_processes_tpls }}"
+
+# END products configurations
 
 - name: Install security limits
   template:
@@ -207,7 +253,7 @@
     owner: jboss
     group: jboss
 
-- name: Copying 
+- name: Copying
   copy:
     src: "files/jbossas/jblogrotate.sh"
     dest: "/etc/jbossas/jblogrotate.sh"
@@ -268,7 +314,7 @@
   shell: echo "{{ jboss_management_user }}:ManagementRealm:{{ jboss_management_pass }}" | md5sum | cut -d ' ' -f 1
   register: md5jbosspwd
 
-- set_fact: 
+- set_fact:
     jboss_real_management_pass: "{{ md5jbosspwd.stdout }}"
 
 - name: Install mgmt-users.properties template

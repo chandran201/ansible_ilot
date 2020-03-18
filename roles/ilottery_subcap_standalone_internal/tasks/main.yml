@@ -1,0 +1,71 @@
+---
+- set_fact:
+    pd_core_standalone_packages:
+      - "{{ config.siteName}}-subcap-application-rpm-internal"
+    pd_core_subcap_tpls:
+      - "{{ p_tmpdir }}/additional.properties.tpl"
+      - "{{ p_tmpdir }}/logback-spring.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-subcap-internal.xml.tpl"
+      - "{{ p_tmpdir }}/subcap.properties.tpl"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ pd_core_standalone_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ pd_core_standalone_packages }}"
+
+- name: Fetch templates
+  fetch:
+    src: "{{ item.src}}"
+    dest: "{{ item.dest }}/"
+    flat: yes
+  become: false
+  run_once: true
+  with_items:
+    - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/additional.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/esa-configuration-subcap-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/subcap-internal/{{ config.siteName }}-subcap-env-config-internal/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
+
+- name: Create /etc/gtech/pd/config/subcap-internal folder
+  file:
+    path: /etc/gtech/pd/config/subcap-internal
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create /var/log/subcap-internal/ folder
+  file:
+    path: /var/log/subcap-internal
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Parsing subcap templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/subcap-internal/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_core_subcap_tpls }}"
+
+
+- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
+  file:
+    src: "/usr/lib/jvm/java"
+    dest: "/opt/jdk"
+    state: link
+

@@ -1,0 +1,81 @@
+---
+
+- name: INIT
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - init
+
+  tasks:
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_subcap_standalone_internal"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
+    - set_fact:
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: STOP
+  hosts: ilottery_subcap_standalone_internal
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - stop
+
+  tasks:
+    - name: Stop Service
+      systemd:
+        name: "subcap-internal"
+        state: stopped
+      ignore_errors: yes
+
+- name: INSTALL
+  hosts: ilottery_subcap_standalone_internal
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  roles:
+    - role: ilottery_subcap_standalone_internal
+
+- name: START
+  hosts: ilottery_subcap_standalone_internal
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - start
+
+  tasks:
+    - name: Start Service
+      systemd:
+        name: "subcap-internal"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+
+- name: CLEAN
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - clean
+
+  tasks:
+    - name: Remove local temp directory
+      file:
+        path: "{{ p_tmpdir }}"
+        state: absent
+      delegate_to: 127.0.0.1
+      run_once: true

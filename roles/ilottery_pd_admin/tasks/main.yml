@@ -3,7 +3,6 @@
     pd_admin_packages:
       - "{{ config.siteName}}-admin-rest-application-rpm"
       - "{{ config.siteName}}-admin-gov-frontend-rpm"
-      - "{{ config.siteName}}-pd2-admin-frontend-rpm"
       - "{{ config.siteName}}-balancing-application-rpm"
       - "{{ config.siteName}}-balancing-db-cleanup-rpm"
       - "{{ config.siteName}}-batch-admin-application-rpm"
@@ -16,18 +15,20 @@
       - "coreutils"
       - "hawtio-no-slf4j-1.4.65-1"
     pd_admin_main_tpls:
-      - "{{ p_tmpdir }}/admin-rest.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-admin.xml.tpl"
     pd_admin_balancing_tpls:
       - "{{ p_tmpdir }}/configuration-connect.xml.tpl"
       - "{{ p_tmpdir }}/configuration.xml.tpl"
       - "{{ p_tmpdir }}/hibernate.cfg.xml.tpl"
     pd_admin_balancing_db_cleanup_tpls:
       - "{{ p_tmpdir }}/balancing-db-cleanup.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-balancing.xml.tpl"
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
+    pd_admin_admin_tpls:
+      - "{{ p_tmpdir }}/admin-rest.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-admin.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -35,6 +36,12 @@
     state: present
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
+
+- name: Cleanup container
+  when: clean_configs == "true"
+  file:
+    state: absent
+    path: "/etc/gtech/pd/config/pd-admin/main"
 
 - name: Remove application packages
   when: install_app == "true"
@@ -68,12 +75,13 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-admin-env-config/src/main/env-config/module/admin-rest.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-admin-env-config/src/main/env-config/module/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-admin-env-config/src/main/env-config/module/esa-configuration-admin.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-admin-env-config/src/main/env-config/module/admin/admin-rest.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-admin-env-config/src/main/env-config/module/admin/esa-configuration-admin.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration-connect.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/hibernate.cfg.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/esa-configuration-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -102,6 +110,14 @@
     group: jboss
     mode: 0755
 
+- name: Create /etc/gtech/pd/config/pd-admin/main/admin folder
+  file:
+    path: /etc/gtech/pd/config/pd-admin/main/admin
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: Create /opt/gtech/pd/balancing-db-cleanup/conf folder
   file:
     path: /opt/gtech/pd/balancing-db-cleanup/conf
@@ -109,7 +125,6 @@
     owner: jboss
     group: jboss
     mode: 0755
-
 
 - name: Parsing pd-admin main templates
   when: install_app == "true"
@@ -143,6 +158,13 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_balancing_db_cleanup_tpls }}"
 
+- name: Parsing pd-admin admin templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-admin/main/admin/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_admin_admin_tpls }}"
 
  # END products configurations 
 
