@@ -1,2 +1,3 @@
 ---
 box: "pd-crm"
+log_directory: "/var/log/subcap-internal"
