@@ -213,14 +213,6 @@
 - set_fact:
     realjmspassword: "{{ md5jbossjmspwd.stdout }}"
 
-- name: Install application-users.properties template
-  template:
-    src: "templates/configuration/application-users.properties"
-    dest: "/etc/jbossas/{{ instance_name }}/application-users.properties"
-    mode: 0644
-    owner: jboss
-    group: jboss
-
 - name: Create hash forejb-security-realm secret
   shell: echo -n "{{ ejbpassword }}" | base64
   register: forejb_security_realm_secret
