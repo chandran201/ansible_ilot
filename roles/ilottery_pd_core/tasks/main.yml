@@ -393,8 +393,6 @@
     owner: jboss
     group: jboss
   with_items:
-    - application-roles.properties
-    - application-users.properties
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
