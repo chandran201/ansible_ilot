@@ -32,10 +32,9 @@
     pd_core_main_esa_geocompliance_tpls:
       - "{{ p_tmpdir }}/geo-compliance-adapter.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-geocompliance-persistence.xml.tpl"
-    pd_core_main_txstore_tpls:
-      - "{{ p_tmpdir }}/txstore.properties.tpl"
-      - "{{ p_tmpdir }}/txstore-lottery-plugin.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
+    pd_core_main_txstore_write_tpls:
+      - "{{ p_tmpdir }}/txstore-write.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-txstore-write.xml.tpl"
     pd_core_proxy_oauth_tpl:
       - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
       - "{{ p_tmpdir }}/oauth-plugins.properties.tpl"
@@ -129,9 +128,8 @@
       #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/geo-compliance-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/esa-configuration-geocompliance-persistence.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/txstore-lottery-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/txstore-write.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/esa-configuration-txstore-write.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/esa-gateway-config-proxy-oauth.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -153,9 +151,9 @@
     #    group: jboss
     #    mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-core/main/txstore folder
+- name: Create /etc/gtech/pd/config/pd-core/main/txstore-write folder
   file:
-    path: /etc/gtech/pd/config/pd-core/main/txstore
+    path: /etc/gtech/pd/config/pd-core/main/txstore-write
     state: directory
     owner: jboss
     group: jboss
@@ -225,13 +223,13 @@
     mode: 0644
   with_fileglob: "{{ pd_core_main_esa_geocompliance_tpls }}"
 
-- name: Parsing pd_core_main_txstore templates
+- name: Parsing pd_core_main_txstore_write templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-core/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    dest: "/etc/gtech/pd/config/pd-core/main/txstore-write/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_core_main_txstore_tpls }}"
+  with_fileglob: "{{ pd_core_main_txstore_write_tpls }}"
 
 - name: Parsing pd_core_proxy_oauth templates
   when: install_app == "true"
@@ -370,14 +368,6 @@
 - set_fact:
     realjmspassword: "{{ md5jbossjmspwd.stdout }}"
 
-- name: Install application-users.properties template
-  template:
-    src: "templates/configuration/application-users.properties"
-    dest: "/etc/jbossas/{{ instance_name }}/application-users.properties"
-    mode: 0644
-    owner: jboss
-    group: jboss
-
 - name: Create hash forejb-security-realm secret
   shell: echo -n "{{ ejbpassword }}" | base64
   register: forejb_security_realm_secret
@@ -393,8 +383,6 @@
     owner: jboss
     group: jboss
   with_items:
-    - application-roles.properties
-    - application-users.properties
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties

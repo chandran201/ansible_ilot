@@ -8,6 +8,7 @@
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
+      - "{{ config.siteName}}-txstore-read-public-application-rpm"
       - "{{ config.siteName}}-anywhere-instant-games-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
@@ -41,9 +42,12 @@
       - "{{ p_tmpdir }}/params-gameinfo-context.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
-    pd_gaming_txstore_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
-      - "{{ p_tmpdir }}/txstore.properties.tpl"
+    pd_gaming_txstore_read_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
+      - "{{ p_tmpdir }}/txstore-read.properties.tpl"
+    pd_gaming_txstore_read_public_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
+      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
     pd_gaming_host_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
     pd_gaming_instant_games_tpls:
@@ -132,8 +136,10 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/esa-configuration-txstore-read.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/esa-configuration-txstore-read-public.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/txstore-read.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/txstore-read-public.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -235,9 +241,17 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore folder
+- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore-read folder
   file:
-    path: /etc/gtech/pd/config/pd-gaming/main/txstore
+    path: /etc/gtech/pd/config/pd-gaming/main/txstore-read
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore-read-public folder
+  file:
+    path: /etc/gtech/pd/config/pd-gaming/main/txstore-read-public
     state: directory
     owner: jboss
     group: jboss
@@ -331,13 +345,21 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_instant_games_tpls }}"
 
-- name: Parsing pd-gaming txstore templates
+- name: Parsing pd-gaming txstore-read-internal templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_gaming_txstore_tpls }}"
+  with_fileglob: "{{ pd_gaming_txstore_read_tpls }}"
+
+- name: Parsing pd-gaming txstore-read-public templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read-public/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_txstore_read_public_tpls }}"
 
 - name: Parsing pd-gaming triggers templates
   when: install_app == "true"
@@ -584,14 +606,6 @@
 - set_fact:
     realjmspassword: "{{ md5jbossjmspwd.stdout }}"
 
-- name: Install application-users.properties template
-  template:
-    src: "templates/configuration/application-users.properties"
-    dest: "/etc/jbossas/{{ instance_name }}/application-users.properties"
-    mode: 0644
-    owner: jboss
-    group: jboss
-
 - name: Create hash forejb-security-realm secret
   shell: echo -n "{{ ejbpassword }}" | base64
   register: forejb_security_realm_secret
@@ -607,8 +621,6 @@
     owner: jboss
     group: jboss
   with_items:
-    - application-roles.properties
-    - application-users.properties
     - logging.properties
     - mgmt-groups.properties
     - mgmt-users.properties
