@@ -51,6 +51,19 @@
     - role: ilottery_pd_core
       jboss_node_port_offset: 200
 
+- name: CLEANUP CONTAINER
+  hosts: ilottery_pd_core
+  become: true
+  gather_facts: no
+  tags:
+    - clean_config
+
+  tasks:
+    - name: Deleting Application Folder
+      file:
+        state: absent
+        path: "/etc/gtech/pd/config/pd-core/main"
+
 - name: START
   hosts: ilottery_pd_core
   serial: 1
