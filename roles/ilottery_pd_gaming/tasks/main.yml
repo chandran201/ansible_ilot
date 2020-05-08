@@ -47,7 +47,6 @@
       - "{{ p_tmpdir }}/este.properties.tpl"
     pd_gaming_txstore_tpls:
       - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
-      - "{{ p_tmpdir }}/txstore.properties.tpl"
       - "{{ p_tmpdir }}/txstore-lnz-ede-plugin.properties.tpl"
     pd_gaming_esa_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
@@ -123,7 +122,6 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/esa-configuration-txstore.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore/txstore-lnz-ede-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
    # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-instant-games-env-config/src/main/env-config/es-configuration/esa/host.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
