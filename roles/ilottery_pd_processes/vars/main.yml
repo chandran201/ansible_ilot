@@ -2,4 +2,3 @@
 jboss_java_version: "java-11-openjdk"
 jboss_node_name: "{{ instance_name }}"
 jboss_node_user: "jboss"
-jboss_node_javaopts: "-Dorg.apache.tomcat.util.http.Parameters.MAX_COUNT=2048 -Xms{{ java_memory_min }}m -Xmx{{ java_memory_max }}m -Xmn{{ java_memory_young }}m -verbose:gc -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Djboss.modules.system.pkgs=org.jboss.byteman -Dorg.jboss.resolver.warning=true -Dorg.jboss.as.logging.per-deployment=false -Djboss.tx.node.id={{ ansible_hostname }}-proc -Dhawtio.authenticationEnabled=true -Dhawtio.realm=jboss-web-policy -Dhawtio.role=admin -XX:+UseCompressedOops -Xss256k -Dorg.jboss.resolver.warning=true -Dsun.lang.ClassLoader.allowArraySyntax=true -Djgroups.bind_addr={{ jgroups_bind | default(jboss_listen_ip) }} -Dspring.profiles.active=balancingDB2"

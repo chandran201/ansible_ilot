@@ -8,7 +8,8 @@
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
-     # - "{{ config.siteName}}-esa-instant-games-rpm"
+#      - "{{ config.siteName}}-esa-instant-games-rpm"
+#      - "{{ config.siteName}}-txstore-read-public-application-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
      # - "{{ config.siteName}}-scan-store-application-rpm"
@@ -26,8 +27,6 @@
       - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-triggers-internal.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-triggers.xml.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
     pd_gaming_gis_tpls:
       - "{{ p_tmpdir }}/esa-configuration-gis.xml.tpl"
@@ -45,6 +44,12 @@
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
+#    pd_gaming_txstore_read_tpls:
+#      - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
+#      - "{{ p_tmpdir }}/txstore-read.properties.tpl"
+#    pd_gaming_txstore_read_public_tpls:
+#      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
+#      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
     pd_gaming_esa_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
     pd_gaming_instant_gratz_tpls:
@@ -57,6 +62,8 @@
 #      - "{{ p_tmpdir }}/scan-store.properties.tpl"
     pd_gaming_triggers_tpls:
       - "{{ p_tmpdir }}/triggers.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-triggers-internal.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-triggers.xml.tpl"
     pd_gaming_locations_tpls:
       - "{{ p_tmpdir }}/esa-gateway-config-locations.xml.tpl"
     pd_gaming_random_tpls:
@@ -118,16 +125,19 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-esa-instant-games-env-config/src/main/env-config/es-configuration/esa/host.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/esa-configuration-txstore-read.xml.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/esa-configuration-txstore-read-public.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/txstore-read.properties.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/txstore-read-public.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store-common-context.xml.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
-   # - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers.xml.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store-common-context.xml.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
+#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/esa-configuration-triggers.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-triggers-env-config/src/main/env-config/triggers/triggers.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-locations-env-config/src/main/env-config/esa-gateway-config-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -144,9 +154,9 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    owner: jboss
+    group: jboss
+    mode: 0775
   with_items:
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwdesc"
     - "{{ config.sharedStorePath }}renaissance/application/{{ config.siteID }}/clps/in/este/drwevent"
@@ -202,9 +212,17 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore folder
+- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore-read folder
   file:
-    path: /etc/gtech/pd/config/pd-gaming/main/txstore
+    path: /etc/gtech/pd/config/pd-gaming/main/txstore-read
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /etc/gtech/pd/config/pd-gaming/main/txstore-read-public folder
+  file:
+    path: /etc/gtech/pd/config/pd-gaming/main/txstore-read-public
     state: directory
     owner: jboss
     group: jboss
@@ -282,13 +300,21 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_esa_tpls }}"
 
-- name: Parsing pd-gaming txstore templates
+- name: Parsing pd-gaming txstore-read-internal templates
   when: install_app == "true"
   template:
     src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
-  with_fileglob: "{{ pd_gaming_txstore_tpls }}"
+  with_fileglob: "{{ pd_gaming_txstore_read_tpls }}"
+
+- name: Parsing pd-gaming txstore-read-public templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read-public/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ pd_gaming_txstore_read_public_tpls }}"
 
 - name: Parsing pd-gaming triggers templates
   when: install_app == "true"
@@ -371,22 +397,40 @@
     owner: jboss
     group: jboss
 
-- name: Copying 
-  copy:
-    src: "files/jbossas/jblogrotate.sh"
-    dest: "/etc/jbossas/jblogrotate.sh"
-    owner: root
-    group: root
-    mode: 0755
+# Check if jblogrotate.sh exist
+- name: Check if jblogrotate.sh exist
+  stat:
+    path: /etc/jbossas/jblogrotate.sh
+  register: jblogrotate_stat
 
-- name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
+- name: Remove file jblogrotate.sh
+  file:
+    path: /etc/jbossas/jblogrotate.sh
+    state: absent
+  when: jblogrotate_stat.stat.exists is defined and jblogrotate_stat.stat.exists == true
+
+- name: Remove jboss cron logrotation /etc/jbossas/jblogrotate.sh
   when: enable_logremoval
   cron:
     name: "jboss logrotation jblogrotate.sh"
-    minute: "0"
-    hour: "23"
-    user: "root"
-    job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
+    state: absent
+
+# - name: Copying
+#   copy:
+#     src: "files/jbossas/jblogrotate.sh"
+#     dest: "/etc/jbossas/jblogrotate.sh"
+#     owner: root
+#     group: root
+#     mode: 0755
+
+# - name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
+#   when: enable_logremoval
+#   cron:
+#     name: "jboss logrotation jblogrotate.sh"
+#     minute: "0"
+#     hour: "23"
+#     user: "root"
+#     job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
 
 - name: Setting correct permissions/ownership on various directories
   file:
