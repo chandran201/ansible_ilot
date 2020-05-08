@@ -40,9 +40,9 @@
     pd_core_main_esa_geocompliance_tpls:
       - "{{ p_tmpdir }}/geo-compliance-adapter.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-geocompliance-persistence.xml.tpl"
-#    pd_core_main_txstore_write_tpls:
-#      - "{{ p_tmpdir }}/txstore-write.properties.tpl"
-#      - "{{ p_tmpdir }}/esa-configuration-txstore-write.xml.tpl"
+    pd_core_main_txstore_write_tpls:
+      - "{{ p_tmpdir }}/txstore-write.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-txstore-write.xml.tpl"
     pd_core_proxy_oauth_tpl:
       - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
       - "{{ p_tmpdir }}/oauth-plugins.properties.tpl"
