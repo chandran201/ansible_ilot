@@ -39,6 +39,19 @@
         state: stopped
       ignore_errors: yes
 
+- name: CLEANUP CONTAINER
+  hosts: ilottery_este_gateway_adapter
+  become: true
+  gather_facts: no
+  tags:
+    - clean_config
+
+  tasks:
+    - name: Deleting Application Folder
+      file:
+        state: absent
+        path: "/etc/gtech/pd/config/este-gateway-adapter/main"
+  
 - name: INSTALL
   hosts: ilottery_este_gateway_adapter
   become: true
