@@ -47,9 +47,9 @@
     pd_gaming_txstore_read_tpls:
       - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
       - "{{ p_tmpdir }}/txstore-read.properties.tpl"
-#    pd_gaming_txstore_read_public_tpls:
-#      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
-#      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
+    pd_gaming_txstore_read_public_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
+      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
     pd_gaming_esa_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
     pd_gaming_instant_gratz_tpls:
