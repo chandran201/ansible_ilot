@@ -44,9 +44,9 @@
       - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
-#    pd_gaming_txstore_read_tpls:
-#      - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
-#      - "{{ p_tmpdir }}/txstore-read.properties.tpl"
+    pd_gaming_txstore_read_tpls:
+      - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
+      - "{{ p_tmpdir }}/txstore-read.properties.tpl"
 #    pd_gaming_txstore_read_public_tpls:
 #      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
 #      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
