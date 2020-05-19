@@ -41,8 +41,10 @@
       - "{{ p_tmpdir }}/geo-compliance-adapter.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-geocompliance-persistence.xml.tpl"
     pd_core_main_txstore_write_tpls:
-      - "{{ p_tmpdir }}/txstore-write.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-txstore-write.xml.tpl"
+      - "{{ p_tmpdir }}/txstore.properties.tpl"
+      - "{{ p_tmpdir }}/txstore-lottery-plugin.properties.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-txstore.xml.tpl"
+      - "{{ p_tmpdir }}/txstore-lnz-ede-plugin.properties.tpl"
     pd_core_proxy_oauth_tpl:
       - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
       - "{{ p_tmpdir }}/oauth-plugins.properties.tpl"
@@ -115,8 +117,8 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/geo-compliance-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/esa-configuration-geocompliance-persistence.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/txstore-write.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/esa-configuration-txstore-write.xml.tpl", dest: "{{ p_tmpdir }}" }
+    #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/txstore-write.properties.tpl", dest: "{{ p_tmpdir }}" }
+    #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/esa-configuration-txstore-write.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/esa-gateway-config-proxy-oauth.xml.tpl", dest: "{{ p_tmpdir }}" }
