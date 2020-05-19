@@ -19,9 +19,8 @@
       - "{{ p_tmpdir }}/doc-generator-esa-configuration.xml.tpl"
     pd_loyalty_adapter_tpls:
       - "{{ p_tmpdir }}/activemq.properties.tpl"
-      - "{{ p_tmpdir }}/event-quantity-rules.properties.tpl"
       - "{{ p_tmpdir }}/loyalty-adapter.properties.tpl"
-      - "{{ p_tmpdir }}/loyalty-connector-tvc.properties.tpl"
+      - "{{ p_tmpdir }}/command-connectors.properties.tpl"
       - "{{ p_tmpdir }}/lty-skipped-types.properties.tpl"
       - "{{ p_tmpdir }}/lty-transaction-types.properties.tpl"
       - "{{ p_tmpdir }}/loyalty-esa-configuration-adapter.xml.tpl"
@@ -69,9 +68,8 @@
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/event-quantity-rules.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-connector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/command-connectors.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-skipped-types.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-transaction-types.properties.tpl", dest: "{{ p_tmpdir }}" }
