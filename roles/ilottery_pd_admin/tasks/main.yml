@@ -26,6 +26,7 @@
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
+      - "{{ p_tmpdir }}/autopay-gameinfo-context.xml.tpl"
     pd_admin_admin_tpls:
       - "{{ p_tmpdir }}/admin-rest.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-admin.xml.tpl"
@@ -37,11 +38,6 @@
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
 
-- name: Cleanup container
-  when: clean_configs == "true"
-  file:
-    state: absent
-    path: "/etc/gtech/pd/config/pd-admin/main"
 
 - name: Remove application packages
   when: install_app == "true"
@@ -85,6 +81,7 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/autopay-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-admin/main folder
   file:
@@ -200,22 +197,40 @@
     owner: jboss
     group: jboss
 
-- name: Copying 
-  copy:
-    src: "files/jbossas/jblogrotate.sh"
-    dest: "/etc/jbossas/jblogrotate.sh"
-    owner: root
-    group: root
-    mode: 0755
+# Check if jblogrotate.sh exist
+- name: Check if jblogrotate.sh exist
+  stat: 
+    path: /etc/jbossas/jblogrotate.sh
+  register: jblogrotate_stat
 
-- name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
+- name: Remove file jblogrotate.sh
+  file:
+    path: /etc/jbossas/jblogrotate.sh
+    state: absent
+  when: jblogrotate_stat.stat.exists is defined and jblogrotate_stat.stat.exists == true
+
+- name: Remove jboss cron logrotation /etc/jbossas/jblogrotate.sh
   when: enable_logremoval
   cron:
     name: "jboss logrotation jblogrotate.sh"
-    minute: "0"
-    hour: "23"
-    user: "root"
-    job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
+    state: absent
+
+# - name: Copying 
+#   copy:
+#     src: "files/jbossas/jblogrotate.sh"
+#     dest: "/etc/jbossas/jblogrotate.sh"
+#     owner: root
+#     group: root
+#     mode: 0755
+
+# - name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
+#   when: enable_logremoval
+#   cron:
+#     name: "jboss logrotation jblogrotate.sh"
+#     minute: "0"
+#     hour: "23"
+#     user: "root"
+#     job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
 
 - name: Setting correct permissions/ownership on various directories
   file:

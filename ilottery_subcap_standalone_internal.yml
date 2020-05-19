@@ -39,6 +39,19 @@
         state: stopped
       ignore_errors: yes
 
+- name: CLEANUP CONTAINER
+  hosts: ilottery_subcap_standalone_internal
+  become: true
+  gather_facts: no
+  tags:
+    - clean_config
+
+  tasks:
+    - name: Deleting Application Folder
+      file:
+        state: absent
+        path: "/etc/gtech/pd/config/subcap-internal"
+
 - name: INSTALL
   hosts: ilottery_subcap_standalone_internal
   become: true
@@ -48,6 +61,8 @@
 
   roles:
     - role: ilottery_subcap_standalone_internal
+
+
 
 - name: START
   hosts: ilottery_subcap_standalone_internal
