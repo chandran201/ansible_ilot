@@ -28,6 +28,7 @@
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
+      - "{{ p_tmpdir }}/autopay-gameinfo-context.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -77,6 +78,7 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/autopay-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-admin/main folder
   file:
