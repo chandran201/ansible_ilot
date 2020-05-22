@@ -7,7 +7,7 @@
       - "{{ config.siteName}}-essdk-translets-rpm"
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
-#      - "{{ config.siteName}}-txstore-read-application-rpm"
+      - "{{ config.siteName}}-txstore-read-application-rpm"
 #      - "{{ config.siteName}}-esa-instant-games-rpm"
       - "{{ config.siteName}}-txstore-read-public-application-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
