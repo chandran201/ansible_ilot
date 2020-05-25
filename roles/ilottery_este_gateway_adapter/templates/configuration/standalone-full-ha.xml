@@ -142,6 +142,12 @@
         <suffix value=".yyyy-MM-dd-HH"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
+      <logger category="org.apache.activemq">
+        <level name="WARN"/>
+        <handlers>
+          <handler name="FILE"/>
+        </handlers>
+      </logger>
       <logger category="com.arjuna">
         <level name="WARN"/>
       </logger>
