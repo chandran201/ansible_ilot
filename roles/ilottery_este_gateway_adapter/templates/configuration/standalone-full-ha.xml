@@ -107,7 +107,7 @@
           <named-formatter name="PATTERN"/>
         </formatter>
         <file relative-to="jboss.server.log.dir" path="server.log"/>
-        <suffix value=".yyyy-MM-dd-HH"/>
+        <suffix value=".yyyy-MM-dd"/>
         <append value="true"/>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ALERT_LOG"><level name="{{ alert_log_level }}"/>
@@ -115,7 +115,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="alert.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="CONTAINER_LOG"><level name="{{ container_log_level }}"/>
@@ -123,7 +123,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="{{ instance_name }}_container.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="VERIFI_LOG"><level name="{{ verifi_log_level }}"/>
@@ -131,7 +131,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="verifi-com.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ONEPAY_LOG"><level name="{{ onepay_log_level }}"/>
@@ -139,7 +139,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="onepay.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <logger category="org.apache.activemq">
