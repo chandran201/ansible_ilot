@@ -47,7 +47,7 @@
     - clean_config
 
   tasks:
-    - name: Deleting Application Folder
+    - name: Deleting Application Folder 
       file:
         state: absent
         path: "/etc/gtech/pd/config/pd-core/main"
