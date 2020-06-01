@@ -107,7 +107,7 @@
           <named-formatter name="PATTERN"/>
         </formatter>
         <file relative-to="jboss.server.log.dir" path="server.log"/>
-        <suffix value=".yyyy-MM-dd-HH"/>
+        <suffix value=".yyyy-MM-dd"/>
         <append value="true"/>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ALERT_LOG"><level name="{{ alert_log_level }}"/>
@@ -115,7 +115,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="alert.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="CONTAINER_LOG"><level name="{{ container_log_level }}"/>
@@ -123,7 +123,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="{{ instance_name }}_container.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="VERIFI_LOG"><level name="{{ verifi_log_level }}"/>
@@ -131,7 +131,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="verifi-com.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <periodic-rotating-file-handler name="ONEPAY_LOG"><level name="{{ onepay_log_level }}"/>
@@ -139,7 +139,7 @@
         <formatter><pattern-formatter pattern="%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] (%t) %m%n"/>
         </formatter>
         <file path="onepay.log" relative-to="jboss.server.log.dir"></file>
-        <suffix value=".yyyy-MM-dd-HH"></suffix>
+        <suffix value=".yyyy-MM-dd"></suffix>
         <append value="true"></append>
       </periodic-rotating-file-handler>
       <logger category="com.arjuna">
@@ -356,27 +356,7 @@
             <xa-datasource-class>com.ibm.db2.jcc.DB2XADataSource</xa-datasource-class>
           </driver>
         </drivers>
-        {% for datasource, opts in datasources.ilottery.iteritems() %}
-        <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.jdbc.url }}</connection-url>
-          <driver>ibmdb2</driver>
-          <new-connection-sql>SET SCHEMA {{ opts.schema }}</new-connection-sql>
-          <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
-          </timeout>
-          <pool><min-pool-size>25</min-pool-size>
-            <max-pool-size>200</max-pool-size>
-          </pool>
-          <security><user-name>{{ config.databases.jdbc.appUser }}</user-name>
-            <password>{{ config.databases.jdbc.appPassword }}</password>
-          </security>
-          <validation><exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.db2.DB2ExceptionSorter"></exception-sorter>
-            <stale-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.db2.DB2StaleConnectionChecker"></stale-connection-checker>
-            <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.db2.DB2ValidConnectionChecker"></valid-connection-checker>
-            <background-validation>true</background-validation>
-            <background-validation-millis>{{ opts.validationmilis }}</background-validation-millis>
-          </validation>
-        </datasource>
-        {% endfor %}
-        {% for datasource, opts in datasources.command.iteritems() %}
+        {% for datasource, opts in datasources.iteritems() %}
         <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.jdbc.url }}</connection-url>
           <driver>ibmdb2</driver>
           <new-connection-sql>SET SCHEMA {{ opts.schema }}</new-connection-sql>
