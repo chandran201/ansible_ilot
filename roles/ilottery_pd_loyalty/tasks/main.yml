@@ -2,7 +2,7 @@
 - set_fact:
     pd_loyalty_packages:
       - "{{ config.loyaltySiteName}}-loyalty-adapter-application-rpm"
-      - "{{ config.loyaltySiteName}}-doc-generator-application-rpm"
+      - "{{ config.siteName}}-doc-generator-application-rpm"
       - "{{ config.loyaltySiteName}}-raf-adapter-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
@@ -66,7 +66,7 @@
   with_items:
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/command-connectors.properties.tpl", dest: "{{ p_tmpdir }}" }
