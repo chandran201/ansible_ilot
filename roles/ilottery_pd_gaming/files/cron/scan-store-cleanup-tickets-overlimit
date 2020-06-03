@@ -1,0 +1,1 @@
+10 */2 * * * root cd /opt/gtech/pd/scan-store-cleanup-tickets-overlimit/bin;export JAVA_HOME=/usr/lib/jvm/java-11-openjdk;./scan-store-cleanup-tickets-overlimit.sh
