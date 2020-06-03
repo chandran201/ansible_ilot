@@ -1,9 +1,9 @@
 ---
 - set_fact:
     pd_loyalty_packages:
-      - "{{ config.loyaltySiteName}}-loyalty-adapter-application-rpm"
-      - "{{ config.loyaltySiteName}}-doc-generator-application-rpm"
-      - "{{ config.loyaltySiteName}}-raf-adapter-application-rpm"
+      - "{{ config.siteName}}-loyalty-adapter-application-rpm"
+      - "{{ config.siteName}}-doc-generator-application-rpm"
+      - "{{ config.siteName}}-raf-adapter-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
@@ -64,15 +64,15 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/command-connectors.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-skipped-types.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.loyaltySiteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-transaction-types.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/command-connectors.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-skipped-types.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-transaction-types.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/loyalty-adapter folder
   file:
