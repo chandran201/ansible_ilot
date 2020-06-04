@@ -71,3 +71,18 @@
     dest: "/opt/jdk"
     state: link
 
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755
+
+- name: "Install env to /usr/local/env/"
+  template:
+    src: "env/subcap"
+    dest: "/usr/local/env/subcap"
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755

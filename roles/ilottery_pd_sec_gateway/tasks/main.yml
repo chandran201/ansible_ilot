@@ -294,8 +294,8 @@
 
 - name: "Install env to /usr/local/env/{{ jboss_node_name }}"
   template:
-    src: "env/pd-admin"
-    dest: "/usr/local/env/pd-admin"
+    src: "env/pd-sec-gateway"
+    dest: "/usr/local/env/pd-sec-gateway"
     owner: "{{ jboss_node_user }}"
     group: "{{ jboss_node_user }}"
     mode: 0755
