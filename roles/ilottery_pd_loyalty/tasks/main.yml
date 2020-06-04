@@ -301,3 +301,24 @@
     mode: 0644
     owner: jboss
     group: jboss
+
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755
+
+- name: "delete folder /usr/local/env/{{ jboss_node_name }}"
+  file:
+    path: "/usr/local/env/{{ jboss_node_name }}"
+    state: absent
+
+- name: "Install env to /usr/local/env/{{ jboss_node_name }}"
+  template:
+    src: "env/pd-admin"
+    dest: "/usr/local/env/pd-admin"
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755
