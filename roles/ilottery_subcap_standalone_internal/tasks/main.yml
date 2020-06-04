@@ -73,14 +73,12 @@
   file:
     path: "/usr/local/env"
     state: directory
-    owner: "{{ jboss_node_user }}"
-    group: "{{ jboss_node_user }}"
     mode: 0755
 
 - name: "Install env to /usr/local/env/"
   template:
     src: "env/subcap-internal"
     dest: "/usr/local/env/subcap-internal"
-    owner: "{{ jboss_node_user }}"
-    group: "{{ jboss_node_user }}"
+    owner: "springboot"
+    group: "springboot"
     mode: 0755
