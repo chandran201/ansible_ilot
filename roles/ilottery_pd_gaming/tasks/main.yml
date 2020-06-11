@@ -126,9 +126,9 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
-#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/esa-configuration-txstore-read.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/esa-configuration-txstore-read.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/esa-configuration-txstore-read-public.xml.tpl", dest: "{{ p_tmpdir }}" }
-#    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/txstore-read.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/txstore-read.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/txstore-read-public.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
