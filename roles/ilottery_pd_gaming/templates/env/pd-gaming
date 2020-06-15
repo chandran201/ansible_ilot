@@ -1,4 +1,4 @@
-ACTIVEMQ_BROKER_URL=\({{ config.applications.broker.url }}\)
+ACTIVEMQ_BROKERURL=\({{ config.applications.broker.url }}\)
 ACTIVEMQ_USERNAME={{ config.applications.broker.username }}
 ACTIVEMQ_PASSWORD={{ config.applications.broker.password }}
 ENCRYPTION_KEY={{ config.applications.common.encryptionKey }}
@@ -8,7 +8,7 @@ HSM_KEY_NAME={{ config.hsm.keyName }}
 HSM_KEY_PIN={{ config.hsm.keyPin }}
 HSM_SIGN_URL={{ config.hsm.signUrl }}
 HSM_VERIFY_URL={{ config.hsm.verifyUrl }}
-HSM_API_CONTENXT={{ config.hsm.apiContext }}
+HSM_API_CONTEXT={{ config.hsm.apiContext }}
 HSM_INCLUDE_TIMESTAMP={{ config.hsm.includeTimestamp }}
 HSM_MESSAGE_TYPE={{ config.hsm.messageType }}
 TIVOLI_LOCATION_HOST={{ config.tivoli.host }}
