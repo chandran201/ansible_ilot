@@ -1,7 +1,7 @@
 ---
 - set_fact:
     pd_gaming_packages:
-      - "{{ config.siteName}}-boot-pd-gaming-rpm"
+   #   - "{{ config.siteName}}-boot-pd-gaming-rpm"
       - "{{ config.siteName}}-translets-rpm"
       - "{{ config.siteName}}-gtech-translets-rpm"
       - "{{ config.siteName}}-essdk-connector-rpm"
