@@ -1,7 +1,7 @@
 ---
 - set_fact:
     este_gateway_adapter_packages:
-#      - "{{ config.siteName}}-boot-este-gateway-adapter-rpm"
+      - "{{ config.siteName}}-boot-este-gateway-adapter-rpm"
       - "{{ config.siteName}}-este-gateway-adapter-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     jboss_common_packages:
