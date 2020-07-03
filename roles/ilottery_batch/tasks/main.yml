@@ -10,6 +10,7 @@
       - "{{ p_tmpdir }}/pam-jdbc.properties.tpl"
       - "{{ p_tmpdir }}/sms-jdbc.properties.tpl"
       - "{{ p_tmpdir }}/vouchers.properties.tpl"
+      - "{{ p_tmpdir }}/gms-events.properties.tpl"
 
 
 - name: Remove application packages
@@ -74,6 +75,7 @@
     - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/pam-jdbc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/sms-jdbc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/vouchers.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/batch-rpm/{{ config.siteName }}-batch-env-config/src/main/env-config/gms-events.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 
 - name: Parsing batch templates
