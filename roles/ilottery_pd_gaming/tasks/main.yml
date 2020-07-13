@@ -14,6 +14,8 @@
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
+      - "{{ config.siteName}}-scan-store-cleanup-old-tickets-rpm"
+      - "{{ config.siteName}}-scan-store-cleanup-tickets-overlimit-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
       - "{{ config.siteName}}-anywhere-random-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
@@ -73,6 +75,12 @@
       - "{{ p_tmpdir }}/event-detector-core.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-reference.properties.tpl"
       - "{{ p_tmpdir }}/event-detector-tvc.properties.tpl"
+    scan_store_cleanup_old_tickets_tpls:
+      - "{{ p_tmpdir }}/scan-store-cleanup-old-tickets/additional.properties.tpl"
+      - "{{ p_tmpdir }}/scan-store-cleanup-old-tickets/logback-spring.xml.tpl"
+    scan_store_cleanup_tickets_overlimit_tpls:
+      - "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit/additional.properties.tpl"
+      - "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit/logback-spring.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -149,6 +157,10 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/es-configuration/host.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/anywhere-instant-games/esa-gateway-config-instant-games.xml.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/scan-store-cleanup-old-tickets/{{ config.siteName }}-scan-store-cleanup-old-tickets-env-config/src/main/env-config/additional.properties.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-old-tickets" }
+    - { src: "/usr/local/gtech/scan-store-cleanup-old-tickets/{{ config.siteName }}-scan-store-cleanup-old-tickets-env-config/src/main/env-config/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-old-tickets" }
+    - { src: "/usr/local/gtech/scan-store-cleanup-tickets-overlimit/{{ config.siteName }}-scan-store-cleanup-tickets-overlimit-env-config/src/main/env-config/additional.properties.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit" }
+    - { src: "/usr/local/gtech/scan-store-cleanup-tickets-overlimit/{{ config.siteName }}-scan-store-cleanup-tickets-overlimit-env-config/src/main/env-config/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit" }
 
 - name: Create /etc/gtech/pd/config/pd-gaming/main folder
   file:
@@ -300,6 +312,22 @@
     group: jboss
     mode: 0755
 
+- name: Create /opt/gtech/pd/scan-store-cleanup-old-tickets/conf folder
+  file:
+    path: /opt/gtech/pd/scan-store-cleanup-old-tickets/conf
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
+- name: Create /opt/gtech/pd/scan-store-cleanup-tickets-overlimit/conf folder
+  file:
+    path: /opt/gtech/pd/scan-store-cleanup-tickets-overlimit/conf
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
+
 - name: Parsing pd-gaming main templates
   when: install_app == "true"
   template:
@@ -404,6 +432,21 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_event_detector_tpls }}"
 
+- name: Parsing scan-store-cleanup-old-tickets templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/opt/gtech/pd/scan-store-cleanup-old-tickets/conf/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ scan_store_cleanup_old_tickets_tpls }}"
+- name: Parsing scan-store-cleanup-tickets-overlimit templates
+  when: install_app == "true"
+  template:
+    src: "{{ item }}"
+    dest: "/opt/gtech/pd/scan-store-cleanup-tickets-overlimit/conf/{{ item | basename | regex_replace('\\.tpl$', '') }}"
+    mode: 0644
+  with_fileglob: "{{ scan_store_cleanup_tickets_overlimit_tpls }}"
+
  # END products configurations
 
 - name: Copying crontab
@@ -421,6 +464,21 @@
     mode: 0755
     owner: root
     group: root
+
+- name: Copying cron for scan-store-cleanup-old-tickets
+  copy:
+    src: "files/cron/scan-store-cleanup-old-tickets"
+    dest: "/etc/cron.d/scan-store-cleanup-old-tickets"
+    owner: root
+    group: root
+    mode: 0644
+- name: Copying cron for scan-store-cleanup-tickets-overlimit
+  copy:
+    src: "files/cron/scan-store-cleanup-tickets-overlimit"
+    dest: "/etc/cron.d/scan-store-cleanup-tickets-overlimit"
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Install security limits
   template:
@@ -645,3 +703,24 @@
     mode: 0644
     owner: jboss
     group: jboss
+
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755
+
+- name: "delete folder /usr/local/env/{{ jboss_node_name }}"
+  file:
+    path: "/usr/local/env/{{ jboss_node_name }}"
+    state: absent
+
+- name: "Install env to /usr/local/env/{{ jboss_node_name }}"
+  template:
+    src: "env/pd-gaming"
+    dest: "/usr/local/env/pd-gaming"
+    owner: "{{ jboss_node_user }}"
+    group: "{{ jboss_node_user }}"
+    mode: 0755

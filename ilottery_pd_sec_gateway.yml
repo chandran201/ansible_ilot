@@ -52,7 +52,6 @@
         state: absent
         path: "/etc/gtech/pd/config/pd-sec-gateway/main"
 
-
 - name: INSTALL
   hosts: ilottery_pd_sec_gateway
   become: true

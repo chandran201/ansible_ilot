@@ -51,7 +51,7 @@
       file:
         state: absent
         path: "/etc/gtech/pd/config/pd-loyalty/main"
-        
+
 - name: INSTALL
   hosts: ilottery_pd_loyalty
   become: true
@@ -64,7 +64,6 @@
     - role: ilottery_pd_loyalty
       jboss_node_port_offset: 1000
 
-  
 - name: START
   hosts: ilottery_pd_loyalty
   serial: 1

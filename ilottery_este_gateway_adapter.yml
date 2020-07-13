@@ -51,7 +51,7 @@
       file:
         state: absent
         path: "/etc/gtech/pd/config/este-gateway-adapter/main"
-        
+
 - name: INSTALL
   hosts: ilottery_este_gateway_adapter
   become: true
@@ -62,7 +62,6 @@
   roles:
     - role: ilottery_este_gateway_adapter
       jboss_node_port_offset: 900
-
 
 - name: START
   hosts: ilottery_este_gateway_adapter

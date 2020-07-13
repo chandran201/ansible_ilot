@@ -71,3 +71,16 @@
     dest: "/opt/jdk"
     state: link
 
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    mode: 0755
+
+- name: "Install env to /usr/local/env/"
+  template:
+    src: "env/subcap"
+    dest: "/usr/local/env/subcap"
+    owner: "springboot"
+    group: "springboot"
+    mode: 0755

@@ -748,7 +748,7 @@
       <buffer-cache name="default"/>
       <server name="default-server">
         <ajp-listener name="ajp" max-connections="4096" tcp-backlog="8192" socket-binding="ajp" scheme="http"/>
-        <http-listener name="default" max-connections="4096" tcp-backlog="8192"  socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
+        <http-listener name="default" max-connections="4096" tcp-backlog="8192" tcp-keep-alive="true" socket-binding="http" enabled="true" resolve-peer-address="false" record-request-start-time="true" secure="false" enable-http2="true"/>
         <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>

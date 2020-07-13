@@ -51,7 +51,7 @@
       file:
         state: absent
         path: "/etc/gtech/pd/config/pd-gaming/main"
-    
+
 - name: INSTALL
   hosts: ilottery_pd_gaming
   become: true

@@ -9,6 +9,7 @@
       - "{{ p_tmpdir }}/tivoli.properties.tpl"
       - "{{ p_tmpdir }}/walletparameters.properties.tpl"
       - "{{ p_tmpdir }}/gaming-engine.properties.tpl"
+      - "{{ p_tmpdir }}/gms-events.properties.tpl"
 
 - name: Remove application packages
   yum:
@@ -43,6 +44,7 @@
     - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/tivoli.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/walletparameters.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/gaming-engine.properties.tpl", dest: "{{ p_tmpdir }}" }
+    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/gms-events.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Parsing global-config templates
   template:

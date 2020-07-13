@@ -64,7 +64,6 @@
     - role: ilottery_pd_processes
       jboss_node_port_offset: 300
 
-
 - name: START
   hosts: ilottery_pd_processes
   serial: 1

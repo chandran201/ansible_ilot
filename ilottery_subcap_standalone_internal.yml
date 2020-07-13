@@ -62,8 +62,6 @@
   roles:
     - role: ilottery_subcap_standalone_internal
 
-
-
 - name: START
   hosts: ilottery_subcap_standalone_internal
   serial: 1
