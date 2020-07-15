@@ -1,0 +1,1 @@
+0 */2 * * * root cd /opt/gtech/pd/scan-store-cleanup-old-tickets/bin;export JAVA_HOME=/usr/lib/jvm/java-11-openjdk;./scan-store-cleanup-old-tickets.sh
