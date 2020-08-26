@@ -2,11 +2,6 @@
 - set_fact:
     pd_core_standalone_packages:
       - "{{ config.siteName}}-subcap-application-rpm"
-    pd_core_subcap_tpls:
-      - "{{ p_tmpdir }}/additional.properties.tpl"
-      - "{{ p_tmpdir }}/logback-spring.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-subcap.xml.tpl"
-      - "{{ p_tmpdir }}/subcap.properties.tpl"
 
 - name: Remove application packages
   yum:
@@ -43,27 +38,26 @@
     owner: "{{application_user}}"
     group: "{{application_user}}"
     mode: 0775
-    
-- name: Fetch templates
-  fetch:
-    src: "{{ item.src}}"
-    dest: "{{ item.dest }}/"
-    flat: yes
-  become: false
-  run_once: true
+
+- name: Create directory for iMarks submission convertion libraries
+  file:
+    path: "/etc/gtech/pd/config/subcap/lib"
+    state: directory
+    owner: "{{application_user}}"
+    group: "{{application_user}}"
+    mode: 0755
+
+- name: Copy iMarks submission convertion libraries
+  copy:
+    src: "{{ item.src }}"
+    dest: "/etc/gtech/pd/config/subcap/lib/"
+    owner: "{{application_user}}"
+    group: "{{application_user}}"
+    mode: 0755
+    remote_src: yes
   with_items:
-    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/additional.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
-
-- name: Parsing subcap templates
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_core_subcap_tpls }}"
-
+    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/lib/libGtech-sgi-tn.so" }
+    - { src: "/usr/local/gtech/subcap/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/lib/libTicketMapper.so" }
 
 - name: Create symlinks /opt/jdk to /usr/lib/jvm/java
   file:

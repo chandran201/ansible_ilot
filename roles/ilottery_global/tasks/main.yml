@@ -2,14 +2,6 @@
 - set_fact:
     global_config_packages:
       - "{{ config.siteName}}-global-config-rpm"
-    global_config_tpls:
-      - "{{ p_tmpdir }}/activemq.properties.tpl"
-      - "{{ p_tmpdir }}/encryption.properties.tpl"
-      - "{{ p_tmpdir }}/hsm.properties.tpl"
-      - "{{ p_tmpdir }}/tivoli.properties.tpl"
-      - "{{ p_tmpdir }}/walletparameters.properties.tpl"
-      - "{{ p_tmpdir }}/gaming-engine.properties.tpl"
-      - "{{ p_tmpdir }}/gms-events.properties.tpl"
 
 - name: Remove application packages
   yum:
@@ -29,29 +21,6 @@
     disable_gpg_check: yes
   with_items: "{{ global_config_packages }}"
 
-
-- name: Fetch templates
-  fetch:
-    src: "{{ item.src}}"
-    dest: "{{ item.dest }}/"
-    flat: yes
-  become: false
-  run_once: true
-  with_items:
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/encryption.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/hsm.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/tivoli.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/walletparameters.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/gaming-engine.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/{{ config.siteName }}-global-config/{{ config.siteName }}-global-config/src/main/env-config/gms-events.properties.tpl", dest: "{{ p_tmpdir }}" }
-
-- name: Parsing global-config templates
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-global/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ global_config_tpls }}"
 
 - name: Setting correct permissions/ownership on various directories
   file:
