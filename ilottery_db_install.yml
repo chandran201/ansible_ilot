@@ -65,7 +65,9 @@
           - "txstore-lottery-plugin" 
           - "utils" 
           - "vouchers" 
-          - "vouchers-txstore-plugin" 
+          - "vouchers-txstore-plugin"
+          - "batch-site"
+          - "vouchers-site"
 
     - name: Remove old packages
       yum:
