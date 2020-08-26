@@ -1,0 +1,6 @@
+---
+dependencies:
+  - { role: nfs_mount, nfs_mount_path: "/srv/esshare", nfs_mount_source: "{{ ilottery_nfs_source | default('')}}", 
+      nfs_mount_opts: "rw,noatime,vers=4.0,rsize=1048576,wsize=1048576,namlen=255,acregmin=1,acregmax=1,acdirmin=1,acdirmax=1,soft,proto=tcp,port=0,timeo=600,retrans=2,sec=sys,local_lock=none"}
+  - { role: ansible_facts }
+  - { role: ilottery_spring_boot, application_load_env_file: true }

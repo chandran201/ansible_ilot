@@ -1,0 +1,94 @@
+---
+
+- name: INIT
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - init
+
+  tasks:
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_arte_adapter"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
+    - set_fact:
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: STOP
+  hosts: ilottery_arte_adapter
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - stop
+
+  tasks:
+    - name: Stop Service
+      systemd:
+        name: "arte-adapter"
+        state: stopped
+      ignore_errors: yes
+
+- name: CLEANUP CONTAINER
+  hosts: ilottery_arte_adapter
+  become: true
+  gather_facts: no
+  tags:
+    - clean_config
+
+  tasks:
+    - name: Deleting Application Folder
+      file:
+        state: absent
+        path: "/etc/gtech/pd/config/arte-adapter"
+
+- name: INSTALL
+  hosts: ilottery_arte_adapter
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  roles:
+    - role: ilottery_arte_adapter
+
+- name: START
+  hosts: ilottery_arte_adapter
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - start
+
+  tasks:
+    - name: Start Service
+      systemd:
+        name: "arte-adapter"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+
+- name: CLEAN
+  hosts: all
+  become: false
+  gather_facts: no
+  tags:
+    - clean
+
+  tasks:
+    - name: Remove local temp directory
+      file:
+        path: "{{ p_tmpdir }}"
+        state: absent
+      delegate_to: 127.0.0.1
+      run_once: true
