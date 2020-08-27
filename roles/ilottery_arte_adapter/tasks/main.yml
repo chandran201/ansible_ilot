@@ -1,0 +1,58 @@
+---
+- set_fact:
+    arte_adapter_packages:
+      - "{{ config.siteName}}-arte-adapter-application-rpm"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ arte_adapter_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ arte_adapter_packages }}"
+
+- name: Create /etc/gtech/pd/config/arte-adapter folder
+  file:
+    path: /etc/gtech/pd/config/arte-adapter
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create /var/log/arte-adapter/ folder
+  file:
+    path: /var/log/arte-adapter
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
+  file:
+    src: "/usr/lib/jvm/java"
+    dest: "/opt/jdk"
+    state: link
+
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    mode: 0755
+
+- name: "Install env to /usr/local/env/"
+  template:
+    src: "env/arte-adapter"
+    dest: "/usr/local/env/arte-adapter"
+    owner: "springboot"
+    group: "springboot"
+    mode: 0755

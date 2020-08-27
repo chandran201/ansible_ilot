@@ -1,0 +1,3 @@
+---
+box: "pd-gaming"
+log_directory: "/var/log/arte-adapter"
