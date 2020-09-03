@@ -183,11 +183,11 @@
         gtkinst1        hard    nproc   60000
         gtkinst1        hard    data    unlimited
 
-- name: DROP_DB
-  hosts: ilottery_db
-  gather_facts: no
-  tags:
-    - drop_db
+    - name: DROP_DB
+      hosts: ilottery_db
+      gather_facts: no
+      tags:
+        - drop_db
 
   tasks:
     - name: Running drop
