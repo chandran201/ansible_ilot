@@ -171,18 +171,6 @@
       with_fileglob:
         - "{{ p_tmpdir }}/dbinstall-properties-subcap.xml.tpl"
 
-    - name: Tunes limits.conf for gtkinst1
-      lineinfile:
-        path: /etc/security/limits.conf
-        regexp: '^gtkinst1'
-        line: SELINUX=enforcing
-
-        gtkinst1        soft    nofile  60000
-        gtkinst1        hard    nofile  65536
-        gtkinst1        soft    nproc   20000
-        gtkinst1        hard    nproc   60000
-        gtkinst1        hard    data    unlimited
-
     - name: DROP_DB
       hosts: ilottery_db
       gather_facts: no
