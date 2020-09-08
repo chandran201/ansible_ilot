@@ -171,11 +171,11 @@
       with_fileglob:
         - "{{ p_tmpdir }}/dbinstall-properties-subcap.xml.tpl"
 
-    - name: DROP_DB
-      hosts: ilottery_db
-      gather_facts: no
-      tags:
-        - drop_db
+- name: DROP_DB
+  hosts: ilottery_db
+  gather_facts: no
+  tags:
+    - drop_db
 
   tasks:
     - name: Running drop
