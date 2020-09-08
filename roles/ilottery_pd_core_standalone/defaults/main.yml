@@ -1,3 +1,4 @@
 ---
 box: "pd-crm"
 log_directory: "/var/log/subcap"
+log_nfs_mount_path: "/opt/igt/logs"
