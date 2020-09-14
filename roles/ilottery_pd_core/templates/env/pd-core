@@ -21,3 +21,14 @@ WALLET_PAYMENTS_EXTERNAL_CARD={{ config.applications.ewallet.externalCard }}
 WALLET_PAYMENTS_WALLET={{ config.applications.ewallet.eWallet }}
 WALLET_PAYMENTS_LOYALTY={{ config.applications.ewallet.loyalty }}
 WALLET_PAYMENTS_EWLCONVERSIONFACTOR={{ config.applications.ewallet.ewlConversionFactor }}
+#pd-core
+ESA_LOGGING_REQUEST_BODY={{ config.applications.esa.logging.requestBody }}
+ESA_LOGGING_REQUEST_HEADERS={{ config.applications.esa.logging.requestHeaders }}
+ESA_LOGGING_RESPONSE_BODY={{ config.applications.esa.logging.responseBody }}
+ESA_LOGGING_RESPONSE_HEADERS={{ config.applications.esa.logging.responseHeaders }}
+WEBBROKER_URL={{ config.containers.webBroker.url }}
+SITE_ID={{ config.siteID }}
+PARTNER_ID={{ config.partnerID }}
+PRODUCT_ID={{ config.productID }}
+GEOCOMPLIANCES_STATUSES_OPTIN={{ config.applications.geoCompliance.statuses.optIn }}
+GEOCOMPLIANCES_STATUSES_OPTOUT={{ config.applications.geoCompliance.statuses.optOut }}
