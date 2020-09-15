@@ -21,24 +21,6 @@
     disable_gpg_check: yes
   with_items: "{{ pd_core_standalone_packages }}"
 
-- name: Change {{ application_working_directory }} ownership, group and permissions
-  file:
-    path: "{{ application_working_directory }}"
-    state: directory
-    recurse: yes
-    owner: "{{application_user}}"
-    group: "{{application_user}}"
-    mode: 0775
-
-- name: Change application log folder permissions
-  file:
-    path: "/var/log/{{application_name}}"
-    state: directory
-    recurse: yes
-    owner: "{{application_user}}"
-    group: "{{application_user}}"
-    mode: 0775
-
 - name: Create directory for iMarks submission convertion libraries
   file:
     path: "/etc/gtech/pd/config/subcap/lib"
