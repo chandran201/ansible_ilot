@@ -15,8 +15,6 @@
     pd_loyalty_raf_tpls:
       - "{{ p_tmpdir }}/raf-adapter.properties.tpl"
       - "{{ p_tmpdir }}/raf-esa-configuration-adapter.xml.tpl"
-    pd_loyalty_doc_tpls:
-      - "{{ p_tmpdir }}/doc-generator-esa-configuration.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -59,7 +57,6 @@
   with_items:
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/loyalty-adapter folder
   file:
@@ -102,13 +99,6 @@
     mode: 0644
   with_fileglob: "{{ pd_loyalty_raf_tpls }}"
 
-- name: Parsing pd-loyalty doc-generator templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-loyalty/main/doc-generator/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_loyalty_doc_tpls }}"
 
  # END products configurations 
 
