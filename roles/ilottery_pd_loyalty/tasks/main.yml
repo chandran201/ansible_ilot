@@ -12,9 +12,6 @@
       - "openssl"
       - "coreutils"
       - "hawtio-no-slf4j-1.4.65-1"
-    pd_loyalty_raf_tpls:
-      - "{{ p_tmpdir }}/raf-adapter.properties.tpl"
-      - "{{ p_tmpdir }}/raf-esa-configuration-adapter.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -45,18 +42,6 @@
     state: present
     disable_gpg_check: yes
   with_items: "{{ pd_loyalty_packages }}"
-
-- name: Fetch templates
-  when: install_app == "true"
-  fetch:
-    src: "{{ item.src}}"
-    dest: "{{ item.dest }}/"
-    flat: yes
-  become: false
-  run_once: true
-  with_items:
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/loyalty-adapter folder
   file:
@@ -90,15 +75,6 @@
     owner: jboss
     group: jboss
     mode: 0755
-
-- name: Parsing pd-loyalty raf-adapter templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-loyalty/main/raf-adapter/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_loyalty_raf_tpls }}"
-
 
  # END products configurations 
 
