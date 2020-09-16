@@ -17,13 +17,6 @@
       - "{{ p_tmpdir }}/raf-esa-configuration-adapter.xml.tpl"
     pd_loyalty_doc_tpls:
       - "{{ p_tmpdir }}/doc-generator-esa-configuration.xml.tpl"
-    pd_loyalty_adapter_tpls:
-      - "{{ p_tmpdir }}/activemq.properties.tpl"
-      - "{{ p_tmpdir }}/loyalty-adapter.properties.tpl"
-      - "{{ p_tmpdir }}/command-connectors.properties.tpl"
-      - "{{ p_tmpdir }}/lty-skipped-types.properties.tpl"
-      - "{{ p_tmpdir }}/lty-transaction-types.properties.tpl"
-      - "{{ p_tmpdir }}/loyalty-esa-configuration-adapter.xml.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -67,12 +60,6 @@
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-raf-adapter-env-config/src/main/env-config/module/raf-adapter/raf-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-doc-generator-env-config/src/main/env-config/module/doc-generator/doc-generator-esa-configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/activemq.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/command-connectors.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/loyalty-esa-configuration-adapter.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-skipped-types.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-loyalty/{{ config.siteName }}-loyalty-adapter-env-config/src/main/env-config/module/loyalty-adapter/lty-transaction-types.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-loyalty/main/loyalty-adapter folder
   file:
@@ -122,14 +109,6 @@
     dest: "/etc/gtech/pd/config/pd-loyalty/main/doc-generator/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_loyalty_doc_tpls }}"
-
-- name: Parsing pd-loyalty adapter templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-loyalty/main/loyalty-adapter/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_loyalty_adapter_tpls }}"
 
  # END products configurations 
 
