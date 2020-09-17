@@ -29,9 +29,6 @@
     pd_core_main_subcap_tpls:
       - "{{ p_tmpdir }}/esa-configuration-subcap.xml.tpl"
       - "{{ p_tmpdir }}/subcap.properties.tpl"
-    pd_core_main_esa_geocompliance_tpls:
-      - "{{ p_tmpdir }}/geo-compliance-adapter.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-geocompliance-persistence.xml.tpl"
     pd_core_main_txstore_write_tpls:
       - "{{ p_tmpdir }}/txstore-write.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-txstore-write.xml.tpl"
@@ -120,8 +117,6 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-vouchers-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
       #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
       #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/geo-compliance-adapter.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-geo-compliance-persistence-env-config/src/main/env-config/esa-geocompliance/esa-configuration-geocompliance-persistence.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/txstore-write.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-txstore-write-env-config/src/main/env-config/txstore-write/esa-configuration-txstore-write.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -208,14 +203,6 @@
   #    dest: "/etc/gtech/pd/config/pd-core/main/subcap/{{ item | basename | regex_replace('\\.tpl$', '') }}"
   #    mode: 0644
   #  with_fileglob: "{{ pd_core_main_subcap_tpls }}"
-
-- name: Parsing pd_core_main_esa_geocompliance templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-core/main/esa-geocompliance/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_core_main_esa_geocompliance_tpls }}"
 
 - name: Parsing pd_core_main_txstore_write templates
   when: install_app == "true"
