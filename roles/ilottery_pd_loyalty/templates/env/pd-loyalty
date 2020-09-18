@@ -51,4 +51,5 @@ LOYALTYADAPTER_CONTEXT={{ config.applications.loyaltyadapter.context }}
 LOYALTYADAPTER_FILECAMELPROCESS_DIR={{ config.applications.loyaltyadapter.fileCamelProcess.dir }}
 LOYALTYADAPTER_FILECAMELPROCESS_INCLUDEFILENAMEPATTERN={{ config.applications.loyaltyadapter.fileCamelProcess.includeFileNamePattern }}
 LOYALTYADAPTER_FILECAMELPROCESS_MSDELAY={{ config.applications.loyaltyadapter.fileCamelProcess.msDelay }}
+LOYALTYADAPTER_DATEFORMAT={{ config.ltmDateFormat }}
 RAFADAPTER_MAXNUMBEROFINVITES={{ config.applications.rafAdapter.maxNumberOfInvites }}
