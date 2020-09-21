@@ -106,3 +106,4 @@ VOUCHERS_HTTPMAXPERROUTE={{ config.applications.vouchers.httpMaxPerRoute }}
 VOUCHERS_CONNECTIONTIMEOUT={{ config.applications.vouchers.connectionTimeout }}
 VOUCHERS_SOCKETTIMEOUT={{ config.applications.vouchers.socketTimeout }}
 VOUCHERS_CONNECTIONREQUESTTIMEOUT={{ config.applications.vouchers.connectionRequestTimeout }}
+VOUCHERS_LOGIN_REGISTRATION_PREFERREDCURRENCY={{ config.currency.isoCode }}
