@@ -18,7 +18,6 @@
       - "coreutils"
 
     pd_core_main_tpls:
-      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-tvc.properties.tpl"
       - "{{ p_tmpdir }}/onepay.properties.tpl"
     pd_core_main_subcap_tpls:
@@ -27,8 +26,6 @@
     pd_core_proxy_oauth_tpl:
       - "{{ p_tmpdir }}/esa-gateway-config-proxy-oauth.xml.tpl"
       - "{{ p_tmpdir }}/oauth-plugins.properties.tpl"
-    pd_core_main_backendbus_tpls:
-      - "{{ p_tmpdir }}/backendbus.properties.tpl"
     pd_core_main_pd_crm_adapter_tpls:
       - "{{ p_tmpdir }}/pd-crm-adapter/esa-configuration-adapter-internal.xml.tpl"
       - "{{ p_tmpdir }}/pd-crm-adapter/esa-configuration-adapter.xml.tpl"
@@ -94,7 +91,6 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/onepay.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/crm-connector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/crm-adapter.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
@@ -104,8 +100,6 @@
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-crm-adapter-env-config/src/main/env-config/pd-crm-adapter/command-connector.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-adapter" }
        #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/esa-configuration-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
       #- { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-subcap-env-config/src/main/env-config/subcap/subcap.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-pd-backend-bus-env-config/src/main/env-config/backendbus/backendbus.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/esa-gateway-config-proxy-oauth.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-core/{{ config.siteName }}-anywhere-proxy-oauth-env-config/src/main/env-config/oauth-plugins.properties.tpl", dest: "{{ p_tmpdir }}" }
 
@@ -189,13 +183,6 @@
     mode: 0644
   with_fileglob: "{{ pd_core_proxy_oauth_tpl }}"
 
-- name: Parsing backendbus templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-core/main/backendbus/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_core_main_backendbus_tpls }}"
 
 - name: Parsing pd_crm_adapter templates
   when: install_app == "true"
