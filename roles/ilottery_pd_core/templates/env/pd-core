@@ -79,6 +79,7 @@ COMMON_SECURITYQUESTIONSENABLED={{ config.applications.common.securityQuestionsE
 COMMON_SECURITYQUESTIONTYPES={{ config.applications.common.securityQuestionTypes }}
 COMMON_ENCRYPTTOKENS={{ config.applications.common.encryptTokens }}
 COMMON_INVALIDATETOKENS={{ config.applications.common.invalidateTokens }}
+COMMON_SECGATEWAY_URL={{ config.containers.secGateway.url }}
 PDCRMADAPTER_ORCHESTRATEMONEYTRANSFER={{ config.applications.pdCrmAdapter.orchestrateMoneyTransfer }}
 PDCRMADAPTER_DOHSMVERIFICATION={{ config.applications.pdCrmAdapter.doHsmVerification }}
 PDCRMADAPTER_DOHASHDATECOMPARISON={{ config.applications.pdCrmAdapter.doHashDateComparison }}
