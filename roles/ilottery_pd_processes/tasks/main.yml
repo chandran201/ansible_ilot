@@ -12,16 +12,6 @@
       - "apr"
       - "openssl"
       - "coreutils"
-    pd_processes_main_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-balancing-plugins.xml.tpl"
-    pd_processes_ilottery_balancing_tpls:
-      - "{{ p_tmpdir }}/este-plugin.properties.tpl"
-      - "{{ p_tmpdir }}/txstore-este-plugin.properties.tpl"
-      - "{{ p_tmpdir }}/txstore-einstants-plugin.properties.tpl"
-    pd_processes_igaming_balancing_tpls:
-      - "{{ p_tmpdir }}/sms-plugin.properties.tpl"
-    pd_processes_balancing_tpls:
-      - "{{ p_tmpdir }}/balancing-plugin-common.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -61,22 +51,6 @@
   delegate_to: 127.0.0.1
   become: false
   run_once: true
-
-- name: Fetch templates
-  when: install_app == "true"
-  fetch:
-    src: "{{ item.src}}"
-    dest: "{{ item.dest }}/"
-    flat: yes
-  become: false
-  run_once: true
-  with_items:
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/esa-configuration-balancing-plugins.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/balancing-plugins/balancing-plugin-common.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/igaming-balancing-plugins/sms-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-einstants-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-processes/main/balancing-plugins folder
   file:
@@ -151,37 +125,6 @@
     mode: 0775
     recurse: true
 
-- name: Parsing pd-processes main templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_processes_main_tpls }}"
-
-- name: Parsing pd-processes balancing templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_processes_balancing_tpls }}"
-
-- name: Parsing pd-processes igaming balancing templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/igaming-balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_processes_igaming_balancing_tpls }}"
-
-- name: Parsing pd-processes ilottery balancing templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/ilottery-balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_processes_ilottery_balancing_tpls }}"
 
 # END products configurations
 
