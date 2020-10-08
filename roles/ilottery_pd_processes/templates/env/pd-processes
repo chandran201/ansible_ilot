@@ -69,7 +69,7 @@ PDCRMPROCESSES_DOVERIFICATION={{ config.applications.pdCrmProcesses.doVerificati
 PDCRMPROCESSES_ESTEVERIFISTATUS={{ config.applications.pdCrmProcesses.esteVerifiStatus }}
 PDCRMPROCESSES_DONOTSENDEMAILACTIVATION={{ config.applications.pdCrmProcesses.doNotSendEmailActivation }}
 PDCRMPROCESSES_LIMITPASSWORDHINTATTEMPTS={{ config.applications.pdCrmProcesses.limitPasswordHintAttempts }}
-PDCRMPROCESSES_LOCKPERIOD{{ config.applications.pdCrmProcesses.lockPeriod }}
+PDCRMPROCESSES_LOCKPERIOD={{ config.applications.pdCrmProcesses.lockPeriod }}
 PDCRMPROCESSES_SELFEXCLUSION_CLEARCOLLOFFHOURS={{ config.applications.pdCrmProcesses.selfExclusion.clearCooloffHours }}
 MAIL_HOST={{ config.applications.mail.host }}
 MAIL_PORT={{ config.applications.mail.port }}
@@ -81,6 +81,7 @@ COMMON_SECURITYQUESTIONSENABLED={{ config.applications.common.securityQuestionsE
 COMMON_ENCRYPTTOKENS={{ config.applications.common.encryptTokens }}
 COMMON_INVALIDATETOKENS={{ config.applications.common.invalidateTokens }}
 COMMON_UNLOCKACCOUNTPASSWORDRESET={{ config.applications.common.unlockAccountPasswordReset }}
+COMMON_SESSIONTIMELIMITS_ENABLED={{ config.applications.common.sessionTimeLimits.enabled }}
 COMMON_SESSIONTIMELIMITS_MAXINACTIVITYTIME={{ config.applications.common.sessionTimeLimits.maxInactivityTime }}
 EWALLET_CONNECTORTOUSE={{ config.applications.ewallet.connectorToUse }}
 DATABASES_DBSPECIFICSETTINGS_SCHEDULEREXECUTORDRIVERDELEGATECLASS={{ config.databases.dbSpecificSettings.schedulerExecutorDriverDelegateClass }}

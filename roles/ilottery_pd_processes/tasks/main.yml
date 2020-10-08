@@ -13,9 +13,7 @@
       - "openssl"
       - "coreutils"
     pd_processes_main_tpls:
-      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-balancing-plugins.xml.tpl"
-      - "{{ p_tmpdir }}/onepay.properties.tpl"
     pd_processes_ilottery_balancing_tpls:
       - "{{ p_tmpdir }}/este-plugin.properties.tpl"
       - "{{ p_tmpdir }}/txstore-este-plugin.properties.tpl"
@@ -28,12 +26,6 @@
       - "{{ p_tmpdir }}/esa-configuration-plm.xml.tpl"
       - "{{ p_tmpdir }}/plm.properties.tpl"
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
-    pd_crm_processes_tpls:
-      - "{{ p_tmpdir }}/pd-crm-processes/command-connector.properties.tpl"
-      - "{{ p_tmpdir }}/pd-crm-processes/crm-processes.properties.tpl"
-      - "{{ p_tmpdir }}/pd-crm-processes/esa-configuration-processes.xml.tpl"
-      - "{{ p_tmpdir }}/pd-crm-processes/event-processor-jms.properties.tpl"
-      - "{{ p_tmpdir }}/pd-crm-processes/nickNameOffensiveWordsValidation.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -83,13 +75,6 @@
   become: false
   run_once: true
   with_items:
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/onepay.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/command-connector.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/nickNameOffensiveWordsValidation.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/crm-processes.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/esa-configuration-processes.xml.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-pd-crm-processes-env-config/src/main/env-config/pd-crm-processes/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}/pd-crm-processes" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/esa-configuration-balancing-plugins.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/balancing-plugins/balancing-plugin-common.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-igaming-balancing-plugins-env-config/src/main/env-config/igaming-balancing-plugins/sms-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -212,14 +197,6 @@
     dest: "/etc/gtech/pd/config/pd-processes/main/ilottery-balancing-plugins/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_processes_ilottery_balancing_tpls }}"
-
-- name: Parsing pd-crm-processes templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/pd-crm-processes/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_crm_processes_tpls }}"
 
 # END products configurations
 
