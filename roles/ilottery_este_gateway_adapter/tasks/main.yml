@@ -66,6 +66,14 @@
     - { src: "/usr/local/gtech/este-gateway-adapter/{{ config.siteName }}-este-gateway-adapter-env-config/src/main/env-config/este-gateway-adapter/info-host.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/este-gateway-adapter/{{ config.siteName }}-este-gateway-adapter-env-config/src/main/env-config/este-gateway-adapter/pay-host.properties.tpl", dest: "{{ p_tmpdir }}" }
 
+- name: waiting for SID-205 fixes
+  shell: 'sed -i "s#config\.esteConnection\.nodes\[ansible_hostname\]#esteConnection#g" {{ item }}'
+  delegate_to: 127.0.0.1
+  run_once: true
+  with_items:
+    - "{{ p_tmpdir }}/hist-host.properties.tpl"
+    - "{{ p_tmpdir }}/info-host.properties.tpl"
+    - "{{ p_tmpdir }}/pay-host.properties.tpl"
 
 - name: Parsing este-gateway-adapter main templates
   when: install_app == "true"

@@ -1,4 +1,13 @@
 ---
+esteConnection:
+#  servername: "{{ ansible_host | regex_replace('\..*') }}{{ prodSuffix }}"
+  servername: "{{ ansible_host }}"
+#  jvmid: "1"
+  vtpool:
+    startTerminal: "50010"
+    endTerminal: "50019"
+    tellerPassword: "1234"
+
 enable_logremoval: true
 keep_logs_days: "5"
 http_proxy_port: "6666"
