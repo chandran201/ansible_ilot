@@ -83,9 +83,8 @@
 
 
 # ig_tomcat stuff
-- name: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
-  shell: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
-  become: true
-  register: install_tomcat8
-
-- debug: msg="{{ install_tomcat8.stdout}}"
+#- name: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
+#  shell: "cd /usr/local/gtech/igportalrest/; ./install-portal-rest-config.sh"
+#  become: true
+#  register: install_tomcat8
+#- debug: msg="{{ install_tomcat8.stdout}}"
