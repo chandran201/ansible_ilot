@@ -41,8 +41,7 @@
 - name: INSTALL
   hosts: ilottery_cq5_publish
   become: true
-  # dont set gather_facts to no, we need ansible_hostname variable
-  gather_facts: yes
+  gather_facts: no
   tags:
     - install
 
