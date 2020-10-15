@@ -22,10 +22,6 @@
       - "{{ p_tmpdir }}/sms-plugin.properties.tpl"
     pd_processes_balancing_tpls:
       - "{{ p_tmpdir }}/balancing-plugin-common.properties.tpl"
-    pd_processes_plm_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-plm.xml.tpl"
-      - "{{ p_tmpdir }}/plm.properties.tpl"
-      - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
 
 - name: Install jboss common packages
   yum:
@@ -81,9 +77,6 @@
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-este-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-ilottery-balancing-plugins-env-config/src/main/env-config/ilottery-balancing-plugins/txstore-einstants-plugin.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/plm.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/esa-configuration-plm.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-processes/{{ config.siteName }}-plm-env-config/src/main/env-config/plm/crm-connector-client.properties.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-processes/main/balancing-plugins folder
   file:
@@ -165,14 +158,6 @@
     dest: "/etc/gtech/pd/config/pd-processes/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_processes_main_tpls }}"
-
-- name: Parsing pd-processes plm templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-processes/main/plm/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_processes_plm_tpls }}"
 
 - name: Parsing pd-processes balancing templates
   when: install_app == "true"
