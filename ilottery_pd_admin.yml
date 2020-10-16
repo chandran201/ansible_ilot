@@ -64,7 +64,7 @@
       jboss_node_port_offset: 600
 
 - name: START
-  hosts: ilottery_pd_admin
+  hosts: pdadmin
   serial: 1
   become: true
   gather_facts: no

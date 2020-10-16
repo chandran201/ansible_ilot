@@ -57,7 +57,7 @@
         msg: "No services to start"
 
 - name: CLEAN
-  hosts: all
+  hosts: ilottery_global
   become: false
   gather_facts: no
   tags:
