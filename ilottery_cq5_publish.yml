@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: cq5publish
   become: false
   gather_facts: no
   tags:
@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_cq5"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_cq5publish"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: ilottery_cq5_publish
+  hosts: cq5publish
   become: true
   gather_facts: no
   tags:
@@ -39,18 +39,17 @@
       ignore_errors: yes
 
 - name: INSTALL
-  hosts: ilottery_cq5_publish
+  hosts: cq5publish
   become: true
   gather_facts: no
   tags:
     - install
 
   roles:
-    - role: os_config
     - role: ilottery_cq5
 
 - name: START
-  hosts: ilottery_cq5_publish
+  hosts: cq5publish
   become: true
   gather_facts: no
   tags:
@@ -65,7 +64,7 @@
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: all
+  hosts: cq5publish
   become: false
   gather_facts: no
   tags:

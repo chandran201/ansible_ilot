@@ -1,0 +1,1173 @@
+---
+
+config: "{{ config_defaults | combine(config_overrides, recursive=True) | combine(config_immutable, recursive=True) }}"
+
+config_immutable:
+  applications:
+    achievements:
+      url: "http://{{ siteID }}-{{ envID }}-dynamo{{ vipSuffix }}:8080"
+    bonusmeter:
+      url: "http://{{ siteID }}-{{ envID }}-dynamo{{ vipSuffix }}:8080"
+    broker:
+      url: "tcp://{{ groups['cmdbroker'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':61616,tcp://') }}:61616"
+    esa:
+      b2b:
+        url: http://127.0.0.1:8780
+    esaIdVerification:
+      url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/adapter-internal/api/v1/id-verification/verify"
+    essns:
+      host: "{{ siteID }}-{{ envID }}-essns{{ vipSuffix }}"
+      port: '8080'
+      protocol: http
+    esteGatewayAdapter:
+      urlForEste: "http://{{ siteID }}-{{ envID }}-estega{{ vipSuffix }}:8980/este-gateway-adapter/api"
+    gadm:
+      url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}"
+    geoCompliance:
+      locationSmart:
+        consentDomain: "{{ pdweb_vhosts_servernames['games'] }}"
+#    gis:
+#      wagering:
+#        arte:
+#          url: http://10.17.35.141:8580/api
+    loyaltyadapter:
+      host: "{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}"
+      jmsurl: "tcp://{{ groups['cmdbroker'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':61616,tcp://') }}:61616"
+      port: '80'
+    onePay:
+      notify:
+        endpoint: "http://{{ siteID }}-{{ envID }}-paypg{{ vipSuffix }}:8188/PaymentGateway/G2PGNotifyAPI"
+      wallet:
+        endpoint: "http://{{ siteID }}-{{ envID }}-paypg{{ vipSuffix }}:8188/PaymentGateway/G2PGWalletAPI"
+    pad:
+      url: "http://{{ siteID }}-{{ envID }}-cmdpad{{ vipSuffix }}:8080"
+#    pd2AdminRest:
+#      url: http://refdevplaydigital-pdadmin.dev.igt.com
+    pdCrmProcesses:
+      solr:
+        hostname: "{{ siteID }}-{{ envID }}-cmdcontrolsolr{{ vipSuffix }}"
+        port: '8983'
+    playerLocation:
+      sites:
+        ref:
+          applicationBrokerUrl: "{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}"
+          deliveryUrl: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/notifications-connector/api"
+          locationsUrl: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/locations/api/v1"
+          loyaltyUrl: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/loyalty-adapter/api"
+    playerprofile:
+      url: "http://{{ siteID }}-{{ envID }}-playerprofile{{ vipSuffix }}:8080"
+    portal:
+      author:
+        bingo:
+          flash_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-html-client/index.html"
+          html5_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-smartphone-client/index.html"
+        cashier_app_url: "https://{{ sites_web.i20.web_cashier_url }}/cashierapp/"
+        esa:
+          player_resource:
+            url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/b2c-esa-securegateway/api/"
+        imarcsBridge:
+          portalredirecturl: "https://{{ pdweb_vhosts_servernames['games'] }}/en-us/home.html"
+        poker:
+          webclient_url: "https://{{ pdweb_vhosts_servernames['poker'] }}/"
+#      bingoendpoint: http://10.3.18.15:9090/
+#      casinofreeplayendpoint: 172.19.161.116:9090/
+#      gpportalendpoint: http://172.19.152.107:9090/
+      igamingRestUrl: "http://{{ siteID }}-{{ envID }}-igamingrest{{ vipSuffix }}:8080"
+      mobile:
+        url: "https://{{ pdweb_vhosts_servernames['games-mobile'] }}"
+      pokerendpoint: "http://{{ siteID }}-{{ envID }}-poker{{ vipSuffix }}:8082/"
+      publish:
+        bingo:
+          flash_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-html-client/index.html"
+          html5_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-smartphone-client/index.html"
+        cashier_app_url: "https://{{ sites_web.i20.web_cashier_url }}/cashierapp/"
+        demoportal:
+          mobile_launchurl: "https://{{ pdweb_vhosts_servernames['casino-mobile'] }}/"
+        esa:
+          player_resource:
+            url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/b2c-esa-securegateway/api/"
+        imarcsBridge:
+          portalredirecturl: "https://{{ pdweb_vhosts_servernames['author'] }}/en-us/home.html"
+        poker:
+          webclient_url: "https://{{ pdweb_vhosts_servernames['poker'] }}/"
+      url: "https://{{ pdweb_vhosts_servernames['games'] }}"
+      url_author: "https://{{ pdweb_vhosts_servernames['author'] }}"
+    secondchance:
+      url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/api"
+    xp:
+      url: "http://{{ siteID }}-{{ envID }}-dynamo{{ vipSuffix }}:8080"
+  containers:
+    secGateway:
+      mobileHost: "{{ siteID }}-{{ envID }}-pdsecgatewaymobile{{ vipSuffix }}"
+      terminalHost: "{{ siteID }}-{{ envID }}-pdsecgatewayterminal{{ vipSuffix }}"
+      url: "http://{{ siteID }}-{{ envID }}-pdsecgateway{{ vipSuffix }}:8480"
+      vip: "{{ siteID }}-{{ envID }}-pdsecgateway{{ vipSuffix }}"
+    webBroker:
+      ipPort: "{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}"
+      url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}"
+  databases:
+    commandJdbc:
+      url: "jdbc:db2://{{ siteID }}-{{ envID }}-cmddb{{ vipSuffix }}:{{ cmd_db_port }}/{{ cmd_db_database_id }}"
+    jdbc:
+      url: "jdbc:db2://{{ siteID }}-{{ envID }}-pddb{{ vipSuffix }}:{{ pddb_port }}/{{ pddb_database_id }}"
+    pamJdbc:
+      url: "jdbc:db2://{{ siteID }}-{{ envID }}-cmddb{{ vipSuffix }}:{{ cmd_db_port }}/{{ cmd_db_database_id }}:currentSchema=PAM_CMD;"
+#  oauth:
+#    port: '8580'
+#    url: http://156.24.66.159
+
+# END config_immutable:
+
+config_defaults:
+  applications:
+    backendBus:
+      logToDB: 'true'
+    balancing:
+      artifact:
+        interval: '20000'
+        requests: '20'
+      configuration:
+        adjusters:
+          enabled: 'true'
+          flowsDeletedStatusAdjuster:
+            enabled: 'true'
+      httpConnectionTimeout: '5000'
+      httpMaxConnectionsPerRoute: '2'
+      httpMaxTotalConnections: '5'
+      httpSocketTimeout: '10000'
+      notification:
+        admins:
+        - changeit@igt.com
+        mailServer:
+          host: RIMAILGATE02.gtk.gtech.com
+          port: '25'
+        mailSubjectFormat: REF PD21 DEV - %s Session Results
+      timeout:
+        action:
+          detailedCompare:
+            FinXfer: '600000'
+          notification: '120000'
+          simpleCompare:
+            PlayerVer: '900000'
+          transfer:
+            PlayerXfer: '900000'
+        import:
+          FinXfer: '360000'
+          PlayerVer: '540000'
+          PlayerXfer: '540000'
+          default: '180000'
+        session: '1800000'
+        sessionStep: '300000'
+    balancingDbCleanup:
+      home: /opt/gtech/pd/balancing-db-cleanup/
+    batch:
+      deleteOldLogs: 'true'
+      home: /opt/gtech/pd4/batch/
+    broker:
+      password: defaultPassword
+      username: defaultUser
+    clientConnectionManager:
+      connectionRequestTimeout: '15000'
+      connectionTimeout: '15000'
+      defMaxPerRoute: '500'
+      hostType: localhost
+      httpMaxPerRoute: '500'
+      maxTotalConn: '500'
+      schemaRegSchema: http
+      schemePort: '80'
+      socketTimeout: '15000'
+    common:
+      contactVerifyTokenValidityTime: '2592000'
+      encryptTokens: 'true'
+      encryptionKey: '[--*Some4ind0fs3cr3t%]>>...;'
+      formatPreservingEncryptionToolKey: '>^9476467)e74}504cFA853~8aEc6?P"a2aA3c61'
+      formatPreservingEncryptionToolTweak: Kaewt
+      invalidateTokens: 'true'
+      processesRegistrationTestModeEnabled: 'false'
+      scratcherRegex: ^(?<gamenum>\\d{3})(\\d{6})(\\d{3})(\\d{10})$
+      securityQuestionTypes: securityQuestion.city;securityQuestion.father;securityQuestion.car;securityQuestion.teacher;securityQuestion.song
+      securityQuestionsEnabled: 'true'
+      sessionTimeLimits:
+        batch:
+          removeOlderThan: '60'
+        cacheStoreDelay: '10000'
+        cacheStoreOnlyOnCreateEnd: 'false'
+        enabled: 'true'
+        evictPreviousSession: 'true'
+        evictPreviousSessionCoolOffPeriod: '10000'
+        loginWhenSessionLoginExceeded: 'false'
+        maxInactivityTime: '900000'
+        persistDelay: '20000'
+      supportPlayerIdOnlyToken: 'true'
+      tokenValidityTime: '86400'
+      unlockAccountPasswordReset: 'true'
+      webcode23secret: pFZ_QfP^AzkEyebp
+      webcode25secret: THIS IS THE KEY
+    defaultHttpClientConnectionProperties:
+      connectionRequestTimeout: '30000'
+      connectionTimeout: '30000'
+      defMaxPerRoute: '500'
+      hostType: localhost
+      httpMaxPerRoute: '500'
+      maxTotalConn: '500'
+      schemaRegSchema: http
+      schemePort: '80'
+      socketTimeout: '30000'
+    esa:
+      logging:
+        requestBody: 'true'
+        requestHeaders: 'true'
+        responseBody: 'true'
+        responseHeaders: 'true'
+      maintenancePageActive: 'false'
+    esaIdVerification:
+      commaSeparatedHeadersMap: EMPTY
+      commaSeparatedHeadersMapKeyValueSeparator: EMPTY
+      commaSeparatedHeadersMapSeparator: EMPTY
+    essns:
+      baseContext: /essns-rs
+      email: from.lottery@gtech.com
+      useProxy: 'false'
+    esteGatewayAdapter:
+      connectionRequestTimeout: '30000'
+      connectionTimeout: '35000'
+      connectionsPerRoute: '100'
+      defMaxPerRoute: '200'
+      httpMaxPerRoute: '100'
+      jmsConnectionCacheSize: '75'
+      maxConcurrentConsumers: '100'
+      maxTotalConn: '500'
+      maxTotalConnections: '500'
+      socketTimeout: '35000'
+    eventDetector:
+      jmsConnectionCacheSize: '5'
+      nodeName: xxmkt26
+      queueTimeout: '10'
+    ewallet:
+      connectorToUse: pdWalletConnector
+      eWallet: 'true'
+      ewlConversionFactor: '100'
+      externalCard: 'true'
+      loyalty: 'true'
+    gameInfo:
+      sites:
+        ref:
+          games:
+          - displayName: Lotto
+            id: '8'
+            name: Lotto
+          - displayName: Pick 3
+            id: '9'
+            name: Numbers
+          - displayName: ALL OR NOTHING
+            id: '11'
+            name: ALL OR NOTHING
+          - displayName: Powerball
+            id: '12'
+            name: Powerball
+          - displayName: Pick 4
+            id: '14'
+            name: Win 4
+          - displayName: Mega Millions
+            id: '20'
+            name: Mega Millions
+          - displayName: Keno
+            id: '22'
+            name: Quick Draw
+          - displayName: Euro Millions
+            id: '29'
+            name: Euro Millions
+          - displayName: Euro Jackpot
+            id: '31'
+            name: Euro Jackpot
+          - displayName: CASH POP
+            id: '35'
+            name: CASH POP
+    geoCompliance:
+      additionalVerification:
+        html5:
+          accuracyRadiusThreshold: '500'
+          confidenceIn: '67'
+          confidenceOut: '40'
+          enabled: 'true'
+        trustedGPS:
+          accuracyRadiusThreshold: '200'
+          confidenceIn: '67'
+          confidenceOut: '40'
+          enabled: 'true'
+      connections:
+        maxConnectionsPerRoute: '200'
+        maxTotalConnections: '400'
+        proxyHost: 10.199.199.155
+        proxyPort: '53443'
+        readTimeout: '30000'
+        useProxy: 'false'
+      context: geo-compliance
+      countries:
+      - value: it
+      - value: in
+      - value: pl
+      - value: us
+      countryCheckEnabled: 'true'
+      deviceAuthorization:
+        deviceAuthRadiusFactor: '2.0'
+        enableDeviceAuthorization: 'true'
+        maxDistanceAllowed: '10000.0'
+        minDistanceAllowed: '5000.0'
+      deviceProfile:
+        apiKey: 3fc3026xt7rk2p0y
+        enabled: 'true'
+        orgId: 7sj0ekum
+      essns:
+        decyryptAndExtractPIDOptInSMS: 'false'
+        helpCmd: GTECHINT PLAYDIGITAL-DEV HELP GEO
+        helpConfirmation: 'Lottery Support: 1-123-456-7890. Location. Reply '
+        helpTxt: GTECHINT PLAYDIGITAL-DEV HELP GEO for help GTECHINT PLAYDIGITAL-DEV
+          STOP GEO to cancel
+        optInConfirmation: 'Hi: You enabled location. Reply '
+        pinOptin: 'Hi! http://www.lottery.com/geo?%s to enable location.
+          Reply '
+        reminder: 'Reminder from Lottery: You enabled use of your location.
+          Reply '
+        smsOptin: 'Hi. Reply GTECHINT PLAYDIGITAL-DEV YES GEO to enable
+          location. Reply '
+        stopCmd: GTECHINT PLAYDIGITAL-DEV STOP GEO
+        stopConfirmation: You have been unsubscribed to Lottery location.
+          Your location will no longer be obtained. For more info 1-123-456-7890
+        stripSMSBodyPrefixQA: 'false'
+        yesCmd: ^GTECHINT PLAYDIGITAL-DEV YES GEO.*
+      geoComplyConfiguration:
+        enableGeoComply: 'false'
+        state: ri
+      geoComplyLicense:
+        credentials:
+        - value: noReason::galottery::0057a5d84b6c292b4f3834782021c4d8
+        url: https://us3-stg-auth.geocomply.net
+      infinispan:
+        cacheDataLoggingEnabled: 'true'
+        cacheStatisticsLoggingEnabled: 'false'
+        enabled: 'true'
+      locationSmart:
+        serviceId: demo
+        subscriptionGroup: GTEC-D01-LOCNOPIN
+        zones:
+        - value: system::Kentucky
+        - value: system::RhodeIsland
+      minCountryCF: '60'
+      mobileServiceProviders:
+        nblsEnabled:
+        - value: Default=true
+        - value: AT_T=true
+        - value: VERIZON_WIRELESS=false
+        - value: SPRINT=true
+        - value: T_MOBILE=true
+      multiFactorLocationEnabled: 'true'
+      optOutFailureEmailRecipient: xxx@yyy.zzz
+      optOutRetryCount: '1'
+      optOutRetryDelayInSeconds: '30'
+      sendTraps: 'true'
+      states:
+      - value: Telangana
+      - value: Tamilnadu
+      - value: Andra Pradesh
+      - value: RI
+      statuses:
+        optIn: OPTED_IN
+        optOut: OPTED_OUT
+      useProxy: 'false'
+    gis:
+      cart:
+        batch:
+          purge:
+            anonymous:
+              timeBeforeAnonymousCartRemoval: '259200000'
+            player:
+              maximumNumberOfNotifications: '10'
+              offsetBetweenReminders: '14400000'
+              timeBeforeCartRemoval: '604800000'
+              timeBeforeReminder: '259200000'
+        contextRoot: gis-cart
+        dongleLock:
+          attemptCounter: '10'
+          attemptInterval: '1000'
+          expirationRepeatInterval: '15000'
+          expirationTime: '30000'
+        failedWagerDiscountStrategyBean: doNothingFailedWagerDiscountStrategy
+      coreService:
+        base:
+          initialDelay: '6000'
+          updateDelay: '30000'
+        ngin:
+          initialDelay: '6000'
+          updateDelay: '2147483647'
+      defaultPaymentType: MONEY
+      groupPlayActivationJobRepeatInterval: '60000'
+      hostRpcJmsConnectionCacheSize: '5'
+      onlineTicketInquiry:
+        trainingMode: 'false'
+      openAPIChannelId: '6'
+      pamUppercasesFirstNameLastName: 'true'
+      params:
+        synchronization:
+          enabled:
+            Addon: 'true'
+            CashPop1: 'true'
+            Keno1: 'true'
+            Keno2: 'true'
+            Lotto1: 'true'
+            Lotto2: 'false'
+            Lotto3: 'true'
+            LottoGM: 'false'
+            Numbers1: 'true'
+            Numbers2: 'true'
+            Powerball1: 'true'
+            Powerball2: 'true'
+          gmLotto:
+            repeatInterval: '2147483647'
+      subscription:
+        endNotification:
+          daysBeforeEnd: '10'
+          schedule: 0 */10 * * * ?
+      wagering:
+        arte:
+          canChangeDefaultApi: 'true'
+          defaultApi: OPEN_API
+    gms:
+      defaultPartnerId: '1'
+      defaultSender: iLottery
+    instantgratz:
+      contextRoot: instant-gratz
+      promotionsProviderBean: instantGratificationPromotionsProvider
+    loyaltyadapter:
+      context: loyalty-adapter
+      fileCamelProcess:
+        dir: /srv/esshare/loyalty/bulk
+        includeFileNamePattern: .*.csv
+        msDelay: '10000'
+      jmsconnectionpool: '20'
+      sso:
+        olr:
+          clientToken: 073f8243
+          externalIdHack: 'true'
+          secret: bbe004bb4ddcd6c2
+          url: http://gtech.online-rewards-qa.com
+    mail:
+      host: 156.24.67.220
+      port: '6789'
+    onePay:
+      accountType: DEFAULT
+      apiVersion: '1'
+      notify:
+        maxActive: '50'
+        maxWait: '10000'
+      sharedsecret: SECRET
+      systemId: '1'
+      systemVerificationStateClosingState: I
+      wallet:
+        maxActive: '50'
+        maxWait: '10000'
+    pdCrmAdapter:
+      contextRoot: adapter
+      doAllowValidationsDuringSessionLock: 'false'
+      doHashDateComparison: 'false'
+      doHsmVerification: 'true'
+      doPlayerSessionMitigation: 'true'
+      doPlayerWalletMitigation: 'true'
+      internalContextRoot: adapter-internal
+      loyaltyBalancePointsPath: /balance
+      orchestrateMoneyTransfer: 'false'
+      paymentProviderService: onePayService
+      reserveDailyGame: '9999999'
+      reserveMonthlyGame: '9999999'
+      reserveWeeklyGame: '9999999'
+      smsTimeout: '3600'
+    pdCrmProcesses:
+      autopayWagerMismatchNotificationFrom: no-reply@gtech.com
+      autopayWagerMismatchNotificationTo: cap-personnel@gtech.com
+      autopayvalidateplayer: 'true'
+      autopayvalidateplayerupdatetime: 'false'
+      autopayvalidatewager: 'true'
+      contextRoot: processes
+      doNotSendEmailActivation: 'false'
+      doVerification: 'true'
+      esteVerifiStatus: '2'
+      limitPasswordHintAttempts: '5'
+      lockPeriod: '1800000'
+      playerpersonaldatachange: 'true'
+      registrationWithCardConcurrentConsumers: '1'
+      registrationWithoutCardConcurrentConsumers: '1'
+      selfExclusion:
+        clearCooloffHours: '0'
+      solr:
+        document:
+          number: '50'
+      updatepersonalinfodaysafterreg: '0'
+    playerLocation:
+      contextRoot: player-location
+      sites:
+        ref:
+          brokerQueue: P-OUT
+          channelCallerID: '1'
+          channelName: PUSH_CHANNEL
+          connectionRequestTimeout: '12'
+          connectionTimeout: '12'
+          contentTypeId: '2'
+          currency: usd
+          deviceKey: '1'
+          exClientId: '5001'
+          exSystemId: '5001'
+          locationsProviderName: default
+          maxThreadPerRoute: '1'
+          maxTotalThread: '2'
+          notificationTemplate: GEO_PUSH_PROMOTION
+          notificationsProviderName: default
+          partnerId: '1'
+          preferredLanguage: en
+          promotionType: WEBCODE_EVENT
+          promotionsProviderName: default
+          requestSocketTimeout: '15'
+          serverContextServerInfo: serverContext/serverInfo
+          siteId: '25'
+    portal:
+      author:
+        account_balance_enabled: 'true'
+        account_balance_pockets: 'true'
+        autologin_enabled: 'true'
+        bingo:
+          desktop_client_id: GS4DesktopClient
+          mobile_client_id: GS4MobileClient
+        captcha_enabled: 'true'
+        cludo:
+          customer_id: '2122'
+          customer_key: ab0704bb144e4033bcee652788218195
+          search_url: https://api.cludo.com/
+          site_id: '10204'
+          site_search_enabled: 'false'
+        config:
+          casino:
+            casinoGameClientId: Portal
+            partnerId: '1'
+            siteId: '25'
+        consents:
+          process_id:
+            privacy_policy: '14'
+            terms_and_conditions: '13'
+          terms_enabled: 'true'
+        country_code: us
+        cq_mode: author
+        cq_password: admin
+        cq_port: '4502'
+        cq_username: admin
+        crs:
+          approx_num_winners: 'true'
+          languageswitchenabled: 'false'
+          playerhandle_enabled: 'true'
+          recentwinnersListenabled: 'true'
+          revealssorting_enabled: 'true'
+          wagerConfirmationenabled: 'true'
+        crs_system_enabled: 'true'
+        default_game_height: '640'
+        default_game_width: '960'
+        demoportal:
+          get_mobile_host_n_port: gpHostAddress=refdevplaydigital-casinomob.igtgames.com&gpPort=443
+          mobile_socket_n_client_id: gpHostAddress=refdevplaydigital-casinomob.igtgames.com&gpPort=443
+        einstant_games_enabled: 'true'
+        einstantgames:
+          catalog:
+            channel: Standard
+            gamegroup: eGames
+          oauth:
+            client_id: EinstantsDEV
+            logintokentype: anonymous
+            site_id: '60'
+        einstants:
+          keno_gamegroup: Keno
+          mini_channel: Mini
+          mobile_channel: Mobile
+        esa:
+          draw_duration: '300000'
+          latency: '10000'
+          player:
+            channel: '2'
+            client: PORTAL
+            system: '8'
+          player_resource:
+            version: '2'
+        este:
+          end_time: 11:59 PM
+          start_time: 05:55 AM
+        expiry_days_for_affiliate_cookie: '30'
+        favorite_games_enabled: 'true'
+        games_config: '["PICK3::9::Numbers::pick3::pick-3::pick3::Pick 3","PICK4::14::Win
+          4::pick4::pick-4::pick4::Pick 4","POWERBALL::12::Powerball::powerball::powerball::powerball::Powerball","MEGAMILLIONS::20::Mega
+          Millions::megamillions::megamillions::megamillions::Mega Millions","LOTTO::8::Lotto::lotto::lotto::lotto::Lotto","KENO::22::Quick
+          Draw::keno::keno::keno::Keno","EINSTANT::19::einstant::einstant::eInstants-logo::einstants::Instant
+          Games","HITORMISS::11::ALL OR NOTHING::aon::allornothing::allornothing::All
+          or Nothing","GMLOTTO::42::gmlotto::gm-lotto::gm-lotto::gm-lotto::GM
+          Lotto","EUROJACKPOT::31::Euro Jackpot::eurojackpot::eurojackpot::eurojackpot::Euro
+          Jackpot","EUROMILLIONS::29::Euro Millions::euromillions::euromillions::euromillions::Euro
+          Millions"]'
+        games_maintanance: '["PICK3::false::false::false::false::false::false","PICK4::false::false::false::false::false::false","POWERBALL::false::false::false::false::false::false","MEGAMILLIONS::false::false::false::false::false::false","LOTTO::false::false::false::false::false::false","KENO::false::false::false::false::false::false","HITORMISS::false::false::false::false::false::false","GMLOTTO::false::false::false::false::false::false","EUROJACKPOT::false::false::false::false::false::false","EUROMILLIONS::false::false::false::false::false::false"]'
+        gdpr_enabled: 'true'
+        geoheader_enabled: 'true'
+        google_map_key: AIzaSyDp_hutOaoc9breZPs9QPPCH1mtH1FLdyA
+        google_recaptcha:
+          secret_key: 6Ld1alkUAAAAANqhR2Tx8jZqDG9aWTyqd6AXA49i
+          site_key: 6Ld1alkUAAAAAKTxZsehpOfHtB4oOa2rrhCG7ROn
+        google_search:
+          api_key: AIzaSyCTbx8soD6R3UOzqG_jiDwYnX7Y8ZhfV0o
+          application_name: Interactive.igtgames.com
+          context_number: 018197981576954043705:sqg5plbz2wo
+          proxy_enabled: 'true'
+          proxy_ip: 10.199.199.155
+          proxy_port: '53443'
+        helpsi_enabled: 'true'
+        htmllibmanager:
+          debug: 'false'
+          gzip: 'true'
+          minify: 'true'
+        jlottery:
+          compulsiondelayinsecond: '2'
+          demob4movetomoneybutton: '2'
+          demosupported: 'true'
+          phase: '2'
+          seconddelayb4resultscreen: '3'
+          secondsdelaygetbalance: '5'
+          soundstartdisabled: 'false'
+        keno_draw:
+          end_time: 11:55 PM
+          start_time: 06:00 AM
+        keno_enabled: 'true'
+        knowledgebase_helpsi_iframeUrl: /helpsipublic/knowledgebase.jsp?siteid=1&lang=en_US
+        language: en
+        low_tier_winnings: '60000'
+        loyalty_enabled: 'true'
+        number_games_enabled: 'true'
+        onp_system_id: '1'
+        payment_method: onepay-redirect
+        player:
+          portal:
+            abbr: RIC
+            home: /en-us/playerHome.html
+            id: '25'
+            login: /en-us/home.html
+            register: /en-us/registration.html
+          savebetslipprogress_enabled: 'true'
+          ssnlastconfig: '4'
+        poker:
+          android_phone_download_url: http://10.17.41.143/update/bin/BASE/smartphone-armv7.apk
+          android_tablet_download_url: http://10.17.41.143/update/bin/BASE/tablet-armv7.apk
+          ipad_download_url: https://distribution.g2-networks.com/swdist/client_artifacts/PD192DEV_static_link/BASE/ringmasterOTA.html
+          iphone_download_url: https://distribution.g2-networks.com/swdist/client_artifacts/PD192DEV_static_link/BASE/ringmasterOTA.html
+          mac_download_url: http://10.17.41.143/update/bin/BASE/PokerCode.dmg
+          webclient_url: https://refdevplaydigital-poker.dev.igt.com/
+          windows_download_url: http://10.17.41.143/update/bin/BASE/PokerCode.exe
+        registration_levels:
+          anonymous: '4'
+          full: '2'
+          light: '5'
+        responsible_wagering_limits_enabled: 'true'
+        reveal_server: https://ei5dev-crs.dev.igt.com/en-us/iframe/content.html
+        rgs_games_url: https://rgs-demo03.lab.wagerworks.com
+        rgs_system_enabled: 'true'
+        second_chance_enabled: 'true'
+        self_exclusion_enabled: 'true'
+        shoppingcart_enabled: 'true'
+        site_error_page: ''
+        site_name: igt
+        social_media:
+          gmail_id: 239375056134-ku407vqqgb8pc77b3q2d4coehpoo7pom.apps.googleusercontent.com
+          hotmail_id: 00000000481EFC8F
+          yahoo_id: dj0yJmk9OEtpV21DYVJJYWEzJmQ9WVdrOWJUbHRWRE5PTTJVbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mZQ--
+        stats_gmt: GTM-P26M28
+        stats_googleAnalyticsId: UA-56325845-4
+        subscriptions_enabled: 'true'
+        threatmatrix:
+          enabled: 'false'
+          orgid: wh2hgf17
+          page_id_config: '["Home::1::wagerGroup","Powerball::2::wagerGroup","Mega
+            Millions::3::wagerGroup","Lotto::4::wagerGroup","Pick3::5::wagerGroup","Pick4::6::wagerGroup","All
+            or Nothing::7::wagerGroup","Keno::8::wagerGroup","Euro Jackpot::31::wagerGroup","Euro
+            Millions::29::wagerGroup"]["Home::1::wagerGroup","Powerball::2::wagerGroup","Mega
+            Millions::3::wagerGroup","Lotto::4::wagerGroup","Pick3::5::wagerGroup","Pick4::6::wagerGroup","All
+            or Nothing::7::wagerGroup","Keno::8::wagerGroup","Euro Jackpot::31::wagerGroup","Euro
+            Millions::29::wagerGroup"]'
+          url: https://h.online-metrix.net/fp/tags.js
+        timezone: America/New_York
+        wagering_enabled: 'true'
+        watermark:
+          enabled: 'false'
+          environment: DEMO WEB
+        wavecrest_enabled: 'true'
+        wc:
+          callback_url: https://refdevplaydigital.dev.igt.com/content/interactive/ilottery/services/wccardregcallback.html
+          ip_address: 156.24.29.144
+          site_id: '100'
+          url: http://156.24.29.144:8171
+      bingoendpoint: http://10.3.18.15:9090/
+      captcha:
+        allowedHostNames: testkey.google.com
+        enabled: 'true'
+        secretKey: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+        verifyUrl: https://www.google.com/recaptcha/api/siteverify
+      casinofreeplayendpoint: 172.19.161.116:9090/
+      domain: dev.igt.com
+      gpportalendpoint: http://172.19.152.107:9090/
+      igamingRestUrl: http://xxpdg1014:8080
+      mobile:
+        url: https://refdevplaydigital-mobile.dev.igt.com
+      pokerendpoint: http://10.3.18.5:7011/
+      publish:
+        account_balance_enabled: 'true'
+        account_balance_pockets: 'true'
+        autologin_enabled: 'true'
+        bingo:
+          desktop_client_id: GS4DesktopClient
+          flash_client_url: https://refdevplaydigital.igtgames.com/globe-bingo-html-client/index.html
+          html5_client_url: https://refdevplaydigital.igtgames.com/globe-bingo-smartphone-client/index.html
+          mobile_client_id: GS4MobileClient
+        captcha_enabled: 'true'
+        cashier_app_url: https://refdevplaydigital-cashier.dev.igt.com/cashierapp/
+        chat:
+          base_url: /chat/#/join-the-community
+          enabled: 'true'
+          server_domain: refdevplaydigital.corp.gtech.com
+          server_ip: refdevplaydigital.dev.igt.com
+          xmppConnectionHostName: refdevplaydigital.dev.igt.com
+        cludo:
+          customer_id: '2122'
+          customer_key: ab0704bb144e4033bcee652788218195
+          search_url: https://api.cludo.com/
+          site_id: '10204'
+          site_search_enabled: 'false'
+        config:
+          casino:
+            casinoGameClientId: Portal
+            partnerId: '1'
+            siteId: '25'
+        consents:
+          process_id:
+            privacy_policy: '14'
+            terms_and_conditions: '13'
+          terms_enabled: 'true'
+        country_code: us
+        cq_mode: publish
+        cq_password: admin
+        cq_port: '4503'
+        cq_username: admin
+        crs:
+          approx_num_winners: 'true'
+          languageswitchenabled: 'false'
+          playerhandle_enabled: 'true'
+          recentwinnersListenabled: 'true'
+          revealssorting_enabled: 'true'
+          wagerConfirmationenabled: 'true'
+        crs_system_enabled: 'true'
+        default_game_height: '640'
+        default_game_width: '960'
+        demoportal:
+          get_mobile_host_n_port: gpHostAddress=refdevplaydigital-casinomob.igtgames.com&gpPort=443
+          mobile_launchurl: https://refdevplaydigital-casinomob.igtgames.com/
+          mobile_socket_n_client_id: gpHostAddress=refdevplaydigital-casinomob.igtgames.com&gpPort=443
+        einstant_games_enabled: 'true'
+        einstantgames:
+          catalog:
+            channel: Standard
+            gamegroup: eGames
+          oauth:
+            client_id: EinstantsDEV
+            logintokentype: anonymous
+            site_id: '60'
+          root_url: https://ei5dev-api.dev.igt.com
+        einstants:
+          crsrepo: https://ei5dev-crs.dev.igt.com
+          esa_rgs_root_url: https://ipl-dev02-int.lab.wagerworks.com
+          keno_gamegroup: Keno
+          mini_channel: Mini
+          mobile_channel: Mobile
+          rgs_url: https://ei5dev-crs.dev.igt.com
+        esa:
+          draw_duration: '300000'
+          latency: '10000'
+          player:
+            channel: '2'
+            client: PORTAL
+            system: '8'
+          player_resource:
+            url: http://xxpdg1014:8480/b2c-esa-securegateway/api/
+            version: v2
+        este:
+          end_time: 11:55:00 PM
+          start_time: 05:55 AM
+        expiry_days_for_affiliate_cookie: '30'
+        favorite_games_enabled: 'true'
+        games_config: '["PICK3::9::Numbers::pick3::pick-3::pick3::Pick 3","PICK4::14::Win
+          4::pick4::pick-4::pick4::Pick 4","POWERBALL::12::Powerball::powerball::powerball::powerball::Powerball","MEGAMILLIONS::20::Mega
+          Millions::megamillions::megamillions::megamillions::Mega Millions","LOTTO::8::Lotto::lotto::lotto::lotto::Lotto","KENO::22::Quick
+          Draw::keno::keno::keno::Keno","EINSTANT::19::einstant::einstant::eInstants-logo::einstants::Instant
+          Games","HITORMISS::11::ALL OR NOTHING::aon::allornothing::allornothing::All
+          or Nothing","GMLOTTO::42::gmlotto::gm-lotto::gm-lotto::gm-lotto::GM
+          Lotto","EUROJACKPOT::31::Euro Jackpot::eurojackpot::eurojackpot::eurojackpot::Euro
+          Jackpot","EUROMILLIONS::29::Euro Millions::euromillions::euromillions::euromillions::Euro
+          Millions"]'
+        games_maintanance: '["PICK3::false::false::false::false::false::false","PICK4::false::false::false::false::false::false","POWERBALL::false::false::false::false::false::false","MEGAMILLIONS::false::false::false::false::false::false","LOTTO::false::false::false::false::false::false","KENO::false::false::false::false::false::false","HITORMISS::false::false::false::false::false::false","GMLOTTO::false::false::false::false::false::false","EUROJACKPOT::false::false::false::false::false::false","EUROMILLIONS::false::false::false::false::false::false"]'
+        gdpr_enabled: 'true'
+        geoheader_enabled: 'true'
+        google_map_key: AIzaSyDp_hutOaoc9breZPs9QPPCH1mtH1FLdyA
+        google_recaptcha:
+          secret_key: 6Ld1alkUAAAAANqhR2Tx8jZqDG9aWTyqd6AXA49i
+          site_key: 6Ld1alkUAAAAAKTxZsehpOfHtB4oOa2rrhCG7ROn
+        google_search:
+          api_key: AIzaSyCTbx8soD6R3UOzqG_jiDwYnX7Y8ZhfV0o
+          application_name: Interactive.igtgames.com
+          context_number: 018197981576954043705:sqg5plbz2wo
+          proxy_enabled: 'true'
+          proxy_ip: 10.199.199.155
+          proxy_port: '53443'
+        helpsi_enabled: 'true'
+        htmllibmanager:
+          debug: 'false'
+          gzip: 'true'
+          minify: 'true'
+        imarcsBridge:
+          portalredirecturl: https://refdevplaydigital-author.dev.igt.com/en-us/home.html
+          secret_key: 122ca68a36bf0c3ad5b024cab8a73eefc3188625
+          url: http://staging-wofdemo.imarcsgroup.com/-bridge/incoming/
+        jlottery:
+          compulsiondelayinsecond: '2'
+          demob4movetomoneybutton: '2'
+          demosupported: 'true'
+          phase: '2'
+          seconddelayb4resultscreen: '3'
+          secondsdelaygetbalance: '5'
+          soundstartdisabled: 'false'
+        keno_draw:
+          end_time: 11:55 PM
+          start_time: 6:00:00 AM
+        keno_enabled: 'true'
+        knowledgebase_helpsi_iframeUrl: /helpsipublic/knowledgebase.jsp?siteid=1&lang=en_US
+        language: en
+        low_tier_winnings: '60000'
+        loyalty_enabled: 'true'
+        number_games_enabled: 'true'
+        onp_system_id: '1'
+        payment_method: onepay-redirect
+        player:
+          portal:
+            abbr: RIC
+            home: /en-us/playerHome.html
+            id: '25'
+            login: /en-us/home.html
+            register: /en-us/registration.html
+          savebetslipprogress_enabled: 'true'
+          ssnlastconfig: '4'
+        poker:
+          android_phone_download_url: http://10.17.41.143/update/bin/BASE/smartphone-armv7.apk
+          android_tablet_download_url: http://10.17.41.143/update/bin/BASE/tablet-armv7.apk
+          ipad_download_url: https://distribution.g2-networks.com/swdist/client_artifacts/PD192DEV_static_link/BASE/ringmasterOTA.html
+          iphone_download_url: https://distribution.g2-networks.com/swdist/client_artifacts/PD192DEV_static_link/BASE/ringmasterOTA.html
+          mac_download_url: http://10.17.41.143/update/bin/BASE/PokerCode.dmg
+          webclient_url: https://refdevplaydigital-poker.dev.igt.com/
+          windows_download_url: http://10.17.41.143/update/bin/BASE/PokerCode.exe
+        registration_levels:
+          anonymous: '4'
+          full: '2'
+          high: '9'
+          light: '5'
+        responsible_wagering_limits_enabled: 'true'
+        reveal_server: https://ei5dev-crs.dev.igt.com/en-us/iframe/content.html
+        rgs_games_url: https://rgs-demo03.lab.wagerworks.com
+        rgs_system_enabled: 'true'
+        second_chance_enabled: 'true'
+        self_exclusion_enabled: 'true'
+        shoppingcart_enabled: 'true'
+        site_error_page: ''
+        site_name: igt
+        social_media:
+          gmail_id: 239375056134-ku407vqqgb8pc77b3q2d4coehpoo7pom.apps.googleusercontent.com
+          hotmail_id: 00000000481EFC8F
+          yahoo_id: dj0yJmk9N0JMNTFjY0VxTnRSJmQ9WVdrOVJXNTFUbXQxTnpZbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD01NQ--
+        stats_gmt: GTM-P26M28
+        stats_googleAnalyticsId: UA-56325845-4
+        subscriptions_enabled: 'true'
+        threatmatrix:
+          enabled: 'false'
+          orgid: wh2hgf17
+          page_id_config: '["Home::1::wagerGroup","Powerball::2::wagerGroup","Mega
+            Millions::3::wagerGroup","Lotto::4::wagerGroup","Pick3::5::wagerGroup","Pick4::6::wagerGroup","All
+            or Nothing::7::wagerGroup","Keno::8::wagerGroup","Euro Jackpot::31::wagerGroup","Euro
+            Millions::29::wagerGroup"]["Home::1::wagerGroup","Powerball::2::wagerGroup","Mega
+            Millions::3::wagerGroup","Lotto::4::wagerGroup","Pick3::5::wagerGroup","Pick4::6::wagerGroup","All
+            or Nothing::7::wagerGroup","Keno::8::wagerGroup","Euro Jackpot::31::wagerGroup","Euro
+            Millions::29::wagerGroup"]'
+          url: https://h.online-metrix.net/fp/tags.js
+        timezone: America/New_York
+        wagering_enabled: 'true'
+        watermark:
+          enabled: 'false'
+          environment: DEMO WEB
+        wavecrest_enabled: 'false'
+        wc:
+          callback_url: https://refdevplaydigital-author.dev.igt.com/content/interactive/ilottery/services/wccardregcallback.html
+          ip_address: 156.24.29.144
+          site_id: '100'
+          url: http://156.24.29.144:8171
+      url: https://refdevplaydigital.dev.igt.com
+      url_author: https://refdevplaydigital-author.dev.igt.com
+    rafAdapter:
+      maxNumberOfInvites: '1000'
+    rgs:
+      balancingPluginUrl: http://cga-dev11-app01.lab.wagerworks.com:10010/wfs/rest
+      dayEndUrl: http://cga-dev11-app01.lab.wagerworks.com:10010/wfs/rest/100/notifyDayend
+    scanstore:
+      sites:
+        ref:
+          enableAutomaticTicketAddition: 'true'
+    secondchance:
+      context: second-chance
+    secureGateway:
+      connectionTimeout: 5000
+      contextRoot: b2c-esa-securegateway
+      gcsFilter: 'false'
+      headersToCopy: X-CLIENT-ID,X-CHANNEL-ID,X-EX-SYSTEM-ID,X-DEVICE-ID,X-PARTNER-ID,X-PRODUCT-ID,X-SITE-ID,X-CLIENT-DEVICE-ID,X-CLIENT-DEVICE-TYPE
+      readTimeout: 15000
+    subcap:
+      forwarder:
+        chunk_size: '200'
+        enabled: 'true'
+        executor:
+          corePoolSize: '10'
+          maxPoolSize: '12'
+          queueCapacity: '12'
+        quartz:
+          cron: 0 */1 * ? * *
+        skip_limit: '5'
+        throttle_limit: '12'
+      notifications:
+        chunk_size: '200'
+        enabled: 'true'
+        executor:
+          corePoolSize: '10'
+          maxPoolSize: '12'
+          queueCapacity: '12'
+        grace_period: '5'
+        quartz:
+          cron: 0 */1 * ? * *
+        skip_limit: '5'
+        throttle_limit: '12'
+      player:
+        submissions:
+          limits:
+            invalid:
+              count: '5'
+              enabled: 'true'
+              seconds: '120'
+            valid:
+              count: '20'
+              enabled: 'true'
+              seconds: '86400'
+      reconciliation:
+        chunk_size: '200'
+        enabled: 'true'
+        executor:
+          corePoolSize: '5'
+          maxPoolSize: '6'
+          queueCapacity: '6'
+        forwardRetryLimit: '10'
+        quartz:
+          cron: 0 */10 * ? * *
+        skip_limit: '5'
+        throttle_limit: '5'
+    vouchers:
+      connectionRequestTimeout: '80000'
+      connectionTimeout: '80000'
+      context: vouchers/api
+      contextInternal: vouchers-internal/api
+      defMaxPerRoute: '100'
+      httpMaxPerRoute: '200'
+      login:
+        codeLength: '9'
+        password: VoucherPassword1
+      maxTotalConn: '500'
+      socketTimeout: '80000'
+      version: v1
+  containers:
+    crmExt:
+      containerName: crm-ext
+    esteGatewayAdapter:
+      containerName: este-gateway-adapter
+    gaming:
+      containerName: pd-gaming
+    pdAdmin:
+      containerName: pd-admin
+    pdCore:
+      containerName: pd-core
+    pdProcesses:
+      containerName: pd-processes
+    secGateway:
+      containerName: pd-sec-gateway
+    webBroker:
+      ipPort: 10.17.37.217
+      url: http://10.17.37.217
+  creationDateOffset: '90'
+  currency:
+    isoCode: USD
+  databases:
+    commandJdbc:
+      appPassword: gtkappl1
+      appUser: gtkappl1
+    dbSpecificSettings:
+      crmAdatperTablePrefix: QRTZ_CRMADPT_
+      gisPersistenceHibernateDialect: com.gtech.gis.pa.persistence.HibernateDB2Dialect
+      persistenceHibernateDialect: org.hibernate.dialect.DB2Dialect
+      schedulerExecutorDriverDelegateClass: org.quartz.impl.jdbcjobstore.DB2v8Delegate
+      schedulerExecutorSelectWithLockSQL: 'SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE WITH RS USE AND KEEP UPDATE LOCKS'
+      subcapHibernateJpaVendorAdapterDBName: DB2
+    jdbc:
+      appPassword: gtkappl1
+      appUser: gtkappl1
+      driver: com.ibm.db2.jcc.DB2Driver
+      password: gtkinst1
+      urlprop: driverType=4;loginTimeout=5;retryIntervalForClientReroute=3;maxRetriesForClientReroute=10;enableExtendedIndicators=2;
+      user: gtkinst1
+    pamJdbc:
+      password: gtkinst1
+      user: GTKINST1
+    schemas:
+      balancing: BALANCING
+      batch: BATCH
+      eventdetector: ED
+      eventdetector_site: ED
+      geo_compliance_persistence: PD
+      gis: GIS
+      gis_site: GIS
+      gms4_pd: PD
+      gmsSys: GMS4
+      instant_gratz: IG
+      plm: PLM
+      plm_site: PLM
+      scan_store: SCANSTORE
+      subcap: SUBCAP
+      triggers: TRIGGERS
+      txstore: TXSTORE
+      txstore_claimsummary_plugin: TXSTORE
+      txstore_lottery_plugin: TXSTORE
+      voucher_txstore_plugin: TXSTORE
+      vouchers: VOUCHERS
+    tablespaces:
+      custom:
+        balancing:
+          large:
+            file: /db2data1/gtkinst1/pddb/containers/container_balancing_large.dat
+            initialSize: '32768'
+          largeIdx:
+            file: /db2data1/gtkinst1/pddb/containers/container_balancing_large_idx.dat
+            initialSize: '32768'
+          primary:
+            file: /db2data1/gtkinst1/pddb/containers/container_balancing.dat
+            initialSize: '32768'
+          primaryIdx:
+            file: /db2data1/gtkinst1/pddb/containers/container_balancing_idx.dat
+            initialSize: '32768'
+        subcap:
+          large:
+            file: /db2data1/gtkinst1/pddb/containers/container_subcap_large.dat
+            initialSize: '4096'
+          largeIdx:
+            file: /db2data1/gtkinst1/pddb/containers/container_subcap_large_idx.dat
+            initialSize: '4096'
+          primary:
+            file: /db2data1/gtkinst1/pddb/containers/container_subcap.dat
+            initialSize: '8192'
+          primaryIdx:
+            file: /db2data1/gtkinst1/pddb/containers/container_subcap_idx.dat
+            initialSize: '8192'
+      locations:
+        store1: /db2data1/gtkinst1/pddb/containers/
+        store4: /db2data1/gtkinst1/pddb/containers/
+        store5: /db2data1/gtkinst1/pddb/containers/
+        store7: /db2data1/gtkinst1/pddb/containers/
+        store8: /db2data1/gtkinst1/pddb/containers/
+        store9: /db2data1/gtkinst1/pddb/containers/
+      sizes:
+        medium:
+          large:
+            initialSize: '4096'
+          largeIdx:
+            initialSize: '4096'
+          primary:
+            initialSize: '8192'
+          primaryIdx:
+            initialSize: '8192'
+        small:
+          large:
+            initialSize: '4096'
+          largeIdx:
+            initialSize: '4096'
+          primary:
+            initialSize: '8192'
+          primaryIdx:
+            initialSize: '8192'
+  emailAsUsername: 'false'
+  esteConnection:
+    este:
+      esccDeployed: 'true'
+      ips:
+        name: ''
+        schema: ipsdbo
+      isPlayerBalancingEnabled: 'false'
+      port: '53380'
+  fingerPrint:
+    maximumDevices: '10'
+    reauthenticationInterval: '2'
+    systemWideBiometricAuthenticationEnabled: 'true'
+  fourDigitsSSNMode: 'true'
+  hsm:
+    apiContext: http://156.24.63.156:8580
+    hsmenable: '1'
+    hsmmock: 'true'
+    includeTimestamp: 'true'
+    keyName: dev
+    keyPin: '2632'
+    messageType: empty
+    signUrl: /api/v1/cryptography/sign
+    verifyUrl: /api/v1/cryptography/verify
+  jboss:
+    home: /opt/jboss
+  language:
+    default:
+      iso2: en
+      iso3: eng
+  languageMessages:
+    loyalty:
+      wagerForPointsTxDescription: Wager purchase
+    voucher:
+      voucherPaymentCancellationDescription: Execute voucher payment cancellation
+      voucherPaymentForPointsTxDescription: 'Execute voucher payment, transaction
+        amount:'
+  logCloseAccountFileName: logPurgeCloseAccount.csv
+  logCloseAccountPath: /tmp
+  loyalty:
+    gameDomainId: '60'
+    systemId: lty_pl
+  ltmDateFormat: yyyy/MM/dd hh:mm:ss
+  oauth:
+    clientId: InteractiveMobileApp
+    context: ''
+    password: changeme!!!
+    username: oauth-client
+    version: V4
+  partnerID: '1'
+  playspot:
+    enabled: 'false'
+  productID: '100'
+  releases:
+    release:
+      enabled: 'true'
+    snapshot:
+      enabled: 'true'
+  sharedStorePath: /srv/esshare/
+  siteID: '25'
+  siteName: ref
+
+# END config_defaults:

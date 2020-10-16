@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: pddb
   become: false
   gather_facts: no
   tags:
@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_ilotterydb"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_pddb"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -26,7 +26,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: ilottery_db
+  hosts: pddb
   become: true
   gather_facts: no
   tags:
@@ -37,138 +37,17 @@
         msg: "No services to stop"
 
 - name: INSTALL
-  hosts: ilottery_db
+  hosts: pddb
   become: true
   gather_facts: no
   tags:
     - install
 
-
-  tasks:
-    - set_fact:
-        db_schemas: 
-          - "balancing"
-          - "batch"
-          - "eventdetector"
-          - "eventdetector-site"
-          - "geo-compliance-persistence"
-          - "gis"
-          - "gis-site"
-          - "gms4-pd"
-          - "instant-gratz"
-          - "plm"
-          - "scan-store"
-          - "subcap"
-          - "triggers" 
-          - "txstore" 
-          - "txstore-claimsummary-plugin" 
-          - "txstore-lottery-plugin" 
-          - "utils" 
-          - "vouchers" 
-          - "vouchers-txstore-plugin"
-
-    - name: Remove old packages
-      yum:
-        name: "{{ item }}"
-        state: removed
-        disable_gpg_check: yes
-      with_items:
-        - "{{ config.siteName }}-database-install"
-        - "ric_esdb5_dbmaint"
-
-    - name: Install new packages
-      yum:
-        name: "{{ item }}"
-        state: present
-        disable_gpg_check: yes
-      with_items:
-        - "{{ config.siteName }}-database-install-{{ config.ilottery_version }}"
-        - "ric_esdb5_dbmaint"
-        - "ant-1.9.4-2.el7"
-
-    - name: Fetch templates
-      fetch:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}/"
-        flat: yes
-      become: false
-      run_once: true
-      with_items:
-        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/config.xml.tpl", dest: "{{ p_tmpdir }}" }
-        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties.xml.tpl", dest: "{{ p_tmpdir }}" }
-        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
-        - { src: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/dbinstall-properties-subcap.xml.tpl", dest: "{{ p_tmpdir }}" }
-
-    - name: Remove old folders
-      file:
-        path: "{{ item }}"
-        state: absent
-      with_items:
-        - "/usr/local/gtech/{{ config.siteName }}-database-install/db-install/scripts-out"
-        - "/usr/local/gtech/{{ config.siteName }}-common-config/env-config"
-        - "/usr/local/gtech/{{ config.siteName }}-database-install/env-config"
-
-    - name: Create new folders
-      file:
-        path: "{{ item }}"
-        state: directory
-        owner: "{{ ansible_ssh_user }}"
-        mode: 0755
-        recurse: yes
-      with_items:
-        - "/usr/local/gtech/{{ config.siteName }}-database-install"
-        - "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}"
-        - "/usr/local/gtech/{{ config.siteName }}-common-config/env-config/{{ stage }}"
-        - "/var/log/gtech"
-
-
-    - name: Create schema folders
-      file:
-        path: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/{{ item }}"
-        state: directory
-        owner: "{{ ansible_ssh_user }}"
-        mode: 0755
-        recurse: yes
-      with_items: "{{ db_schemas }}"
-
-
-    - name: Add config.xml to common-config
-      template:
-        src: "{{ item }}"
-        dest: "/usr/local/gtech/{{ config.siteName }}-common-config/env-config/{{ stage }}/{{ item | basename | regex_replace('\\.tpl$', '')}}"
-        mode: 0644
-        owner: "{{ ansible_ssh_user }}"
-      with_fileglob:
-        - "{{ p_tmpdir }}/config.xml.tpl"
-
-    - name: Add dbinstall-properties.xml to all schemas
-      template:
-        src: "{{ p_tmpdir }}/dbinstall-properties.xml.tpl"
-        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/{{ item }}/dbinstall-properties.xml"
-        mode: 0644
-        owner: "{{ ansible_ssh_user }}"
-      with_items: "{{ db_schemas }}"
-
-    - name: Add dbinstall-properties-balancing.xml to balancing
-      template:
-        src: "{{ item }}"
-        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/balancing/{{ item | basename | regex_replace('\\.tpl$', '') | regex_replace('-balancing', '')}}"
-        mode: 0644
-        owner: "{{ ansible_ssh_user }}"
-      with_fileglob:
-        - "{{ p_tmpdir }}/dbinstall-properties-balancing.xml.tpl"
-
-    - name: Add dbinstall-properties-subcap.xml to subcap
-      template:
-        src: "{{ item }}"
-        dest: "/usr/local/gtech/{{ config.siteName }}-database-install/env-config/{{ stage }}/subcap/{{ item | basename | regex_replace('\\.tpl$', '') | regex_replace('-subcap', '')}}"
-        mode: 0644
-        owner: "{{ ansible_ssh_user }}"
-      with_fileglob:
-        - "{{ p_tmpdir }}/dbinstall-properties-subcap.xml.tpl"
+  roles:
+    - role: ilottery_db_install
 
 - name: DROP_DB
-  hosts: ilottery_db
+  hosts: pddb
   gather_facts: no
   tags:
     - drop_db
@@ -183,7 +62,7 @@
     - debug: msg="{{ drop_run.stdout }}"
 
 - name: CREATE_DB
-  hosts: ilottery_db
+  hosts: pddb
   gather_facts: no
   tags:
     - create_db
@@ -198,22 +77,16 @@
     - debug: msg="{{ create_run.stdout }}"
 
 - name: UPDATE_DB
-  hosts: ilottery_db
+  hosts: pddb
   gather_facts: no
   tags:
     - update_db
 
-  tasks:
-    - name: Running delta scripts
-      shell: |
-        cd /usr/local/gtech/{{ config.siteName }}-database-install
-        ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
-      register: delta_run
-
-    - debug: msg="{{ delta_run.stdout }}"
+  roles:
+    - role: ilottery_db_update
 
 - name: Export DB
-  hosts: ilottery_db
+  hosts: pddb
   gather_facts: no
   tags:
     - export_db
@@ -228,7 +101,7 @@
     - debug: msg="{{ export_run.stdout }}"
 
 - name: START
-  hosts: ilottery_db
+  hosts: pddb
   become: true
   gather_facts: no
   tags:
@@ -239,7 +112,7 @@
         msg: "No services to restart"
 
 - name: CLEAN
-  hosts: all
+  hosts: pddb
   become: false
   gather_facts: no
   tags:

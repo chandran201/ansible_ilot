@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: pdsecgateway
   become: false
   gather_facts: no
   tags:
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: ilottery_pd_sec_gateway
+  hosts: pdsecgateway
   serial: 1
   become: true
   gather_facts: no
@@ -40,7 +40,7 @@
       ignore_errors: yes
 
 - name: CLEANUP CONTAINER
-  hosts: ilottery_pd_sec_gateway
+  hosts: pdsecgateway
   become: true
   gather_facts: no
   tags:
@@ -53,19 +53,18 @@
         path: "/etc/gtech/pd/config/pd-sec-gateway/main"
 
 - name: INSTALL
-  hosts: ilottery_pd_sec_gateway
+  hosts: pdsecgateway
   become: true
   gather_facts: no
   tags:
     - install
 
   roles:
-    - role: os_config
     - role: ilottery_pd_sec_gateway
       jboss_node_port_offset: 400
 
 - name: START
-  hosts: ilottery_pd_sec_gateway
+  hosts: pdsecgateway
   serial: 1
   become: true
   gather_facts: no
@@ -81,7 +80,7 @@
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: all
+  hosts: pdsecgateway
   become: false
   gather_facts: no
   tags:

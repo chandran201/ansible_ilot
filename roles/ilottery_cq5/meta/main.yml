@@ -1,3 +1,4 @@
 ---
 dependencies:
+  - { role: ilottery_configs }
   - { role: java_ibm_rpm  }

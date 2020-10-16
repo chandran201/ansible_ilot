@@ -1,0 +1,23 @@
+---
+
+installation_url: "jdbc:db2://{{ siteID }}-{{ envID }}-pddb{{ vipSuffix }}:{{ pddb_port }}/{{ pddb_database_id }}"
+db_schemas: 
+  - "balancing"
+  - "batch"
+  - "eventdetector"
+  - "eventdetector-site"
+  - "geo-compliance-persistence"
+  - "gis"
+  - "gis-site"
+  - "gms4-pd"
+  - "instant-gratz"
+  - "plm"
+  - "scan-store"
+  - "subcap"
+  - "triggers" 
+  - "txstore" 
+  - "txstore-claimsummary-plugin" 
+  - "txstore-lottery-plugin" 
+  - "utils" 
+  - "vouchers" 
+  - "vouchers-txstore-plugin"

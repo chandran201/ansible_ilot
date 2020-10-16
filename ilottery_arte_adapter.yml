@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: arteadapter
   become: false
   gather_facts: no
   tags:
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: ilottery_arte_adapter
+  hosts: arteadapter
   serial: 1
   become: true
   gather_facts: no
@@ -40,7 +40,7 @@
       ignore_errors: yes
 
 - name: CLEANUP CONTAINER
-  hosts: ilottery_arte_adapter
+  hosts: arteadapter
   become: true
   gather_facts: no
   tags:
@@ -53,7 +53,7 @@
         path: "/etc/gtech/pd/config/arte-adapter"
 
 - name: INSTALL
-  hosts: ilottery_arte_adapter
+  hosts: arteadapter
   become: true
   gather_facts: no
   tags:
@@ -63,7 +63,7 @@
     - role: ilottery_arte_adapter
 
 - name: START
-  hosts: ilottery_arte_adapter
+  hosts: arteadapter
   serial: 1
   become: true
   gather_facts: no
@@ -79,7 +79,7 @@
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: all
+  hosts: arteadapter
   become: false
   gather_facts: no
   tags:

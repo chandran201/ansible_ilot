@@ -1,0 +1,9 @@
+---
+
+- name: Running delta scripts
+  shell: |
+    cd /usr/local/gtech/{{ config.siteName }}-database-install
+    ./delta_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }} true
+  register: delta_run
+
+- debug: msg="{{ delta_run.stdout }}"

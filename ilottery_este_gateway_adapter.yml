@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: estega
   become: false
   gather_facts: no
   tags:
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: ilottery_este_gateway_adapter
+  hosts: estega
   serial: 1
   become: true
   gather_facts: no
@@ -40,7 +40,7 @@
       ignore_errors: yes
 
 - name: CLEANUP CONTAINER
-  hosts: ilottery_este_gateway_adapter
+  hosts: estega
   become: true
   gather_facts: no
   tags:
@@ -53,7 +53,7 @@
         path: "/etc/gtech/pd/config/este-gateway-adapter/main"
 
 - name: INSTALL
-  hosts: ilottery_este_gateway_adapter
+  hosts: estega
   become: true
   gather_facts: no
   tags:
@@ -64,7 +64,7 @@
       jboss_node_port_offset: 900
 
 - name: START
-  hosts: ilottery_este_gateway_adapter
+  hosts: estega
   serial: 1
   become: true
   gather_facts: no
@@ -80,7 +80,7 @@
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: all
+  hosts: estega
   become: false
   gather_facts: no
   tags:

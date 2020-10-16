@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: all
+  hosts: ilottery_global
   become: false
   gather_facts: no
   tags:
@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_batch"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_global"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -61,7 +61,7 @@
   become: false
   gather_facts: no
   tags:
-    - clean
+    - ilottery_global
 
   tasks:
     - name: Remove local temp directory
