@@ -112,9 +112,9 @@ config_immutable:
       url: "jdbc:db2://{{ siteID }}-{{ envID }}-pddb{{ vipSuffix }}:{{ pddb_port }}/{{ pddb_database_id }}"
     pamJdbc:
       url: "jdbc:db2://{{ siteID }}-{{ envID }}-cmddb{{ vipSuffix }}:{{ cmd_db_port }}/{{ cmd_db_database_id }}:currentSchema=PAM_CMD;"
-#  oauth:
-#    port: '8580'
-#    url: http://156.24.66.159
+  oauth:
+    port: '8580'
+    url: "http://{{ siteID }}-{{ envID }}-oauth{{ vipSuffix }}"
 
 # END config_immutable:
 
