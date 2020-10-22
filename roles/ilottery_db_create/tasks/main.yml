@@ -1,0 +1,9 @@
+---
+
+- name: Running create
+  shell: |
+    cd /usr/local/gtech/{{ config.siteName }}-database-install
+    ./create_db_all.sh {{ config.siteName }} {{ stage }} abort true {{ config.databases.jdbc.password }}
+  register: create_run
+
+- debug: msg="{{ create_run.stdout }}"

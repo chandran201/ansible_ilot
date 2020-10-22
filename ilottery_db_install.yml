@@ -52,14 +52,8 @@
   tags:
     - drop_db
 
-  tasks:
-    - name: Running drop
-      shell: |
-        cd /usr/local/gtech/{{ config_overrides.siteName }}-database-install
-        ./drop_db_all.sh {{ config_overrides.siteName }} {{ stage }} abort true
-      register: drop_run
-
-    - debug: msg="{{ drop_run.stdout }}"
+  roles:
+    - role: ilottery_db_drop
 
 - name: CREATE_DB
   hosts: pddb
@@ -67,14 +61,8 @@
   tags:
     - create_db
 
-  tasks:
-    - name: Running create
-      shell: |
-        cd /usr/local/gtech/{{ config_overrides.siteName }}-database-install
-        ./create_db_all.sh {{ config_overrides.siteName }} {{ stage }} abort true {{ config_overrides.databases.jdbc.password }}
-      register: create_run
-
-    - debug: msg="{{ create_run.stdout }}"
+  roles:
+    - role: ilottery_db_create
 
 - name: UPDATE_DB
   hosts: pddb
@@ -91,14 +79,8 @@
   tags:
     - export_db
 
-  tasks:
-    - name: Running export scripts
-      shell: |
-        cd /usr/local/gtech/{{ config_overrides.siteName }}-database-install
-        ./delta_db_all_export.sh {{ config_overrides.siteName }} {{ stage }} abort true true
-      register: export_run
-
-    - debug: msg="{{ export_run.stdout }}"
+  roles:
+    - role: ilottery_db_export
 
 - name: START
   hosts: pddb

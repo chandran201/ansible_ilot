@@ -1,0 +1,10 @@
+---
+
+- name: Running drop
+  shell: |
+    cd /usr/local/gtech/{{ config.siteName }}-database-install
+    ./drop_db_all.sh {{ config.siteName }} {{ stage }} abort true
+  register: drop_run
+
+- debug: msg="{{ drop_run.stdout }}"
+

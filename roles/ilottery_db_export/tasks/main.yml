@@ -1,0 +1,10 @@
+---
+
+- name: Running export scripts
+  shell: |
+    cd /usr/local/gtech/{{ config.siteName }}-database-install
+    ./delta_db_all_export.sh {{ config.siteName }} {{ stage }} abort true true
+  register: export_run
+
+- debug: msg="{{ export_run.stdout }}"
+
