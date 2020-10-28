@@ -45,6 +45,7 @@
   <system-properties>
     <property name="resteasy.preferJacksonOverJsonB" value="true"/>
     <property name="jackson.deserialization.whitelist.packages" value="com.igt,com.gtech" />
+    <property name="jboss.as.management.blocking.timeout" value="500" />
   </system-properties>
   <management>
     <security-realms>
