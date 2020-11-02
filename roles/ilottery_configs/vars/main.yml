@@ -962,6 +962,8 @@ config_defaults:
               count: '5'
               enabled: 'true'
               seconds: '120'
+              blockade:
+                seconds: '120'
             valid:
               count: '20'
               enabled: 'true'
