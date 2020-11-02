@@ -64,6 +64,7 @@ SUPCAP_PLAYER_SUBMISSIONS_LIMITS_VALID_SECONDS={{ config.applications.subcap.pla
 SUPCAP_PLAYER_SUBMISSIONS_LIMITS_INVALID_ENABLED={{ config.applications.subcap.player.submissions.limits.invalid.enabled }}
 SUPCAP_PLAYER_SUBMISSIONS_LIMITS_INVALID_COUNT={{ config.applications.subcap.player.submissions.limits.invalid.count }}
 SUPCAP_PLAYER_SUBMISSIONS_LIMITS_INVALID_SECONDS={{ config.applications.subcap.player.submissions.limits.invalid.seconds }}
+SUBCAP_PLAYER_SUBMISSIONS_LIMITS_INVALID_BLOCKADE_SECONDS={{ config.applications.subcap.player.submissions.limits.invalid.blockade.seconds }}
 SPRING_DATASOURCE_HIKARI_SCHEMA={{ db_schema }}
 SPRING_DATASOURCE_URL={{ db_url }}
 SPRING_DATASOURCE_HIKARI_DRIVER_CLASS_NAME={{ db_driver_class_name }}
