@@ -11,6 +11,7 @@
       - "{{ config.siteName}}-txstore-read-application-rpm"
       - "{{ config.siteName}}-txstore-read-public-application-rpm"
       - "{{ config.siteName}}-anywhere-instant-games-rpm"
+      - "{{ config.siteName}}-anywhere-instant-games-config-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
