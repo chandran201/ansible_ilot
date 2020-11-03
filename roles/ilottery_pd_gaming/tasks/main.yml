@@ -14,6 +14,7 @@
       - "{{ config.siteName}}-anywhere-instant-games-config-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
+      - "{{ config.siteName}}-anywhere-locations-config-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
       - "{{ config.siteName}}-scan-store-cleanup-old-tickets-rpm"
       - "{{ config.siteName}}-scan-store-cleanup-tickets-overlimit-rpm"
