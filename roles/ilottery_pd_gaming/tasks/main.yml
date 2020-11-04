@@ -23,6 +23,7 @@
       - "{{ config.siteName}}-scan-store-cleanup-old-tickets-rpm"
       - "{{ config.siteName}}-scan-store-cleanup-tickets-overlimit-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
+      - "{{ config.siteName}}-triggers-config-rpm"
       - "{{ config.siteName}}-anywhere-random-rpm"
       - "{{ config.siteName}}-anywhere-random-config-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
