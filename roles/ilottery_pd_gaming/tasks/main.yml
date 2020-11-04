@@ -15,6 +15,7 @@
       - "{{ config.siteName}}-anywhere-instant-games-rpm"
       - "{{ config.siteName}}-anywhere-instant-games-config-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
+      - "{{ config.siteName}}-instant-gratz-config-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
       - "{{ config.siteName}}-anywhere-locations-config-rpm"
       - "{{ config.siteName}}-scan-store-application-rpm"
