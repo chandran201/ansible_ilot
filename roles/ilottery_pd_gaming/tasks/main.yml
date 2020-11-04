@@ -7,6 +7,7 @@
       - "{{ config.siteName}}-essdk-connector-rpm"
       - "{{ config.siteName}}-essdk-translets-rpm"
       - "{{ config.siteName}}-gis-application-rpm"
+      - "{{ config.siteName}}-gis-config-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-event-detector-config-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
