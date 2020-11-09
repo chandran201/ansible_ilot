@@ -4,6 +4,7 @@
       - "{{ config.siteName}}-admin-rest-application-rpm"
       - "{{ config.siteName}}-admin-gov-frontend-rpm"
       - "{{ config.siteName}}-balancing-application-rpm"
+      - "{{ config.siteName}}-balancing-config-rpm"
       - "{{ config.siteName}}-balancing-db-cleanup-rpm"
       - "{{ config.siteName}}-batch-admin-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
