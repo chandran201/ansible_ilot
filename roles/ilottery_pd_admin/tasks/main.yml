@@ -2,6 +2,7 @@
 - set_fact:
     pd_admin_packages:
       - "{{ config.siteName}}-admin-rest-application-rpm"
+      - "{{ config.siteName}}-admin-rest-config-rpm"
       - "{{ config.siteName}}-admin-gov-frontend-rpm"
       - "{{ config.siteName}}-balancing-application-rpm"
       - "{{ config.siteName}}-balancing-config-rpm"
