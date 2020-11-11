@@ -243,9 +243,9 @@ config_defaults:
       jmsConnectionCacheSize: '5'
       nodeName: xxmkt26
       queueTimeout: '10'
-      drawCloseListenerEnabled" : 'true'
-	    drawJackpotListenerEnabled" : 'true'
-	    drawResultsListenerEnabled" : 'true'
+      drawCloseListenerEnabled§: 'true'
+      drawJackpotListenerEnabled: 'true'
+      drawResultsListenerEnabled: 'true'
     ewallet:
       connectorToUse: pdWalletConnector
       eWallet: 'true'
