@@ -934,6 +934,7 @@ config_defaults:
       gcsFilter: 'false'
       headersToCopy: X-CLIENT-ID,X-CHANNEL-ID,X-EX-SYSTEM-ID,X-DEVICE-ID,X-PARTNER-ID,X-PRODUCT-ID,X-SITE-ID,X-CLIENT-DEVICE-ID,X-CLIENT-DEVICE-TYPE
       readTimeout: 15000
+      secondAuthenticationEnabled: 'false'
     subcap:
       forwarder:
         chunk_size: '200'
