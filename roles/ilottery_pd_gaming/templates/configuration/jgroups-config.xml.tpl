@@ -13,8 +13,8 @@
     thread_naming_pattern="esacluster"
   />
 
-  <TCPPING 
-    initial_hosts="{{ pdsecgateway_host_list | join('[{{ jboss_node_port_offset + 20000 }}],') }}[{{ jboss_node_port_offset + 20000 }}] }}" 
+  <TCPPING
+    initial_hosts="{{ pdgaming_host_list | join('[{{ jboss_node_port_offset + 20000 }}],') }}[{{ jboss_node_port_offset + 20000 }}] }}" 
     port_range="1" 
   />
 

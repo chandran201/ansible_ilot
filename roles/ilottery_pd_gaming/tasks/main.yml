@@ -723,6 +723,17 @@
     owner: jboss
     group: jboss
 
+- name: templates for jgroups configuration
+  template:
+    src: "configuration/{{ item }}.tpl"
+    dest: "/etc/gtech/pd/config/pd-gaming/main/gis/{{ item }}"
+    owner: jboss
+    group: jboss
+    mode: 0644
+  with_items:
+    - "dongle-lock-cache-configuration.xml"
+    - "jgroups-config.xml"
+
 - name: create /usr/local/env
   file:
     path: "/usr/local/env"
