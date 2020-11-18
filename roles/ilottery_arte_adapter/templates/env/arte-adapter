@@ -1,3 +1,10 @@
+WEBBROKER_URL={{ config.containers.webBroker.url }}
+DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_MAXTOTALCONN={{ config.applications.defaultHttpClientConnectionProperties.maxTotalConn }}
+DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_HTTPMAXPERROUTE={{ config.applications.defaultHttpClientConnectionProperties.httpMaxPerRoute }}
+DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_CONNECTIONTIMEOUT={{ config.applications.defaultHttpClientConnectionProperties.connectionTimeout }}
+DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_SOCKETTIMEOUT={{ config.applications.defaultHttpClientConnectionProperties.socketTimeout }}
+DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_CONNECTIONREQUESTTIMEOUT={{ config.applications.defaultHttpClientConnectionProperties.connectionRequestTimeout }}
+
 ESA_LOGGING_REQUEST_BODY={{ config.applications.esa.logging.requestBody }}
 ESA_LOGGING_REQUEST_HEADERS={{ config.applications.esa.logging.requestHeaders }}
 ESA_LOGGING_RESPONSE_BODY={{ config.applications.esa.logging.responseBody }}

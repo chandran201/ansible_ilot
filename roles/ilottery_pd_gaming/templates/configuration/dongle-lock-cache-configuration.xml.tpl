@@ -3,7 +3,7 @@
     xmlns="urn:infinispan:config:9.3">
 
   <jgroups>
-    <stack-file name="external-file" path="jgroups-config.xml"/>
+    <stack-file name="external-file" path="/etc/gtech/pd/config/pd-gaming/main/gis/jgroups-config.xml"/>
   </jgroups>
 
   <cache-container>
