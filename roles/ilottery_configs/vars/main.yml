@@ -62,6 +62,8 @@ config_immutable:
           flash_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-html-client/index.html"
           html5_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-smartphone-client/index.html"
         cashier_app_url: "https://{{ sites_web.i20.web_cashier_url }}/cashierapp/"
+        demoportal:
+          mobile_launchurl: "https://{{ pdweb_vhosts_servernames['casino-mobile'] }}/"
         esa:
           player_resource:
             url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/b2c-esa-securegateway/api/"
