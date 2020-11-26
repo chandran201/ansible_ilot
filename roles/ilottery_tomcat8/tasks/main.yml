@@ -37,7 +37,7 @@
 
 - name: Install tomcat8 packages
   yum:
-    name: "{{ item }}-{{ config.portal_version }}"
+    name: "{{ item }}-{{ config.igamingrest_version }}"
     state: present
     disable_gpg_check: yes
   with_items: "{{ tomcat8_packages }}"
