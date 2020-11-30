@@ -172,15 +172,6 @@
     - { src: "/usr/local/gtech/scan-store-cleanup-tickets-overlimit/{{ config.siteName }}-scan-store-cleanup-tickets-overlimit-env-config/src/main/env-config/additional.properties.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit" }
     - { src: "/usr/local/gtech/scan-store-cleanup-tickets-overlimit/{{ config.siteName }}-scan-store-cleanup-tickets-overlimit-env-config/src/main/env-config/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit" }
 
-- name: waiting for SID-205 fixes
-  shell: 'sed -i "s#config\.esteConnection\.nodes\[ansible_hostname\]#esteConnection#g" {{ item }}'
-  delegate_to: 127.0.0.1
-  run_once: true
-  with_items:
-    - "{{ p_tmpdir }}/este.properties.tpl"
-    - "{{ p_tmpdir }}/gis.properties.tpl"
-    - "{{ p_tmpdir }}/host.properties.tpl"
-
 - name: Create /etc/gtech/pd/config/pd-gaming/main folder
   file:
     path: /etc/gtech/pd/config/pd-gaming/main
