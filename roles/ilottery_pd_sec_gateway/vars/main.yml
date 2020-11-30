@@ -2,5 +2,5 @@
 jboss_java_version: "java-11-openjdk"
 jboss_node_name: "{{ instance_name }}"
 jboss_node_user: "jboss"
-jboss_version: "7.2.9"
+jboss_version: "7.2.9.1"
 pdsecgateway_host_list: "{{ groups.pdsecgateway | map('extract', hostvars, ['ansible_host']) | map('regex_replace', '\\..*', prodSuffix ) | list }}"
