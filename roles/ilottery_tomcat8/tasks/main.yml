@@ -76,7 +76,7 @@
   template:
     src: "templates/tomcat8/igportal.properties"
     dest: "/etc/gtech/igportalrest/igportal.properties"
-    mode: 0755
+    mode: 0644
     owner: tomcat
     group: tomcat
 
