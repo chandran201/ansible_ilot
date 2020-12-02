@@ -2,6 +2,7 @@
 - set_fact:
     batch_packages:
       - "{{ config.siteName}}-batch-application-rpm"
+      - "{{ config.siteName}}-batch-config-rpm"
     batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/blacklist.properties.tpl"
