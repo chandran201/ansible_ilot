@@ -10,6 +10,7 @@ db_schemas:
   - "gis"
   - "gis-site"
   - "gms4-pd"
+  - "pd-site"
   - "instant-gratz"
   - "plm"
   - "scan-store"
