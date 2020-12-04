@@ -71,13 +71,13 @@ config_immutable:
           portalredirecturl: "https://{{ pdweb_vhosts_servernames['games'] }}/en-us/home.html"
         poker:
           webclient_url: "https://{{ pdweb_vhosts_servernames['poker'] }}/"
-#      bingoendpoint: http://10.3.18.15:9090/
-#      casinofreeplayendpoint: 172.19.161.116:9090/
-#      gpportalendpoint: http://172.19.152.107:9090/
+#     bingoendpoint: http://10.3.18.15:9090/
+#     casinofreeplayendpoint: 172.19.161.116:9090/
+#     gpportalendpoint: http://172.19.152.107:9090/
       igamingRestUrl: "http://{{ siteID }}-{{ envID }}-igamingrest{{ vipSuffix }}:8080"
       mobile:
         url: "https://{{ pdweb_vhosts_servernames['games-mobile'] }}"
-      pokerendpoint: "http://{{ siteID }}-{{ envID }}-poker{{ vipSuffix }}:8082/"
+#     pokerendpoint: "http://{{ siteID }}-{{ envID }}-poker{{ vipSuffix }}:8082/"
       publish:
         bingo:
           flash_client_url: "https://{{ pdweb_vhosts_servernames['games'] }}/globe-bingo-html-client/index.html"
@@ -709,19 +709,15 @@ config_defaults:
           ip_address: 156.24.29.144
           site_id: '100'
           url: http://156.24.29.144:8171
-      bingoendpoint: http://10.3.18.15:9090/
       captcha:
         allowedHostNames: testkey.google.com
         enabled: 'true'
         secretKey: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
         verifyUrl: https://www.google.com/recaptcha/api/siteverify
-      casinofreeplayendpoint: 172.19.161.116:9090/
       domain: dev.igt.com
-      gpportalendpoint: http://172.19.152.107:9090/
       igamingRestUrl: http://xxpdg1014:8080
       mobile:
         url: https://refdevplaydigital-mobile.dev.igt.com
-      pokerendpoint: http://10.3.18.5:7011/
       publish:
         account_balance_enabled: 'true'
         account_balance_pockets: 'true'
