@@ -718,6 +718,7 @@ config_defaults:
       igamingRestUrl: http://xxpdg1014:8080
       mobile:
         url: https://refdevplaydigital-mobile.dev.igt.com
+      pokerendpoint: "http://{{ siteID }}-{{ envID }}-poker{{ vipSuffix }}:7010/"
       publish:
         account_balance_enabled: 'true'
         account_balance_pockets: 'true'
