@@ -2,7 +2,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/JGroups-3.4.xsd">
   <TCP
-    bind_addr="{{ ansible_host | regex_replace('\\..*') }}{{ prodSuffix }}"
+    bind_addr="match-interface:{{ dynamic_interface }}"
     bind_port="{{ jboss_node_port_offset + 20000 }}"
     port_range="5"
     recv_buf_size="8m"
