@@ -822,6 +822,9 @@
     <interface name="unsecure">
       <inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>
     </interface>
+    <interface name="{{ dynamic_interface }}">
+      <nic name="{{ dynamic_interface }}"/>
+    </interface>
   </interfaces>
   <socket-binding-group name="standard-sockets" default-interface="public" port-offset="{{ port_offset }}">
     <socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/>
@@ -833,7 +836,8 @@
     <socket-binding name="txn-recovery-environment" port="4712"/>
     <socket-binding name="txn-status-manager" port="4713"/>
     <socket-binding name="jgroups-mping" interface="private" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45700"/>
-    <socket-binding name="jgroups-tcp" interface="private" port="7600"/>
+    <socket-binding name="jgroups-tcp" interface="{{ dynamic_interface }}" port="7600"/>
+    <socket-binding name="jgroups-tcp-fd" interface="{{ dynamic_interface }}" port="5760"/>
     <socket-binding name="jgroups-udp" interface="private" port="55200" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45688"/>
     <socket-binding name="modcluster" multicast-address="${jboss.modcluster.multicast.address:224.0.1.105}" multicast-port="23364"/>
     <socket-binding name="iiop" interface="unsecure" port="3528"/>
