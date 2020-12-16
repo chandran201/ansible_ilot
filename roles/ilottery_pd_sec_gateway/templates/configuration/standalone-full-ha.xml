@@ -596,9 +596,9 @@
     <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
     <subsystem xmlns="urn:jboss:domain:jgroups:6.0">
       <channels default="ee">
-        <channel name="ee" stack="udp" cluster="ejb"/>
+        <channel name="ee" stack="tcp" cluster="ejb"/>
       </channels>
-      <stacks>
+      <stacks default="tcp">
         <stack name="udp">
           <transport type="UDP" socket-binding="jgroups-udp"/>
           <protocol type="PING"/>
@@ -615,10 +615,20 @@
           <protocol type="FRAG3"/>
         </stack>
         <stack name="tcp">
-          <transport type="TCP" socket-binding="jgroups-tcp"/>
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+          <transport type="TCP" socket-binding="jgroups-tcp">
+            <property name="port_range">50</property>
+            <property name="recv_buf_size">
+                20971520
+            </property>
+            <property name="send_buf_size">
+                20971520
+            </property>
+          </transport>
+          <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
+            <property name="initial_hosts">{% for item in groups.pdsecgateway %}{{ hostvars[item].ansible_host | regex_replace('\..*') }}{{ prodSuffix }}[{{ 7600 + jboss_node_port_offset|int }}]{% if not loop.last %},{% endif %}{% endfor %}</property>
+          </protocol>
           <protocol type="MERGE3"/>
-          <protocol type="FD_SOCK"/>
+          <protocol type="FD_SOCK" socket-bindng="jgroups-tcp"/>
           <protocol type="FD_ALL"/>
           <protocol type="VERIFY_SUSPECT"/>
           <protocol type="pbcast.NAKACK2"/>
@@ -789,6 +799,9 @@
     <interface name="unsecure">
       <inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>
     </interface>
+    <interface name="{{ dynamic_interface }}">
+      <nic name="{{ dynamic_interface }}"/>
+    </interface>
   </interfaces>
   <socket-binding-group name="standard-sockets" default-interface="public" port-offset="{{ port_offset }}">
     <socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/>
@@ -800,7 +813,8 @@
     <socket-binding name="txn-recovery-environment" port="4712"/>
     <socket-binding name="txn-status-manager" port="4713"/>
     <socket-binding name="jgroups-mping" interface="private" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45700"/>
-    <socket-binding name="jgroups-tcp" interface="private" port="7600"/>
+    <socket-binding name="jgroups-tcp" interface="{{ dynamic_interface }}" port="7600"/>
+    <socket-binding name="jgroups-tcp-fd" interface="{{ dynamic_interface }}" port="5760"/>
     <socket-binding name="jgroups-udp" interface="private" port="55200" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45688"/>
     <socket-binding name="modcluster" multicast-address="${jboss.modcluster.multicast.address:224.0.1.105}" multicast-port="23364"/>
     <socket-binding name="iiop" interface="unsecure" port="3528"/>
