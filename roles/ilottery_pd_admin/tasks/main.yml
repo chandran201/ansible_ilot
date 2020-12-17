@@ -337,7 +337,7 @@
 - name: GET INTERFACE
   shell: |
     PRODUCTION_IP=$(getent ahostsv4 {{ prod_host }} | awk '$0 ~ /STREAM/ { print $1 }')
-    ip a|grep $PRODUCTION_IP|awk '{print $NF}'
+    /usr/sbin/ip a|grep $PRODUCTION_IP|awk '{print $NF}'
   register: d_interface
 
 - set_fact:

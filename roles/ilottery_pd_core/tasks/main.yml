@@ -287,23 +287,14 @@
 - set_fact:
    prod_host: "{{ ansible_host | regex_replace('\\..*',prodSuffix) }}"
 
-- debug:
-   msg: "{{ prod_host }}"
-
 - name: GET INTERFACE
   shell: |
     PRODUCTION_IP=$(getent ahostsv4 {{ prod_host }} | awk '$0 ~ /STREAM/ { print $1 }')
     /usr/sbin/ip a|grep $PRODUCTION_IP|awk '{print $NF}'
   register: d_interface
 
-- debug:
-   msg: "{{ d_interface }}"
-
 - set_fact:
     dynamic_interface: "{{ d_interface.stdout }}"
-
-- debug:
-   msg: "{{ dynamic_interface }}"
 
 - name: Install jboss configuration file
   template:
