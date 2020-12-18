@@ -30,6 +30,7 @@ WEBBROKER_URL={{ config.containers.webBroker.url }}
 SITE_ID={{ config.siteID }}
 PARTNER_ID={{ config.partnerID }}
 PRODUCT_ID={{ config.productID }}
+GAME_PLATFORM_ID={{ config.gamePlatformId }}
 DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_SCHEMAREGSCHEMA={{ config.applications.defaultHttpClientConnectionProperties.schemaRegSchema }}
 DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_SCHEMEPORT={{ config.applications.defaultHttpClientConnectionProperties.schemePort }}
 DEFAULTHTTPCLIENTCONNECTIONPROPERTIES_CONNECTIONTIMEOUT={{ config.applications.defaultHttpClientConnectionProperties.connectionTimeout }}

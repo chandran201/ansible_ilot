@@ -288,6 +288,12 @@ config_defaults:
           - displayName: CASH POP
             id: '35'
             name: CASH POP
+          - displayName: Terminal
+            id: '-1'
+            name: Terminal
+          - displayName: Addon
+            id: '28'
+            name: Addon            
     geoCompliance:
       additionalVerification:
         html5:
@@ -1173,6 +1179,7 @@ config_defaults:
       enabled: 'true'
   sharedStorePath: /srv/esshare/
   siteID: '25'
+  gamePlatformId: '70'
   siteName: ref
 
 # END config_defaults:

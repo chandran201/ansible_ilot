@@ -30,6 +30,7 @@ WEBBROKER_URL={{ config.containers.webBroker.url }}
 SITE_ID={{ config.siteID }}
 PARTNER_ID={{ config.partnerID }}
 PRODUCT_ID={{ config.productID }}
+GAME_PLATFORM_ID={{ config.gamePlatformId }}
 GEOCOMPLIANCES_STATUSES_OPTIN={{ config.applications.geoCompliance.statuses.optIn }}
 GEOCOMPLIANCES_STATUSES_OPTOUT={{ config.applications.geoCompliance.statuses.optOut }}
 OAUTH_URL={{ config.oauth.url }}
