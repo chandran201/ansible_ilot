@@ -284,6 +284,18 @@
     - mgmt-groups.properties
     - mgmt-users.properties
 
+- set_fact:
+   prod_host: "{{ ansible_host | regex_replace('\\..*',prodSuffix) }}"
+
+- name: GET INTERFACE
+  shell: |
+    PRODUCTION_IP=$(getent ahostsv4 {{ prod_host }} | awk '$0 ~ /STREAM/ { print $1 }')
+    /usr/sbin/ip a|grep $PRODUCTION_IP|awk '{print $NF}'
+  register: d_interface
+
+- set_fact:
+    dynamic_interface: "{{ d_interface.stdout }}"
+
 - name: Install jboss configuration file
   template:
     src: "templates/configuration/standalone-full-ha.xml"
