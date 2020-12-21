@@ -11,3 +11,7 @@ ESA_LOGGING_RESPONSE_BODY={{ config.applications.esa.logging.responseBody }}
 ESA_LOGGING_RESPONSE_HEADERS={{ config.applications.esa.logging.responseHeaders }}
 ARTE_ADAPTER_LOG_DIRECTORY={{ log_directory }}
 ARTE_ADAPTER_LOG_PATTERN={{ log_pattern }}
+
+SITE_ID={{ config.siteID }}
+PARTNER_ID={{ config.partnerID }}
+PRODUCT_ID={{ config.productID }}
