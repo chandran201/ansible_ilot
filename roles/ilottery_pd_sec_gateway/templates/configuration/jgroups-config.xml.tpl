@@ -14,7 +14,7 @@
   />
 
   <TCPPING 
-    initial_hosts="{{ pdsecgateway_host_list | join('[' + (jboss_node_port_offset + 20000)|string + '],') }} }}[{{ jboss_node_port_offset + 20000 }}]" 
+    initial_hosts="{{ pdsecgateway_host_list | join('[' + (jboss_node_port_offset + 20000)|string + '],') }}[{{ jboss_node_port_offset + 20000 }}]" 
     port_range="1" 
   />
 
