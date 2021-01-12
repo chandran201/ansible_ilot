@@ -296,7 +296,7 @@
 - name: templates for jgroups configuration
   template:
     src: "configuration/{{ item }}.tpl"
-    dest: "/etc/gtech/pd/config/pd-sec-gateway/main/{{ item }}"
+    dest: "/etc/gtech/pd/config/pd-sec-gateway/main/esa-secure-gateway/{{ item }}"
     owner: jboss
     group: jboss
     mode: 0644
