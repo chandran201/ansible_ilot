@@ -1,6 +1,5 @@
 ---
 dependencies:
   - { role: ilottery_configs }
-#  - { role: ansible_facts }
   - { role: set_sysctl, sysctlconf: "ilottery" }
   - { role: jboss7_rpm, jboss_node_javaopts: "{{ pd_sec_gateway_jboss_node_javaopts }}", jboss_load_app_env_file: true }
