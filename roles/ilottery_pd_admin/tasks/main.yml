@@ -27,8 +27,8 @@
       - "{{ p_tmpdir }}/balancing-db-cleanup.properties.tpl"
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
       - "{{ p_tmpdir }}/autopay-gameinfo-context.xml.tpl"
+      - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
 
 - name: Install jboss common packages
   yum:

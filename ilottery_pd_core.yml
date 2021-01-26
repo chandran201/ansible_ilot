@@ -39,18 +39,6 @@
         state: stopped
       ignore_errors: yes
 
-- name: INSTALL
-  hosts: ilottery_pd_core
-  become: true
-  gather_facts: no
-  tags:
-    - install
-
-  roles:
-    - role: os_config
-    - role: ilottery_pd_core
-      jboss_node_port_offset: 200
-
 - name: CLEANUP CONTAINER
   hosts: ilottery_pd_core
   become: true
@@ -63,6 +51,18 @@
       file:
         state: absent
         path: "/etc/gtech/pd/config/pd-core/main"
+
+- name: INSTALL
+  hosts: ilottery_pd_core
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  roles:
+    - role: os_config
+    - role: ilottery_pd_core
+      jboss_node_port_offset: 200
 
 - name: START
   hosts: ilottery_pd_core

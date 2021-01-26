@@ -9,10 +9,12 @@
       - "{{ config.siteName}}-gis-application-rpm"
       - "{{ config.siteName}}-event-detector-application-rpm"
       - "{{ config.siteName}}-txstore-read-application-rpm"
+      # Unused on LNZ
 #      - "{{ config.siteName}}-esa-instant-games-rpm"
       - "{{ config.siteName}}-txstore-read-public-application-rpm"
       - "{{ config.siteName}}-instant-gratz-application-rpm"
       - "{{ config.siteName}}-anywhere-locations-rpm"
+      # Unused on LNZ
      # - "{{ config.siteName}}-scan-store-application-rpm"
       - "{{ config.siteName}}-triggers-application-rpm"
       - "{{ config.siteName}}-anywhere-random-rpm"
@@ -56,6 +58,7 @@
     pd_gaming_instant_gratz_tpls:
       - "{{ p_tmpdir }}/esa-configuration-instant-gratz.xml.tpl"
       - "{{ p_tmpdir }}/instant-gratz.properties.tpl"
+      # Unused on LNZ
 #    pd_gaming_scan_store_tpls:
 #      - "{{ p_tmpdir }}/esa-configuration-scan-store.xml.tpl"
 #      - "{{ p_tmpdir }}/ref-scan-store-common-context.xml.tpl"
@@ -132,6 +135,7 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/txstore-read-public.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
+    # Unused on LNZ
 #    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
 #    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store-common-context.xml.tpl", dest: "{{ p_tmpdir }}" }
 #    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/ref-scan-store.properties.tpl", dest: "{{ p_tmpdir }}" }
@@ -325,6 +329,7 @@
     mode: 0644
   with_fileglob: "{{ pd_gaming_triggers_tpls }}"
 
+# Unused on LNZ
 #- name: Parsing pd-gaming scan-store templates
 #  when: install_app == "true"
 #  template:

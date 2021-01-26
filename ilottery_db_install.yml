@@ -66,6 +66,7 @@
           - "txstore" 
           - "txstore-claimsummary-plugin" 
           - "txstore-lottery-plugin"
+	  # LNZ custom
           - "txstore-ede-lnz-plugin"
           - "utils" 
           - "vouchers" 
