@@ -1,0 +1,43 @@
+---
+- set_fact:
+    swagger_ui_package:
+      - "{{ config.siteName}}-pd-swagger-ui-application-rpm"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ swagger_ui_package }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ swagger_ui_package }}"
+
+- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
+  file:
+    src: "/usr/lib/jvm/java"
+    dest: "/opt/jdk"
+    state: link
+
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    mode: 0755
+
+- name: "Install env to /usr/local/env/"
+  template:
+    src: "env/vars"
+    dest: "/usr/local/env/{{ application_name }}"
+    owner: "springboot"
+    group: "springboot"
+    mode: 0755
+

@@ -1,0 +1,4 @@
+---
+box: "pd-swagg"
+log_directory: "/var/log/pdswaggerui"
+log_nfs_mount_path: "/opt/igt/logs"
