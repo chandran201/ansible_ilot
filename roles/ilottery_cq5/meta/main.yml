@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: ilottery_configs }
-  - { role: java_ibm_rpm  }
+  - { role: java_ibm_rpm , java_version: "{{ cq5_java_version }}"  }

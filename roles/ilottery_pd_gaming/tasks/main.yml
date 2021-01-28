@@ -55,12 +55,6 @@
       - "{{ p_tmpdir }}/params-gameinfo-context.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
-    pd_gaming_txstore_read_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-txstore-read.xml.tpl"
-      - "{{ p_tmpdir }}/txstore-read.properties.tpl"
-    pd_gaming_txstore_read_public_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-txstore-read-public.xml.tpl"
-      - "{{ p_tmpdir }}/txstore-read-public.properties.tpl"
     pd_gaming_host_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
     pd_gaming_instant_games_tpls:
@@ -149,10 +143,6 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/esa-configuration-txstore-read.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/esa-configuration-txstore-read-public.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-env-config/src/main/env-config/txstore-read/txstore-read.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-txstore-read-public-env-config/src/main/env-config/txstore-read-public/txstore-read-public.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/esa-configuration-instant-gratz.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-instant-gratz-env-config/src/main/env-config/instant-gratz/instant-gratz.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-scan-store-env-config/src/main/env-config/module/scan-store/esa-configuration-scan-store.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -377,22 +367,6 @@
     dest: "/etc/igt/anywhere/instant-games/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_gaming_instant_games_tpls }}"
-
-- name: Parsing pd-gaming txstore-read-internal templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_gaming_txstore_read_tpls }}"
-
-- name: Parsing pd-gaming txstore-read-public templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-gaming/main/txstore-read-public/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_gaming_txstore_read_public_tpls }}"
 
 - name: Parsing pd-gaming triggers templates
   when: install_app == "true"
