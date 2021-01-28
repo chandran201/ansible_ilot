@@ -1,0 +1,2 @@
+PD-SWAGGER_UI_LOG_DIRECTORY=/var/log/pd-swagger-ui
+PD-SWAGGER_UI_LOG_PATTERN=%d %-5p [%X{pd2.playerId}/%X{pd2.txId}] [%c:%L] \\(%t\\) %m%n
