@@ -21,6 +21,22 @@
     disable_gpg_check: yes
   with_items: "{{ swagger_ui_package }}"
 
+- name: Create /etc/gtech/pd/config/pd-swagger-ui folder
+  file:
+    path: /etc/gtech/pd/config/pd-swagger-ui
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create /var/log/pd-swagger-ui/ folder
+  file:
+    path: /var/log/pd-swagger-ui
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
 - name: Create symlinks /opt/jdk to /usr/lib/jvm/java
   file:
     src: "/usr/lib/jvm/java"
