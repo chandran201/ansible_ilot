@@ -57,8 +57,6 @@
       - "{{ p_tmpdir }}/este.properties.tpl"
     pd_gaming_host_tpls:
       - "{{ p_tmpdir }}/host.properties.tpl"
-    pd_gaming_instant_games_tpls:
-      - "{{ p_tmpdir }}/esa-gateway-config-instant-games.xml.tpl"
     pd_gaming_instant_gratz_tpls:
       - "{{ p_tmpdir }}/esa-configuration-instant-gratz.xml.tpl"
       - "{{ p_tmpdir }}/instant-gratz.properties.tpl"
@@ -156,7 +154,6 @@
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-locations-env-config/src/main/env-config/esa-gateway-config-locations.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-random-env-config/src/main/env-config/esa-gateway-config-random.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/es-configuration/host.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-anywhere-instant-games-env-config/src/main/env-config/anywhere-instant-games/esa-gateway-config-instant-games.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/scan-store-cleanup-old-tickets/{{ config.siteName }}-scan-store-cleanup-old-tickets-env-config/src/main/env-config/additional.properties.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-old-tickets" }
     - { src: "/usr/local/gtech/scan-store-cleanup-old-tickets/{{ config.siteName }}-scan-store-cleanup-old-tickets-env-config/src/main/env-config/logback-spring.xml.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-old-tickets" }
     - { src: "/usr/local/gtech/scan-store-cleanup-tickets-overlimit/{{ config.siteName }}-scan-store-cleanup-tickets-overlimit-env-config/src/main/env-config/additional.properties.tpl", dest: "{{ p_tmpdir }}/scan-store-cleanup-tickets-overlimit" }
@@ -359,14 +356,6 @@
     dest: "/etc/gtech/instant-games/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
   with_fileglob: "{{ pd_gaming_host_tpls }}"
-
-- name: Parsing pd-gaming instant-games templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/etc/igt/anywhere/instant-games/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_gaming_instant_games_tpls }}"
 
 - name: Parsing pd-gaming triggers templates
   when: install_app == "true"
