@@ -39,19 +39,7 @@
     pd_gaming_main_tpls:
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
     pd_gaming_gis_tpls:
-      - "{{ p_tmpdir }}/esa-configuration-gis.xml.tpl"
-      - "{{ p_tmpdir }}/event-processor-jms.properties.tpl"
       - "{{ p_tmpdir }}/gis.properties.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-balancing.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-cart.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-favorites.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-groupplay.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-params.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-player.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-quickpicks.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-subscriptions-internal.xml.tpl"      
-      - "{{ p_tmpdir }}/esa-configuration-gis-pa-wagering.xml.tpl"
       - "{{ p_tmpdir }}/params-gameinfo-context.xml.tpl"
     pd_gaming_este_tpls:
       - "{{ p_tmpdir }}/este.properties.tpl"
@@ -126,20 +114,8 @@
   run_once: true
   with_items:
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/es-configuration/gis/este.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/esa-configuration-gis.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/event-processor-jms.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/gis.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-env-config/src/main/env-config/module/gis/params-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-cart.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-favorites.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-groupplay.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-params.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-player.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-quickpicks.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-subscriptions-internal.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-gis-pa-env-config/src/main/env-config/module/gis/esa-configuration-gis-pa-wagering.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-core.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-reference.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-gaming/{{ config.siteName }}-event-detector-env-config/src/main/env-config/event-detector/event-detector-tvc.properties.tpl", dest: "{{ p_tmpdir }}" }
