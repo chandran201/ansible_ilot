@@ -1,0 +1,65 @@
+--- standalone-automation-pd-core.xml_20210211	2021-02-11 21:15:30.547633429 +1300
++++ standalone-automation-pd-core.xml	2021-02-11 21:54:22.303884325 +1300
+@@ -357,7 +357,7 @@
+             <xa-datasource-class>com.ibm.db2.jcc.DB2XADataSource</xa-datasource-class>
+           </driver>
+         </drivers>
+-                <datasource jndi-name="java:jboss/datasources/TxStoreDS" enabled="true" jta="false" pool-name="TxStoreDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/TxStoreDS" enabled="true" jta="false" pool-name="TxStoreDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/TXDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA TXSTORE</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -375,7 +375,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/batch-ds" enabled="true" jta="false" pool-name="batch-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/batch-ds" enabled="true" jta="false" pool-name="batch-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA BATCH</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -393,7 +393,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/geoComplianceDS" enabled="true" jta="false" pool-name="geoComplianceDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/geoComplianceDS" enabled="true" jta="false" pool-name="geoComplianceDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA PD</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -411,7 +411,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/gms-ewl-ds" enabled="true" jta="false" pool-name="gms-ewl-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/gms-ewl-ds" enabled="true" jta="false" pool-name="gms-ewl-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA PD</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -429,7 +429,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/pd-ds" enabled="true" jta="false" pool-name="pd-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/pd-ds" enabled="true" jta="false" pool-name="pd-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA PD</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -447,7 +447,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/SubcapDS" enabled="true" jta="false" pool-name="SubcapDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/SubcapDS" enabled="true" jta="false" pool-name="SubcapDSds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA SUBCAP</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
+@@ -465,7 +465,7 @@
+             <background-validation-millis>30000</background-validation-millis>
+           </validation>
+         </datasource>
+-                <datasource jndi-name="java:jboss/datasources/vouchers-ds" enabled="true" jta="false" pool-name="vouchers-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb:60000/PDDB</connection-url>
++                <datasource jndi-name="java:jboss/datasources/vouchers-ds" enabled="true" jta="false" pool-name="vouchers-dsds"><connection-url>jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL</connection-url>
+           <driver>ibmdb2</driver>
+           <new-connection-sql>SET SCHEMA VOUCHERS</new-connection-sql>
+           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>

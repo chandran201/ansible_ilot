@@ -1,0 +1,74 @@
+--- standalone-automation-cmd_async_node.xml_20210211	2021-02-11 23:24:01.448663633 +1300
++++ standalone-automation-cmd_async_node.xml	2021-02-11 23:31:00.987708775 +1300
+@@ -392,7 +392,7 @@
+ 	<subsystem xmlns="urn:jboss:domain:datasources:5.0">
+       <datasources>
+         <datasource jndi-name="java:/gms-jem-ds" pool-name="jemDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://pam-db:60000/cmddb:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb:60000/PAMDBAL:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -414,7 +414,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:jboss/datasources/cmd-cfg-ds" pool-name="cfgDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://pam-db:60000/cmddb:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb:60000/PAMDBAL:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -436,7 +436,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:/gms-vld-ds" pool-name="vldDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://pam-db:60000/cmddb:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb:60000/PAMDBAL:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -458,7 +458,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:/gms-prv-ds" pool-name="prvDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://pam-db:60000/cmddb:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb:60000/PAMDBAL:currentSchema=PAM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -480,7 +480,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:/campaign-ds" pool-name="campaignDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://connect_db_host:60000/cmddb:currentSchema=CMD_REW_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb2:60000/CONDBAL:currentSchema=CMD_REW_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -502,7 +502,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:jboss/datasources/cmd-lrt-ds" pool-name="lrtDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://connect_db_host:60000/cmddb:currentSchema=CMD_COMMON_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb2:60000/CONDBAL:currentSchema=CMD_COMMON_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -524,7 +524,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:jboss/datasources/cmd-fbm-ds" pool-name="fbmDS" enabled="true" use-java-context="true" use-ccm="true">
+-          <connection-url>jdbc:db2://connect_db_host:60000/cmddb:currentSchema=GNS_GNS_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb2:60000/CONDBAL:currentSchema=GNS_GNS_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>5</min-pool-size>
+@@ -546,7 +546,7 @@
+           </timeout>
+         </datasource>
+         <datasource jndi-name="java:jboss/datasources/GameAdmin_BEDatasource" pool-name="gadmDS" enabled="true">
+-          <connection-url>jdbc:db2://gameadmin-db:60000/cmddb:currentSchema=GADM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
++          <connection-url>jdbc:db2://vip.lnz-c2-cmddb2:60000/CONDBAL:currentSchema=GADM_CMD;retrieveMessagesFromServerOnGetMessage=true;</connection-url>
+           <driver>ibmdb2</driver>
+           <pool>
+             <min-pool-size>10</min-pool-size>
