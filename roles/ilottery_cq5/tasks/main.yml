@@ -3,9 +3,6 @@
     cq5_app_packages:
       - "interactive-portal"
 
-- fail:
-    msg: "runmode variable value in inventory must be publish or author"
-  when: runmode != "publish" and runmode != "author"
 
 - name: Install fixed start script
   template:

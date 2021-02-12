@@ -47,6 +47,8 @@
 
   roles:
     - role: ilottery_cq5_middleware
+      runmode: "author"
+
 
 - name: INSTALL
   hosts: cq5author

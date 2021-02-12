@@ -47,6 +47,7 @@
 
   roles:
     - role: ilottery_cq5_middleware
+      runmode: "publish"
 
 - name: INSTALL
   hosts: cq5publish
