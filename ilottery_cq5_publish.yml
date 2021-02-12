@@ -57,6 +57,7 @@
 
   roles:
     - role: ilottery_cq5
+      runmode: "publish"
 
 - name: START
   hosts: cq5publish

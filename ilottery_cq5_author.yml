@@ -57,6 +57,7 @@
 
   roles:
     - role: ilottery_cq5
+      runmode: "author"
 
 - name: START
   hosts: cq5author
