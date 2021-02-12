@@ -5,10 +5,6 @@
       - "CQ-aem6.1-standalone-license-{{ license_version }}"
 
 
-- fail:
-    msg: "runmode variable value in inventory must be publish or author"
-  when: runmode != "publish" and runmode != "author"
-
 - name: Remove cq5 packages
   yum:
     name: "{{ item }}"
