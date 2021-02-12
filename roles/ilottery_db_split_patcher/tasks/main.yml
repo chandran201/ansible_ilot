@@ -1,6 +1,6 @@
 ---
 
-- name: Patch JBoss's standalone for a splitted DB2
+- name: Patch JBoss standalone for a splitted DB2
   ansible.posix.patch:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
