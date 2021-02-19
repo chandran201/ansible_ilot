@@ -10,6 +10,9 @@
     - "{{ config.siteName }}-database-install"
     - "ric_esdb5_dbmaint"
 
+- name: Launch yum clean all
+  shell: "yum clean all"
+
 - name: Install new packages
   yum:
     name: "{{ item }}"
