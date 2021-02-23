@@ -1,0 +1,12 @@
+--- esa-configuration-admin.xml.orig    2021-02-24 02:19:17.475700176 +1300
++++ esa-configuration-admin.xml 2021-02-24 02:31:22.805247035 +1300
+@@ -45,7 +45,7 @@
+     <resources>
+         <resource method="GET" path="/{context}/api/{version}/openapi/{type:.*}" />
+         <resource path="/{context}/api/{version}/balancing/{var:.*}">
+-            <require-gatekeeper get-roles-from-bam="true" with-roles="balancing-admin" />
++            <!-- <require-gatekeeper get-roles-from-bam="false" with-roles="balancing-admin" /> -->
+             <remote-proxy url="http://vip.pdbroker-web/balancing/{var}" />
+         </resource>
+         <resource method="POST" path="/{context}/api/{version}/admin-location/promotion" name="pdadmin.addplmpromotion" >
+
