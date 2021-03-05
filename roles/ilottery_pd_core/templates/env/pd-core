@@ -70,6 +70,7 @@ PDCRMADAPTER_SMSTIMEOUT={{ config.applications.pdCrmAdapter.smsTimeout }}
 FOURDIGITSSSNMODE={{ config.fourDigitsSSNMode }}
 EMAILASUSERNAME={{ config.emailAsUsername }}
 COMMON_TOKENVALIDITYTIME={{ config.applications.common.tokenValidityTime }}
+CRMADAPTER_ESA_ID_VERIFICATION_MOCK_DELAY=150
 PDCRMADAPTER_RESERVEDAILYGAME={{ config.applications.pdCrmAdapter.reserveDailyGame }}
 PDCRMADAPTER_RESERVEWEEKLYGAME={{ config.applications.pdCrmAdapter.reserveWeeklyGame }}
 PDCRMADAPTER_RESERVEMONTHLYGAME={{ config.applications.pdCrmAdapter.reserveMonthlyGame }}
