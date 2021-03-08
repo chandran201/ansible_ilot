@@ -1,0 +1,94 @@
+---
+
+- name: INIT
+  hosts: dcadapterbalancingplugin
+  become: false
+  gather_facts: no
+  tags:
+    - init
+
+  tasks:
+    - name: Create local temp directory
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_dc_adapter_balancing_plugin"
+      delegate_to: 127.0.0.1
+      run_once: true
+      register: reg_tmpdir
+
+    - set_fact:
+        p_tmpdir: "{{ reg_tmpdir.stdout }}"
+
+    - debug: msg="Created directory {{ p_tmpdir }}"
+      delegate_to: 127.0.0.1
+      run_once: true
+
+    - name: Show Connection Infos
+      debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
+
+- name: STOP
+  hosts: dcadapterbalancingplugin
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - stop
+
+  tasks:
+    - name: Stop Service
+      systemd:
+        name: "dc-adapter-balancing-plugin"
+        state: stopped
+      ignore_errors: yes
+
+- name: CLEANUP CONTAINER
+  hosts: dcadapterbalancingplugin
+  become: true
+  gather_facts: no
+  tags:
+    - clean_config
+
+  tasks:
+    - name: Deleting Application Folder
+      file:
+        state: absent
+        path: "/etc/gtech/pd/config/dc-adapter-balancing-plugin"
+
+- name: INSTALL
+  hosts: dcadapterbalancingplugin
+  become: true
+  gather_facts: no
+  tags:
+    - install
+
+  roles:
+    - role: ilottery_dc_adapter_balancing_plugin
+
+- name: START
+  hosts: dcadapterbalancingplugin
+  serial: 1
+  become: true
+  gather_facts: no
+  tags:
+    - start
+
+  tasks:
+    - name: Start Service
+      systemd:
+        name: "dc-adapter-balancing-plugin"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+
+- name: CLEAN
+  hosts: dcadapterbalancingplugin
+  become: false
+  gather_facts: no
+  tags:
+    - clean
+
+  tasks:
+    - name: Remove local temp directory
+      file:
+        path: "{{ p_tmpdir }}"
+        state: absent
+      delegate_to: 127.0.0.1
+      run_once: true
