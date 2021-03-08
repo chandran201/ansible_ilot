@@ -3,10 +3,5 @@ export CQ_PORT={% if runmode == "publish" %}4503{% elif runmode == "author" %}45
 
 export CQ_RUNMODE='{{ runmode }}'
 export CQ_FILE_SIZE_LIMIT=8192
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-ibm
-export CQ_JVM_OPTS="$CQ_JVM_OPTS -server -Djava.awt.headless=true"
-CQ_JVM_OPTS="$CQ_JVM_OPTS -Xmn820m"
-CQ_JVM_OPTS="$CQ_JVM_OPTS -Xms2048m"
-CQ_JVM_OPTS="$CQ_JVM_OPTS -Xmx2048m"
-CQ_JVM_OPTS="$CQ_JVM_OPTS -Xgcpolicy:gencon -verbose:gc -Xgcthreads2 -Xverbosegclog:/var/log/cq5/gc.log.%seq,7,20000 -Xdisableexplicitgc -Xdisableexcessivegc -Xclassgc -XX:+UseCompressedOops -Xnoloa -Xcompressedrefs"
-CQ_JVM_OPTS="$CQ_JVM_OPTS -Xss256k"
+export JAVA_HOME=/usr/lib/jvm/{{ cq5_java_version }}
+export CQ_JVM_OPTS="-server -Djava.awt.headless=true -Xmn820m -Xms2048m -Xmx2048m -Xss256k -verbose:gc -XX:+UseCompressedOops -Xcompressedrefs"
