@@ -39,7 +39,7 @@
       ignore_errors: yes
 
 - name: INSTALL MIDDLEWARE
-  hosts: cq5author
+  hosts: cq5publish
   become: true
   gather_facts: no
   tags:
