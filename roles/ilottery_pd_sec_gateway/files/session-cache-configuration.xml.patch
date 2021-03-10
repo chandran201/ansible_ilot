@@ -1,0 +1,26 @@
+session-cache-configuration.xml.patch
+--- session-cache-configuration.xml_20210219    2021-02-19 10:55:26.000000000 +0100
++++ session-cache-configuration.xml     2021-03-10 23:29:08.000000000 +0100
+@@ -1,11 +1,3 @@
+-<!--
+-  ~ Copyright © 2019 IGT.
+-  ~
+-  ~ This software and all information contained therein is confidential and proprietary
+-  ~ and shall not be duplicated, used, disclosed or disseminated in any way except as
+-  ~ authorized by the applicable license agreement, without the express written permission of IGT.
+-  ~ All authorized reproductions must be marked with this language.
+-  -->
+ <infinispan
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="urn:infinispan:config:9.3 http://www.infinispan.org/schemas/infinispan-config-9.3.xsd"
+@@ -16,7 +8,8 @@
+    </jgroups>
+
+     <cache-container>
+-        <transport />
++        <transport stack="external-file"/>
++
+         <local-cache-configuration name="local-config">
+             <eviction strategy="LIRS" max-entries="65535"/>
+             <expiration interval="10000" max-idle="900000"/>
+
