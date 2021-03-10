@@ -9,4 +9,3 @@
              <remote-proxy url="http://vip.pdbroker-web/balancing/{var}" />
          </resource>
          <resource method="POST" path="/{context}/api/{version}/admin-location/promotion" name="pdadmin.addplmpromotion" >
-
