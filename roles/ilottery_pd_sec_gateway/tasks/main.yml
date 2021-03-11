@@ -1,4 +1,20 @@
 ---
+
+#DEBUG ME
+- block:
+    - name: Generazione degli indirizzi ip di un cluster per jgroups sync node
+      cluster_node_list:
+        type: jgroups
+        json_cluster_structure: "{{ ilottery_pd_sec_gateway_cluster_info }}"
+        port: "{{ 7600 + jboss_node_port_offset|int }}"
+      register: jgroups
+    
+    - name: Generazione variabili per il cluster connect core
+      set_fact:
+        pd_sec_gateway_nodes_list: "{{ jgroups.result }}"
+        pd_sec_gateway_nodes_number: "{{ jgroups.cluster_members}}"
+  when: ilottery_pd_sec_gateway_cluster_info is defined
+    
 - set_fact:
     pd_sec_gateway_packages:
       - "{{ config.siteName}}-esa-geo-compliance-rpm"

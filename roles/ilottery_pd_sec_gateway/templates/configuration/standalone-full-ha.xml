@@ -619,9 +619,9 @@
 		  <property name="port_range">50</property>
 	  </transport>
           <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
-		  <!--TODO-->
+		  <!--DEBUGME-->
 		  <!--<property name="initial_hosts">192.168.102.77[8000],192.168.102.78[8000],192.168.102.83[8000],192.168.102.84[8000]</property>-->
-		  <property name="initial_hosts">{{ }}</property>
+		  <property name="initial_hosts">{{ pd_sec_gateway_nodes_list }}</property>
           </protocol>
           <protocol type="MERGE3"/>
 	  <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
