@@ -639,7 +639,7 @@
         </stack>
         <stack name="tcp">
           <transport type="TCP" socket-binding="jgroups-tcp"/>
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+          <socket-protocol type="MPING" socket-binding="jgroups-mping">
 	      <property name="port_range">50</property>
           </transport>
           <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
