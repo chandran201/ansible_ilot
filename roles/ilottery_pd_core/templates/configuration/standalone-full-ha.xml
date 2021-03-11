@@ -619,7 +619,7 @@
     <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
     <subsystem xmlns="urn:jboss:domain:jgroups:6.0">
       <channels default="ee">
-        <channel name="ee" stack="udp" cluster="ejb"/>
+        <channel name="ee" stack="tcp" cluster="ejb"/>
       </channels>
       <stacks>
         <stack name="udp">
@@ -640,6 +640,13 @@
         <stack name="tcp">
           <transport type="TCP" socket-binding="jgroups-tcp"/>
           <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+	      <property name="port_range">50</property>
+          </transport>
+          <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
+               <!--DEBUGME-->
+	       <!--<property name="initial_hosts">192.168.119.201[21122],192.168.119.202[21122],192.168.119.212[21122],192.168.119.213[21122],192.168.119.214[21122],192.168.119.215[21122]</property>-->
+	       <property name="initial_hosts">{{ ilottery_pd_core_cluster_info }}</property>
+          </protocol>
           <protocol type="MERGE3"/>
           <protocol type="FD_SOCK"/>
           <protocol type="FD_ALL"/>
