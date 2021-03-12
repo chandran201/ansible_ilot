@@ -619,7 +619,7 @@
     <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
     <subsystem xmlns="urn:jboss:domain:jgroups:6.0">
       <channels default="ee">
-        <channel name="ee" stack="udp" cluster="ejb"/>
+        <channel name="ee" stack="tcp" cluster="ejb"/>
       </channels>
       <stacks>
         <stack name="udp">
@@ -638,8 +638,15 @@
           <protocol type="FRAG3"/>
         </stack>
         <stack name="tcp">
-          <transport type="TCP" socket-binding="jgroups-tcp"/>
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+	  <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+          <transport type="TCP" socket-binding="jgroups-tcp">
+              <property name="port_range">50</property>
+          </transport>
+          <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
+              <!--DEBUGME-->
+              <!--<property name="initial_hosts">192.168.102.205[21222],192.168.102.206[21222],192.168.102.209[21222],192.168.102.210[21222],192.168.102.211[21222],192.168.102.212[21222]</property>-->
+	      <property name="initial_hosts">{{ ilottery_pd_game_cluster_info }}</property>
+          </protocol>
           <protocol type="MERGE3"/>
           <protocol type="FD_SOCK"/>
           <protocol type="FD_ALL"/>
