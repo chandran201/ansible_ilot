@@ -659,10 +659,10 @@
           <protocol type="FRAG3"/>
         </stack>
         <stack name="tcp">
+          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
           <transport type="TCP" socket-binding="jgroups-tcp">
 	      <property name="port_range">50</property>
           </transport>
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
           <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
                <!--DEBUGME-->
 	       <!--<property name="initial_hosts">192.168.119.201[21111],192.168.119.202[21111],192.168.119.212[21111],192.168.119.213[21111],192.168.119.214[21111],192.168.119.215[21111]</property>-->
