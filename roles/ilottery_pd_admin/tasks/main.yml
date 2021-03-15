@@ -138,8 +138,8 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
-- name: Parsing pd-admin main templates
-  when: install_app == "true" and stage == "cat2lnzcust"
+- name: Patch esa-configuration-admin to remove gatekeeper auth
+  when: stage == "cat2lnzcust"
   patch:
     src: "esa-configuration-admin.xml.patch"
     dest: "/etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
