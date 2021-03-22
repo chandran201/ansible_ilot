@@ -2,7 +2,7 @@
 
 #DEBUG ME
 - block:
-    - name: Generazione degli indirizzi ip di un cluster per jgroups sync node
+    - name: Generazione degli indirizzi ip di un cluster per jgroups 
       cluster_node_list:
         type: jgroups
         json_cluster_structure: "{{ ilottery_pd_sec_gateway_cluster_info }}"
