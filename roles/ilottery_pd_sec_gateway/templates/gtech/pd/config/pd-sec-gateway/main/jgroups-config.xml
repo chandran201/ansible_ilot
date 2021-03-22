@@ -4,7 +4,7 @@
    <TCP
 	<!--bind_port="20400"-->
 	bind_addr="match-interface:ens224"
-	bind_port="{{ pdapp.jgroup.port }}"
+	bind_port="{{ jgroups_port }}"
 	recv_buf_size="${tcp.recv_buf_size:20m}"
 	send_buf_size="${tcp.send_buf_size:20m}"
 	max_bundle_size="64K"
@@ -18,7 +18,6 @@
         <!--initial_hosts="192.168.102.77[20400],192.168.102.78[20400],192.168.102.83[20400],192.168.102.84[20400]"-->
         <!--TODO do jinga template -->
         initial_hosts="{{ groups.ilottery_infinispan | map('extract', hostvars, ['jboss_listen_ip']) | list }}"
-
 	port_range="1" />
 
   <MERGE3/>
