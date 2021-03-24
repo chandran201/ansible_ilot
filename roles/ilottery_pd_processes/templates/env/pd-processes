@@ -73,6 +73,7 @@ PDCRMPROCESSES_LOCKPERIOD={{ config.applications.pdCrmProcesses.lockPeriod }}
 PDCRMPROCESSES_SELFEXCLUSION_CLEARCOLLOFFHOURS={{ config.applications.pdCrmProcesses.selfExclusion.clearCooloffHours }}
 PDCRMPROCESSES_ALLOWPASSWORDRESETFORLOCKEDACCOUNT={{ config.applications.pdCrmProcesses.allowPasswordResetForLockedAccount }}
 PDCRMPROCESSES_CLOSEACCOUNT_EXPIRATION_DAYS={{ config.applications.pdCrmProcesses.closeAccountExpirationDays }}
+PDCRMPROCESSES_ENABLEOPTIONALDLVCONTACTS={{ config.applications.pdCrmProcesses.enableOptionalDlvContacts }}
 MAIL_HOST={{ config.applications.mail.host }}
 MAIL_PORT={{ config.applications.mail.port }}
 COMMON_TOKENVALIDITYTIME={{ config.applications.common.tokenValidityTime }}
