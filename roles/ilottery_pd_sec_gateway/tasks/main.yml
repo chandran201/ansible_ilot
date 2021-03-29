@@ -104,6 +104,7 @@
     src: "{{ item }}"
     dest: "/etc/gtech/pd/config/{{ instance_name }}/main/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
+    backup: yes
   with_fileglob: "{{ pd_sec_gateway_tpls }}"
 
 - name: Parsing geo-comliance templates
