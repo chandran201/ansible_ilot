@@ -281,6 +281,7 @@
     mode: 0644
     owner: jboss
     group: jboss
+    backup: yes
 
 - name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/jboss-groups.xml template"
   template:
