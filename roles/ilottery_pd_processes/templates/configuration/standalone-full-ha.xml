@@ -642,12 +642,12 @@
       <channels default="ee">
         <channel name="ee" stack="tcp" cluster="ejb"/>
       </channels>
-      <stacks>
+      <stacks default="tcp">
         <stack name="udp">
           <transport type="UDP" socket-binding="jgroups-udp"/>
           <protocol type="PING"/>
           <protocol type="MERGE3"/>
-          <protocol type="FD_SOCK"/>
+          <protocol type="FD_SOCK" socket-binding="tcp"/>
           <protocol type="FD_ALL"/>
           <protocol type="VERIFY_SUSPECT"/>
           <protocol type="pbcast.NAKACK2"/>
@@ -659,14 +659,21 @@
           <protocol type="FRAG3"/>
         </stack>
         <stack name="tcp">
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
           <transport type="TCP" socket-binding="jgroups-tcp">
-	      <property name="port_range">50</property>
+            <property name="port_range">50</property>
+            <property name="recv_buf_size">
+                20971520
+            </property>
+            <property name="send_buf_size">
+                20971520
+            </property>
           </transport>
           <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
-               <!--DEBUGME-->
+	      <!--DEBUGME-->
+               <property name="initial_hosts">{% for item in groups.ilottery_pd_processes %}{{ hostvars[item].jboss_listen_ip }}[{{ 7600 + jboss_node_port_offset|int }}]{% if not loop.last %},{% endif %}{% endfor %}</property>
 	       <!--<property name="initial_hosts">192.168.119.201[21111],192.168.119.202[21111],192.168.119.212[21111],192.168.119.213[21111],192.168.119.214[21111],192.168.119.215[21111]</property>-->
-	       <property name="initial_hosts">{{ ilottery_pd_processes_cluster_info }}</property>
+	       <!--<property name="initial_hosts">{{ ilottery_pd_processes_cluster_info }}</property>-->
+              </protocol>
           <protocol type="MERGE3"/>
           <protocol type="FD_SOCK"/>
           <protocol type="FD_ALL"/>

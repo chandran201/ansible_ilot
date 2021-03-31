@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: java_ibm_rpm }
+  - { role: java_ibm_rpm, java_version: "{{ tomcat_java_version }}" }

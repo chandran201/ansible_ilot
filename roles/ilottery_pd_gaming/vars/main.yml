@@ -1,5 +1,6 @@
 ---
 jboss_version: "7.2.9.1"
-jboss_java_version: "java-11-openjdk"
+jboss_java_version: "pd-java-11-openjdk"
 jboss_node_name: "{{ instance_name }}"
 jboss_node_user: "jboss"
+pdgaming_host_list: "{{ groups.ilottery_pd_gaming | map('extract', hostvars, ['jboss_listen_ip']) | list }}"

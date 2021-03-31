@@ -619,14 +619,14 @@
     <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
     <subsystem xmlns="urn:jboss:domain:jgroups:6.0">
       <channels default="ee">
-        <channel name="ee" stack="udp" cluster="ejb"/>
+        <channel name="ee" stack="tcp" cluster="ejb"/>
       </channels>
-      <stacks>
+      <stacks default="tcp">
         <stack name="udp">
           <transport type="UDP" socket-binding="jgroups-udp"/>
           <protocol type="PING"/>
           <protocol type="MERGE3"/>
-          <protocol type="FD_SOCK"/>
+          <protocol type="FD_SOCK" socket-binding="tcp"/>
           <protocol type="FD_ALL"/>
           <protocol type="VERIFY_SUSPECT"/>
           <protocol type="pbcast.NAKACK2"/>
@@ -638,10 +638,20 @@
           <protocol type="FRAG3"/>
         </stack>
         <stack name="tcp">
-          <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
-          <transport type="TCP" socket-binding="jgroups-tcp"/>
+          <transport type="TCP" socket-binding="jgroups-tcp">
+            <property name="port_range">50</property>
+            <property name="recv_buf_size">
+                20971520
+            </property>
+            <property name="send_buf_size">
+                20971520
+            </property>
+          </transport>
+          <protocol type="org.jgroups.protocols.TCPPING" module="org.jgroups">
+<property name="initial_hosts">{% for item in groups.ilottery_pd_loyalty %}{{ hostvars[item].jboss_listen_ip }}[{{ 7600 + jboss_node_port_offset|int }}]{% if not loop.last %},{% endif %}{% endfor %}</property>
+          </protocol>
           <protocol type="MERGE3"/>
-          <protocol type="FD_SOCK"/>
+          <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
           <protocol type="FD_ALL"/>
           <protocol type="VERIFY_SUSPECT"/>
           <protocol type="pbcast.NAKACK2"/>
