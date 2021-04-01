@@ -97,6 +97,13 @@
     group: jboss
     mode: 0755
 
+- name: "Create /etc/gtech/pd/config/{{ instance_name }}/main/esa-securegateway folder"
+  file:
+    path: /etc/gtech/pd/config/{{ instance_name }}/main/esa-securegateway
+    state: directory
+    owner: jboss
+    group: jboss
+    mode: 0755
 
 - name: "Parsing {{ instance_name }} templates"
   when: install_app == "true"
