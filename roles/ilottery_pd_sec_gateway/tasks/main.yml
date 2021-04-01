@@ -284,16 +284,17 @@
     group: jboss
     backup: yes
 
-#- name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/jboss-groups.xml template"
-#  template:
-#    src: "templates/gtech/pd/config/{{ instance_name }}/main/jgroups-config.xml"
-#    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/jgroups-config.xml"
-#    mode: 0644
-#    owner: jboss
-#    group: jboss
+- name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/jboss-groups.xml template"
+  template:
+    src: "templates/gtech/pd/config/{{ instance_name }}main/jgroups-config.xml"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/esa-securegateway/jgroups-config.xml"
+    mode: 0644
+    owner: jboss
+    group: jboss
+    backup: yes
 
-#- name: Patch session-cache-configuration.xml to use external file
-#  patch:
-#    backup: yes
-#    src: "session-cache-configuration.xml.patch"
-#    dest: "/etc/gtech/pd/config/pd-sec-gateway/main/session-cache-configuration.xml"
+- name: Patch session-cache-configuration.xml to use external file
+  patch:
+    src: "session-cache-configuration.xml.patch"
+    dest: "/etc/gtech/pd/config/pd-sec-gateway/main/session-cache-configuration.xml"
+    backup: yes
