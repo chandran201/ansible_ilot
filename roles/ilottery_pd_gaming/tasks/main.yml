@@ -656,6 +656,6 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "/opt/gtec"
+    - "/opt/gtech"
     - "/etc/cron.d/scan-store-cleanup-old-tickets"
     - "/etc/cron.d/scan-store-cleanup-tickets-overlimit"
