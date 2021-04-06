@@ -6,7 +6,6 @@
       - "{{ config.siteName}}-admin-gov-frontend-rpm"
       - "{{ config.siteName}}-balancing-application-rpm"
       - "{{ config.siteName}}-balancing-config-rpm"
-      - "{{ config.siteName}}-balancing-db-cleanup-rpm"
       - "{{ config.siteName}}-batch-admin-application-rpm"
       - "{{ config.siteName}}-batch-admin-config-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
@@ -24,8 +23,6 @@
       - "{{ p_tmpdir }}/hibernate.cfg.xml.tpl"
       - "{{ p_tmpdir }}/esa-configuration-balancing.xml.tpl"
       - "{{ p_tmpdir }}/balancing.properties.tpl"
-    pd_admin_balancing_db_cleanup_tpls:
-      - "{{ p_tmpdir }}/balancing-db-cleanup.properties.tpl"
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
@@ -81,7 +78,6 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/balancing.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/hibernate.cfg.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/esa-configuration-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-db-cleanup-env-config/src/main/env-config/balancing-db-cleanup.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/batch.properties.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/esa-configuration-batch.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/autopay-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
@@ -119,13 +115,6 @@
     group: jboss
     mode: 0755
 
-- name: Create /opt/gtech/pd/balancing-db-cleanup/conf folder
-  file:
-    path: /opt/gtech/pd/balancing-db-cleanup/conf
-    state: directory
-    owner: jboss
-    group: jboss
-    mode: 0755
 
 - name: Parsing pd-admin main templates
   when: install_app == "true"
@@ -151,14 +140,6 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_batch_tpls }}"
 
-- name: Parsing pd-admin balancing-db-cleanup templates
-  when: install_app == "true"
-  template:
-    src: "{{ item }}"
-    dest: "/opt/gtech/pd/balancing-db-cleanup/conf/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_admin_balancing_db_cleanup_tpls }}"
-
 - name: Parsing pd-admin admin templates
   when: install_app == "true"
   template:
@@ -168,14 +149,6 @@
   with_fileglob: "{{ pd_admin_admin_tpls }}"
 
  # END products configurations 
-
-- name: Copying cron for balancing-db-cleanup
-  copy:
-    src: "files/cron/balancing-db-cleanup"
-    dest: "/etc/cron.d/balancing-db-cleanup"
-    owner: root
-    group: root
-    mode: 0644
 
 - name: Install security limits
   template:
@@ -218,23 +191,6 @@
   cron:
     name: "jboss logrotation jblogrotate.sh"
     state: absent
-
-# - name: Copying 
-#   copy:
-#     src: "files/jbossas/jblogrotate.sh"
-#     dest: "/etc/jbossas/jblogrotate.sh"
-#     owner: root
-#     group: root
-#     mode: 0755
-
-# - name: Install jboss cron logrotation /etc/jbossas/jblogrotate.sh
-#   when: enable_logremoval
-#   cron:
-#     name: "jboss logrotation jblogrotate.sh"
-#     minute: "0"
-#     hour: "23"
-#     user: "root"
-#     job: "/etc/jbossas/jblogrotate.sh {{ keep_logs_days }}"
 
 - name: Setting correct permissions/ownership on various directories
   file:
@@ -372,3 +328,19 @@
     owner: "{{ jboss_node_user }}"
     group: "{{ jboss_node_user }}"
     mode: 0755
+
+- name: Remove balancing cleanup packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items:
+    - "{{ config.siteName}}-balancing-db-cleanup-rpm"
+
+- name: Delete balancing-cleanup conf
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "/etc/cron.d/balancing-db-cleanup"
+    - "/opt/gtech"

@@ -1,1 +1,0 @@
-0 5 * * * root cd /opt/gtech/pd/balancing-db-cleanup/bin;export JAVA_HOME=/usr/lib/jvm/java-11-openjdk;./balancing-db-cleanup.sh -days 45 30 15;
