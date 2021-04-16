@@ -73,6 +73,7 @@
     src: "{{ item }}"
     dest: "/opt/gtech/pd4/batch/conf/{{ item | basename | regex_replace('\\.tpl$', '') }}"
     mode: 0644
+    backup: yes
   with_fileglob: "{{ batch_tpls }}"
 
  # END products configurations 

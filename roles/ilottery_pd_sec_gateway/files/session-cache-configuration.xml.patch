@@ -1,0 +1,26 @@
+--- session-cache-configuration.xml.orig	2021-04-01 15:57:13.038770800 +0200
++++ session-cache-configuration.xml	2021-04-01 16:06:06.951725100 +0200
+@@ -1,18 +1,14 @@
+-<!--
+-  ~ Copyright © 2019 IGT.
+-  ~
+-  ~ This software and all information contained therein is confidential and proprietary
+-  ~ and shall not be duplicated, used, disclosed or disseminated in any way except as
+-  ~ authorized by the applicable license agreement, without the express written permission of IGT.
+-  ~ All authorized reproductions must be marked with this language.
+-  -->
+ <infinispan
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="urn:infinispan:config:9.3 http://www.infinispan.org/schemas/infinispan-config-9.3.xsd"
+         xmlns="urn:infinispan:config:9.3">
+ 
++    <jgroups>
++        <stack-file name="external-file" path="/etc/gtech/pd/config/pd-sec-gateway/main/esa-secure-gateway/jgroups-config.xml"/>
++    </jgroups>
++
+     <cache-container>
+-        <transport />
++        <transport stack="external-file"/>
+         <local-cache-configuration name="local-config">
+             <eviction strategy="LIRS" max-entries="65535"/>
+             <expiration interval="10000" max-idle="900000"/>
