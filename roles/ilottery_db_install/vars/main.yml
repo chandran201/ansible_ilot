@@ -1,6 +1,6 @@
 ---
 
-installation_url: "jdbc:db2://{{ siteID }}-{{ envID }}-pddb{{ vipSuffix }}:{{ pddb_port }}/{{ pddb_database_id }}"
+installation_url: "jdbc:db2://{{ ansible_host | regex_replace('\\..*',prodSuffix) }}:{{ pddb_port }}/{{ pddb_database_id }}"
 db_schemas: 
   - "balancing"
   - "batch"
