@@ -1054,6 +1054,7 @@ config_defaults:
       plm: PLM
       plm_site: PLM
       scan_store: SCANSTORE
+      dc_adapter: DCA
       subcap: SUBCAP
       triggers: TRIGGERS
       txstore: TXSTORE
