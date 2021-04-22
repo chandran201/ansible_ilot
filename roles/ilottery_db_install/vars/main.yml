@@ -22,3 +22,4 @@ db_schemas:
   - "utils" 
   - "vouchers" 
   - "vouchers-txstore-plugin"
+  - "dc-adapter"
