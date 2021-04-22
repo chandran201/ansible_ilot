@@ -927,6 +927,13 @@ config_defaults:
       sites:
         ref:
           enableAutomaticTicketAddition: 'true'
+      batch:
+        ticketProcessor:
+          executor:
+            throttle_limit: 25
+            corePoolSize: 20
+            maxPoolSize: 25
+            queueCapacity: 25
     secondchance:
       context: second-chance
     secureGateway:
