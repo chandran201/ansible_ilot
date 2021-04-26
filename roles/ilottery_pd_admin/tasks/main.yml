@@ -139,7 +139,7 @@
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
 - name: Patch esa-configuration-admin to remove gatekeeper auth
-  when: stage == "cat2lnzcust" or stage == "pdclnz"
+  when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz"
   patch:
     src: "esa-configuration-admin.xml.patch"
     dest: "/etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
