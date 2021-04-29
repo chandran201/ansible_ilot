@@ -128,3 +128,4 @@ OAUTH_CONTEXT={{ config.oauth.context }}
 OAUTH_USERNAME={{ config.oauth.username }}
 OAUTH_PASSWORD={{ config.oauth.password }}
 OAUTH_VERSION={{ config.oauth.version }}
+BALANCING_COREURL={{ config.applications.balancing.url}}
