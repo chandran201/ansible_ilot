@@ -96,6 +96,8 @@ config_immutable:
       url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/api"
     xp:
       url: "http://{{ siteID }}-{{ envID }}-dynamo{{ vipSuffix }}:8080"
+    balancing:
+      url: "http://{{ siteID }}-{{ envID }}-pdbroker{{ vipSuffix }}/balancing/api"
   containers:
     secGateway:
       mobileHost: "{{ siteID }}-{{ envID }}-pdsecgatewaymobile{{ vipSuffix }}"
