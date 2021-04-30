@@ -1,0 +1,8 @@
+--- pam-jdbc.properties_20210211	2021-02-12 00:13:58.350785581 +1300
++++ pam-jdbc.properties	2021-02-12 00:14:45.207790623 +1300
+@@ -1,4 +1,4 @@
+ pamJdbc.driver.class=com.ibm.db2.jcc.DB2Driver
+-pamJdbc.url=jdbc:db2://vip.lnz-c2-cmddb:60000/cmddb:currentSchema=PAM_CMD;
++pamJdbc.url=jdbc:db2://vip.lnz-c2-cmddb:60000/PAMDBAL:currentSchema=PAM_CMD;
+ pamJdbc.username=GTKINST1
+ pamJdbc.password=lnzigt2020

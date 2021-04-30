@@ -38,6 +38,17 @@
         state: stopped
       ignore_errors: yes
 
+- name: INSTALL MIDDLEWARE
+  hosts: cq5author
+  become: true
+  gather_facts: no
+  tags:
+    - install_middleware
+
+  roles:
+    - role: ilottery_cq5_middleware
+      runmode: "author"
+
 - name: INSTALL
   hosts: ilottery_cq5_author
   become: true
@@ -49,6 +60,7 @@
   roles:
     - role: os_config
     - role: ilottery_cq5
+      runmode: "author"
 
 - name: START
   hosts: ilottery_cq5_author

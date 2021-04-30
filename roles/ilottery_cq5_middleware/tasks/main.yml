@@ -1,0 +1,80 @@
+---
+- set_fact:
+    cq5_packages:
+      - "CQ-aem6.1-standalone-{{ cq_version }}"
+      - "CQ-aem6.1-standalone-license-{{ license_version }}"
+
+
+- name: Remove cq5 packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ cq5_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install cq5 packages
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ cq5_packages }}"
+
+
+- name: Install templates/sysconfig/cq5 in /etc/sysconfig/cq5
+  template:
+    src: "templates/sysconfig/cq5"
+    dest: "/etc/sysconfig/cq5"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Set limits.conf soft nofile
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: nofile
+    value: 32768
+
+- name: Set limits.conf hard nofile
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: nofile
+    value: 32768
+
+- name: Set limits.conf soft nproc
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: nproc
+    value: 32768
+
+- name: Set limits.conf hard nproc
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: nproc
+    value: 32768
+
+- name: Set limits.conf soft memlock
+  pam_limits:
+    domain: cq5
+    limit_type: soft
+    limit_item: memlock
+    value: 1024000
+
+- name: Set limits.conf hard memlock
+  pam_limits:
+    domain: cq5
+    limit_type: hard
+    limit_item: memlock
+    value: 1024000
+
+
+
+
+

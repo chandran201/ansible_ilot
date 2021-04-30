@@ -1,0 +1,22 @@
+---
+
+#- name: Patch JBoss standalone for a splitted DB2
+#  ansible.posix.patch:
+#    src: "{{ item.src }}"
+#    dest: "{{ item.dest }}"
+#    backup: yes
+#  with_items: 
+#    - { src: "patches/ilottery/standalone-automation-pd-core.xml.patch", dest: "/usr/share/jbossas/pd-core/configuration/standalone-automation-pd-core.xml" }
+#    - { src: "patches/ilottery/standalone-automation-pd-gaming.xml.patch", dest: "/usr/share/jbossas/pd-core/configuration/standalone-automation-pd-gaming.xml" }
+#    - { src: "patches/ilottery/standalone-automation-pd-processes.xml.patch", dest: "/usr/share/jbossas/pd-core/configuration/standalone-automation-pd-processes.xml" }
+#
+#- name: Patch Batches Program JDBC properties
+#  ansible.posix.patch:
+#    src: "{{ item.src }}"
+#    dest: "{{ item.dest }}"
+#    backup: yes
+#    basedir: "/opt/gtech/pd4/batch/conf"
+#  with_items: 
+#    - { src: "patches/ilottery/batches/jdbc.properties.patch", dest: "jdbc.properties" }
+#    - { src: "patches/ilottery/batches/pam-jdbc.properties.patch", dest: "pam-jdbc.properties" }
+#    - { src: "patches/ilottery/batches/sms-jdbc.properties.patch", dest: "sms-jdbc.properties" }

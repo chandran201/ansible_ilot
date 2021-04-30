@@ -1,4 +1,21 @@
 ---
+
+#DEBUG ME
+- block:
+    - name: Generazione degli indirizzi ip di un cluster per jgroups
+      cluster_node_list:
+        type: jgroups
+        json_cluster_structure: "{{ ilottery_pd_admin_cluster_info }}"
+        port: "21322"
+        #port: "{{ 7600 + jboss_node_port_offset | int }}"
+      register: jgroups
+    
+    - name: Generazione variabili per il cluster PDADMIN
+      set_fact:
+        pd_admin_nodes_list: "{{ jgroups.result }}"
+        pd_admin_nodes_number: "{{ jgroups.cluster_members}}"
+  when: ilottery_pd_admin_cluster_info is defined
+
 - set_fact:
     pd_admin_packages:
       - "{{ config.siteName}}-admin-rest-application-rpm"
@@ -121,6 +138,7 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
+  # TODO: Improve logic
 - name: Patch esa-configuration-admin to remove gatekeeper auth
   when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz"
   patch:

@@ -1,4 +1,21 @@
 ---
+
+#DEBUG ME
+- block:
+    - name: Generazione degli indirizzi ip di un cluster per jgroups
+      cluster_node_list:
+        type: jgroups
+        json_cluster_structure: "{{ ilottery_pd_core_cluster_info }}"
+        port: "21122"
+        #port: "{{ 7600 + jboss_node_port_offset|int }}"
+      register: jgroups
+    
+    - name: Generazione variabili per il cluster PDCORE
+      set_fact:
+        pd_core_nodes_list: "{{ jgroups.result }}"
+        pd_core_nodes_number: "{{ jgroups.cluster_members}}"
+  when: ilottery_pd_core_cluster_info is defined
+
 - set_fact:
     pd_core_packages:
       - "{{ config.siteName}}-pd-crm-adapter-application-rpm"

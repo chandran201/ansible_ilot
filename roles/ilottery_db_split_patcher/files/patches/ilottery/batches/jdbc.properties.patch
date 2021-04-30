@@ -1,0 +1,8 @@
+--- jdbc.properties_20210211	2021-02-12 00:12:44.384777622 +1300
++++ jdbc.properties	2021-02-12 00:13:17.349781169 +1300
+@@ -1,4 +1,4 @@
+ jdbc.driver.class = com.ibm.db2.jcc.DB2Driver
+-jdbc.url = jdbc:db2://vip.lnz-c2-pddb:60000/PDDB:currentSchema=BATCH;driverType=4;loginTimeout=40;retryIntervalForClientReroute=3;maxRetriesForClientReroute=10;enableExtendedIndicators=2;
++jdbc.url = jdbc:db2://vip.lnz-c2-pddb2:60000/PLDBAL:currentSchema=BATCH;driverType=4;loginTimeout=40;retryIntervalForClientReroute=3;maxRetriesForClientReroute=10;enableExtendedIndicators=2;
+ jdbc.username = gtkappl1
+ jdbc.password = lnzigt2020
