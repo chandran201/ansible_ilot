@@ -358,8 +358,7 @@
           </driver>
         </drivers>
         {% for datasource, opts in datasources.iteritems() %}
-        <!--<datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ config.databases.jdbc.url }}</connection-url>-->
-        <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ opts.connection_url }}</connection-url>
+        <datasource jndi-name="java:jboss/datasources/{{ datasource }}" enabled="true" jta="false" pool-name="{{ datasource }}ds"><connection-url>{{ opts.connection_url | default( config.databases.jdbc.url ) }}</connection-url>
           <driver>ibmdb2</driver>
           <new-connection-sql>SET SCHEMA {{ opts.schema }}</new-connection-sql>
           <timeout><idle-timeout-minutes>1</idle-timeout-minutes>
