@@ -49,6 +49,7 @@
         db_schemas: 
           - "balancing"
           - "batch"
+          - "batch-site"
           - "eventdetector"
           - "eventdetector-site"
           - "geo-compliance-persistence"
