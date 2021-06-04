@@ -294,7 +294,7 @@
 - name: "Install /etc/gtech/pd/config/{{ instance_name }}/main/jboss-groups.xml template"
   template:
     src: "templates/gtech/pd/config/{{ instance_name }}/main/jgroups-config.xml.tpl"
-    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/esa-secure-gateway/jgroups-config.xml"
+    dest: "/etc/gtech/pd/config/{{ instance_name }}/main/jgroups-config.xml"
     mode: 0644
     owner: jboss
     group: jboss
