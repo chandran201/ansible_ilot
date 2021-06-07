@@ -138,9 +138,9 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
-  # TODO: Improve logic
-- name: Patch esa-configuration-admin to remove gatekeeper auth
-  when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz"
+  #TODO: Improve conditional logic, by adding a variable on the inventory
+- name: Patch esa-configuration-admin to remove gatekeeper auth on Duplex envs
+  when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz" or stage = "uatlnzcust1"
   patch:
     src: "esa-configuration-admin.xml.patch"
     dest: "/etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
