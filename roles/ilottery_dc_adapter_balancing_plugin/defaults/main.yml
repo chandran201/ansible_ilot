@@ -1,0 +1,3 @@
+---
+box: "pd-crm"
+log_directory: "/var/log/dc-adapter-balancing-plugin"

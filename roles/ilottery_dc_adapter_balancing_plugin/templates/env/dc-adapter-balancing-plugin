@@ -1,0 +1,9 @@
+WEBBROKER_URL={{ config.containers.webBroker.url }}
+
+ESA_LOGGING_REQUEST_BODY={{ config.applications.esa.logging.requestBody }}
+ESA_LOGGING_REQUEST_HEADERS={{ config.applications.esa.logging.requestHeaders }}
+ESA_LOGGING_RESPONSE_BODY={{ config.applications.esa.logging.responseBody }}
+ESA_LOGGING_RESPONSE_HEADERS={{ config.applications.esa.logging.responseHeaders }}
+DC_ADAPTER_BALANCING_PLUGIN_LOG_DIRECTORY={{ log_directory }}
+DC_ADAPTER_BALANCING_PLUGIN_LOG_PATTERN={{ log_pattern }}
+
