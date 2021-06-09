@@ -1,3 +1,4 @@
 ---
 box: "pd-gaming"
 log_directory: "/var/log/dc-adapter"
+file_path: /opt/igt/pd
