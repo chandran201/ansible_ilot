@@ -1,0 +1,4 @@
+---
+box: "pd-gaming"
+log_directory: "/var/log/pd-maestro"
+file_path: /opt/igt/pd
