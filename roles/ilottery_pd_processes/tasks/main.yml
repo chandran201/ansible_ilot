@@ -2,16 +2,18 @@
 - set_fact:
     pd_processes_packages:
       - "{{ config.siteName}}-pd-crm-processes-application-rpm"
-      - "{{ config.siteName}}-ilottery-balancing-plugins-application-rpm"
-      - "{{ config.siteName}}-igaming-balancing-plugins-application-rpm"
       - "{{ config.siteName}}-plm-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
+    pd_processes_balancing_plugins_packages:
+      - "{{ config.siteName}}-ilottery-balancing-plugins-application-rpm"
+      - "{{ config.siteName}}-igaming-balancing-plugins-application-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
       - "apr"
       - "openssl"
       - "coreutils"
+    first_pd_processes_host: "{{ hostvars[groups['pdprocesses'][0]]['ansible_host']}}"
 
 - name: Install jboss common packages
   yum:
@@ -26,7 +28,7 @@
     name: "{{ item }}"
     state: removed
     disable_gpg_check: yes
-  with_items: "{{ pd_processes_packages }}"
+  with_items: "{{ pd_processes_packages + pd_processes_balancing_plugins_packages }}"
 
 - name: remove jboss autodeploy marker files
   shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
@@ -43,6 +45,14 @@
     disable_gpg_check: yes
   with_items: "{{ pd_processes_packages }}"
 
+- name: Install balancing plugins application packages from yum repo
+  when: install_app == "true" and ansible_host == first_pd_processes_host 
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ pd_processes_balancing_plugins_packages }}"
+
 - name: Create pd-crm-processes folder in temp directory
   file:
     path: "{{ p_tmpdir }}/pd-crm-processes"
@@ -53,6 +63,7 @@
   run_once: true
 
 - name: Create /etc/gtech/pd/config/pd-processes/main/balancing-plugins folder
+  when: ansible_host == first_pd_processes_host 
   file:
     path: /etc/gtech/pd/config/pd-processes/main/balancing-plugins
     state: directory
