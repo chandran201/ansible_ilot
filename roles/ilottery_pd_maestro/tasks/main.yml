@@ -1,7 +1,7 @@
 ---
 - set_fact:
     pd_maestro_packages:
-      - "{{ config.siteName}}-pd-maestro-application-rpm"
+      - "{{ config.siteName}}-maestro-application-rpm"
 
 - name: Remove application packages
   yum:
