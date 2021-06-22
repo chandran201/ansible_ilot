@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: pdmaestro
+  hosts: maestro
   become: false
   gather_facts: no
   tags:
@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_pdmaestro"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_maestro"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: pdmaestro
+  hosts: maestro
   serial: 1
   become: true
   gather_facts: no
@@ -35,12 +35,12 @@
   tasks:
     - name: Stop Service
       systemd:
-        name: "pd-maestro"
+        name: "maestro"
         state: stopped
       ignore_errors: yes
 
 - name: CLEANUP CONTAINER
-  hosts: pdmaestro
+  hosts: maestro
   become: true
   gather_facts: no
   tags:
@@ -50,10 +50,10 @@
     - name: Deleting Application Folder
       file:
         state: absent
-        path: "/etc/gtech/pd/config/pd-maestro"
+        path: "/etc/gtech/pd/config/maestro"
 
 - name: INSTALL
-  hosts: pdmaestro
+  hosts: maestro
   become: true
   gather_facts: no
   tags:
@@ -63,7 +63,7 @@
     - role: ilottery_pd_maestro
 
 - name: START
-  hosts: pdmaestro
+  hosts: maestro
   serial: 1
   become: true
   gather_facts: no
@@ -73,13 +73,13 @@
   tasks:
     - name: Start Service
       systemd:
-        name: "pd-maestro"
+        name: "maestro"
         state: restarted
         enabled: yes
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: pdmaestro
+  hosts: maestro
   become: false
   gather_facts: no
   tags:

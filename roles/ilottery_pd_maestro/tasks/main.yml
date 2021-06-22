@@ -21,17 +21,17 @@
     disable_gpg_check: yes
   with_items: "{{ pd_maestro_packages }}"
 
-- name: Create /etc/gtech/pd/config/pd-maestro folder
+- name: Create /etc/gtech/pd/config/maestro folder
   file:
-    path: /etc/gtech/pd/config/pd-maestro
+    path: /etc/gtech/pd/config/maestro
     state: directory
     owner: springboot
     group: springboot
     mode: 0755
 
-- name: Create /var/log/pd-maestro/ folder
+- name: Create /var/log/maestro/ folder
   file:
-    path: /var/log/pd-maestro
+    path: /var/log/maestro
     state: directory
     owner: springboot
     group: springboot
@@ -51,8 +51,8 @@
 
 - name: "Install env to /usr/local/env/"
   template:
-    src: "env/pd-maestro"
-    dest: "/usr/local/env/pd-maestro"
+    src: "env/maestro"
+    dest: "/usr/local/env/maestro"
     owner: "springboot"
     group: "springboot"
     mode: 0755

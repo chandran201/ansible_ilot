@@ -1,4 +1,5 @@
 ---
-box: "pd-gaming"
-log_directory: "/var/log/pd-maestro"
+box: "pd-crm"
+log_directory: "/var/log/maestro"
 file_path: /opt/igt/pd
+db_schema: "MAESTRO"

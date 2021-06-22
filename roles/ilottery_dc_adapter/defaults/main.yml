@@ -1,5 +1,5 @@
 ---
-box: "pd-gaming"
+box: "pd-crm"
 log_directory: "/var/log/dc-adapter"
 file_path: /opt/igt/pd
 db_schema: "DCA"
