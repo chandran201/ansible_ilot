@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: ilottery_configs }
-  - { role: jboss7_rpm, jboss_node_javaopts: "{{ este_gateway_adapter_jboss_node_javaopts }}", jboss_load_app_env_file: true }
+  - { role: jboss7_rpm, jboss_node_javaopts: "{{ este_gateway_adapter_jboss_node_javaopts }}", jboss_load_app_env_file: true, rotateMinJboss: 0, rotateHourJboss: 1 }
