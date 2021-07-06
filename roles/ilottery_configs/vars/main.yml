@@ -1149,6 +1149,12 @@ config_defaults:
     messageType: empty
     signUrl: /api/v1/cryptography/sign
     verifyUrl: /api/v1/cryptography/verify
+  integration:
+    dataconnector:
+      txPushEnabled: false
+      autopaytEnabled: false
+      drawResultsEnabled: false
+      drawDetailsEnabled: false
   jboss:
     home: /opt/jboss
   language:
