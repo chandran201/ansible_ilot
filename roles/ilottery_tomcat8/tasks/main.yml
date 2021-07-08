@@ -43,14 +43,6 @@
   with_items:
     - "igamingrest-rpm"
 
-- name: Install cashier-application-rpm package
-  yum:
-    name: "{{ item }}-{{ config.cashier_version }}"
-    state: present
-    disable_gpg_check: yes
-  with_items:
-    - "cashier-application-rpm"
-
 - name: Install sysconfig/tomcat8 template
   template:
     src: "templates/sysconfig/tomcat8"
