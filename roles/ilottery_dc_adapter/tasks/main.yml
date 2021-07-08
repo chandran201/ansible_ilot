@@ -37,11 +37,6 @@
     group: springboot
     mode: 0755
 
-- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
-  file:
-    src: "/usr/lib/jvm/java"
-    dest: "/opt/jdk"
-    state: link
 
 - name: create /usr/local/env
   file:

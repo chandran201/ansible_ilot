@@ -534,12 +534,6 @@
   notify:
     - restart sshd
 
-- name: Create symlinks /opt/jdk to /usr/lib/jvm/java
-  file:
-    src: "/usr/lib/jvm/java"
-    dest: "/opt/jdk"
-    state: link
-
 - name: Create hash for jboss mgmt password
   shell: echo "{{ jboss_management_user }}:ManagementRealm:{{ jboss_management_pass }}" | md5sum | cut -d ' ' -f 1
   register: md5jbosspwd
