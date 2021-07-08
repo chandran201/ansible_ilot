@@ -35,13 +35,21 @@
   shell: "yum clean all"
   become: yes
 
-- name: Install tomcat8 packages
+- name: Install igamingrest-rpm package
   yum:
     name: "{{ item }}-{{ config.igamingrest_version }}"
     state: present
     disable_gpg_check: yes
-  with_items: "{{ tomcat8_packages }}"
+  with_items:
+    - "igamingrest-rpm"
 
+- name: Install cashier-application-rpm package
+  yum:
+    name: "{{ item }}-{{ config.cashier_version }}"
+    state: present
+    disable_gpg_check: yes
+  with_items:
+    - "cashier-application-rpm"
 
 - name: Install sysconfig/tomcat8 template
   template:
