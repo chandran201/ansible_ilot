@@ -4,7 +4,7 @@
       - "{{ config.siteName}}-pd-crm-adapter-application-rpm"
       - "{{ config.siteName}}-geo-compliance-persistence-rpm"
       - "{{ config.siteName}}-vouchers-application-rpm"
-        #- "{{ config.siteName}}-subcap-application-rpm"
+      - "{{ config.siteName}}-doc-generator-application-rpm"
       - "{{ config.siteName}}-txstore-write-application-rpm"
       - "{{ config.siteName}}-pd-backend-bus-application-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
