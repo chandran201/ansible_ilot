@@ -1,0 +1,8 @@
+---
+
+#
+# PDDB
+#
+db2logs: /db2dumps/output_logs
+db2scripts: /files/db2/scripts
+db2home: /files/db2/gtkinst1

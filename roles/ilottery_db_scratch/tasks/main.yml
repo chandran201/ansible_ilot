@@ -1,0 +1,58 @@
+---
+
+- name: Copy scripts
+  template:
+    src: "{{ item }}"
+    dest: "{{ db2home }}/{{ item}}"
+    owner: gtkinst1
+    group: gtdbadm1
+    mode: 0755
+  with_items:
+    - checkPDDBScratched.sh
+
+- name: Check inside devops.config
+  shell: "su - gtkinst1 {{ db2home }}/checkPDDBScratched.sh | grep -v login"
+  register: reg_scratched
+  ignore_errors: yes
+
+- name: Show resultset if it exists
+  debug:
+    msg: "Scratched --> {{ reg_scratched.stdout }}"
+
+- name: "Create {{ db2scripts }} folder"
+  file:
+    path: "{{ db2scripts }}"
+    state: directory
+    owner: gtkinst1
+    group: gtdbadm1
+    mode: 0755
+  when: reg_scratched.stdout == "TRUE"
+
+- name: Copy scripts
+  template:
+    src: "{{ item }}"
+    dest: "{{ db2home }}/{{ item}}"
+    owner: gtkinst1
+    group: gtdbadm1
+    mode: 0755
+  with_items:
+    - executePDDBStats.sh
+    - updatePDDBScratchedStatus.sh
+  when: reg_scratched.stdout == "TRUE"
+
+- name: Copy new script rebinder
+  template:
+    src: rebinder
+    dest: "{{ db2scripts }}/rebinder"
+    owner: gtkinst1
+    group: gtdbmnt1
+    mode: 0750
+  when: reg_scratched.stdout == "TRUE"
+
+- name: Execute runstats and rebind
+  shell: "su - gtkinst1 {{ db2home }}/executePDDBStats.sh"  
+  when: reg_scratched.stdout == "TRUE"
+
+- name: Update devops.config
+  shell: "su - gtkinst1 {{ db2home }}/updatePDDBScratchedStatus.sh"
+  when: reg_scratched.stdout == "TRUE"

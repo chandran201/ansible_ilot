@@ -1,0 +1,28 @@
+---
+cmd_db_host: "{{ ansible_host | regex_replace('\\..*') }}{{ prodSuffix }}"
+cmd_db_jdbc_url: jdbc:db2://{{ cmd_db_host }}:{{ cmd_db_port }}/{{ cmd_db_database_id }}:currentSchema=COMMAND_{{ cmd_db_user_suffix }};
+cmd_db_liquibase_user: "{{ cmd_db_user_sys }}"
+cmd_db_liquibase_user_pass: "{{ cmd_db_user_sys_pass }}"
+cmd_db_jdbc_driver_class: com.ibm.db2.jcc.DB2Driver
+cmd_db_liq_classpath: ../drivers/db2/jcc-11.1.4.4.jar
+cmd_db_base_path: /opt/igt/cmddb
+
+cmd_pam_cfg_rmi_address: "{{ groups['cmdpam'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8180,') }}:8180"
+cmd_pam_cos_rmi_address: "{{ groups['cmdpam'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8180,') }}:8180"
+cmd_pam_ewl_rmi_address: "{{ groups['cmdpam'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8180,') }}:8180"
+cmd_pam_jem_rmi_address: "{{ groups['cmdpam'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8180,') }}:8180"
+cmd_pam_sms_rmi_address: "{{ groups['cmdpam'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8180,') }}:8180"
+cmd_connect_rmi_address: "{{ groups['cmdconnect'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8280,') }}:8280"
+cmd_sync_dlv_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_sync_esm_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_sync_ewn_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_sync_hsa_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_sync_loy_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_sync_onp_rmi_address: "{{ groups['cmdsync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8380,') }}:8380"
+cmd_async_act_rmi_address: "{{ groups['cmdasync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8480,') }}:8480"
+cmd_async_cmp_rmi_address: "{{ groups['cmdasync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8480,') }}:8480"
+cmd_async_prv_rmi_address: "{{ groups['cmdasync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8480,') }}:8480"
+cmd_async_raf_rmi_address: "{{ groups['cmdasync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8480,') }}:8480"
+cmd_async_vld_rmi_address: "{{ groups['cmdasync'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8480,') }}:8480"
+cmd_gov_bam_rmi_address: ""
+solr_push_address: "http://{{ groups['cmdcontrolsolr'] | map('extract', hostvars, ['ansible_host']) | map ('regex_replace', '\\..*', prodSuffix) | list | join(':8983|http://') }}:8983"

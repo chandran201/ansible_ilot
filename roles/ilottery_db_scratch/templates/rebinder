@@ -1,0 +1,85 @@
+#!/bin/ksh
+# ===[ rebinder ]============================================================
+#
+# Description:  Package rebinder for specified database.
+#
+# Args:
+#       $1      Database Name
+#       $2      Schema Name
+#
+#      REV     DATE      BY       DESCRIPTION
+#      ----  ---------   ---      -----------------------------------------
+#      1.00  22-Apr-03   gdh      Initial revision.
+#      1.10  05-Mar-04   gdh      Made script more generic - added instance owner
+#                                 checking.
+#      1.20  15-Jun-05   gdh      Removed instance owner checking logic.
+#      1.30  17-Aug-05   gdh      Changed piping logic to file redirection due
+#                                 environment issues when more data returned
+#                                 than permissible for pipe to DB2.
+#      1.40  09-Mar-06   gdh      Removed extraneous shell variables.
+#   -----------------------------------------------------------------------
+#     This item is the property of GTECH Corporation, Providence,
+#     Rhode Island, and contains confidential and trade secret information.
+#     It may not be transferred from the custody or control of GTECH except
+#     as authorized in writing by an officer of GTECH.  Neither this item
+#     nor the information it contains may be used, transferred, reproduced,
+#     published, or disclosed, in whole or in part, and directly or
+#     indirectly, except as expressly authorized by an officer of GTECH,
+#     pursuant to written agreement.
+#
+#     Copyright (c) 2006 GTECH Corporation.  All rights reserved.
+#   -----------------------------------------------------------------------
+
+# Check usage
+if (( $# != 1))
+then
+   echo "Usage: rebinder <Database Name>"
+   exit 1
+fi
+
+ 
+
+# Extract args
+DBNAME=${1}
+
+ 
+
+echo ""
+echo "=================================================================="
+echo "$0 $*"
+echo "------------------------------------------------------------------"
+echo "User      : `whoami`"
+echo "Date      : `date`"
+echo "------------------------------------------------------------------"
+
+ 
+
+db2 "connect to ${DBNAME}"
+
+ 
+
+# Execute package rebind
+echo "Rebinding packages for ${DBNAME}..."
+
+ 
+
+echo "select 'rebind ' || rtrim(pkgschema) || '.' || rtrim(pkgname) || ';' \
+      from   syscat.packages \
+      where  pkgschema in (select distinct tabschema \
+                           from   syscat.tables \
+                           where  ownertype = 'U');" | db2 -tp | grep -i rebind > rebinder.db2
+
+ 
+
+db2 -tvf rebinder.db2
+rm -f rebinder.db2
+
+ 
+
+db2 "disconnect ${DBNAME}"
+
+ 
+
+echo "rebinder for ${DBNAME} completed at `date`"
+echo "=================================================================="
+exit 0

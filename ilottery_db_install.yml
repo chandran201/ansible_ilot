@@ -93,6 +93,9 @@
     - debug:
         msg: "No services to restart"
 
+  roles:
+    - ilottery_db_scratch
+
 - name: CLEAN
   hosts: pddb
   become: false
