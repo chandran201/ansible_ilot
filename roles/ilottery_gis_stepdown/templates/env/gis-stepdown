@@ -1,4 +1,3 @@
-SERVER_PORT={{ application_server_port }}
 STEPDOWN_LOG_DIRECTORY={{ log_directory }}
 STEPDOWN_LOG_PATTERN={{ log_pattern }}
 
