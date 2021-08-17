@@ -60,7 +60,7 @@
     - install
 
   roles:
-    - role: ilottery_gis_stepdown
+    - role: ilottery_stepdown
 
 - name: START
   hosts: stepdown
