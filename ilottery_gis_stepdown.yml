@@ -1,7 +1,7 @@
 ---
 
 - name: INIT
-  hosts: gisstepdown
+  hosts: stepdown
   become: false
   gather_facts: no
   tags:
@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create local temp directory
-      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_gisstepdown"
+      shell: "mktemp -d --tmpdir={{ g_base_tmpdir }} --suffix=_stepdown"
       delegate_to: 127.0.0.1
       run_once: true
       register: reg_tmpdir
@@ -25,7 +25,7 @@
       debug: msg="ansible_host={{ ansible_host }}; ansible_user={{ ansible_user }}"
 
 - name: STOP
-  hosts: gisstepdown
+  hosts: stepdown
   serial: 1
   become: true
   gather_facts: no
@@ -35,12 +35,12 @@
   tasks:
     - name: Stop Service
       systemd:
-        name: "gis-stepdown"
+        name: "stepdown"
         state: stopped
       ignore_errors: yes
 
 - name: CLEANUP CONTAINER
-  hosts: gisstepdown
+  hosts: stepdown
   become: true
   gather_facts: no
   tags:
@@ -50,10 +50,10 @@
     - name: Deleting Application Folder
       file:
         state: absent
-        path: "/etc/gtech/pd/config/gis-stepdown"
+        path: "/etc/gtech/pd/config/stepdown"
 
 - name: INSTALL
-  hosts: gisstepdown
+  hosts: stepdown
   become: true
   gather_facts: no
   tags:
@@ -63,7 +63,7 @@
     - role: ilottery_gis_stepdown
 
 - name: START
-  hosts: gisstepdown
+  hosts: stepdown
   serial: 1
   become: true
   gather_facts: no
@@ -73,13 +73,13 @@
   tasks:
     - name: Start Service
       systemd:
-        name: "gis-stepdown"
+        name: "stepdown"
         state: restarted
         enabled: yes
         daemon_reload: yes
 
 - name: CLEAN
-  hosts: gisstepdown
+  hosts: stepdown
   become: false
   gather_facts: no
   tags:

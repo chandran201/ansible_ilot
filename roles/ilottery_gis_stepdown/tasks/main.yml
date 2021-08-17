@@ -23,15 +23,15 @@
 
 - name: Create /etc/gtech/pd/config/gis-stepdown folder
   file:
-    path: /etc/gtech/pd/config/gis-stepdown
+    path: /etc/gtech/pd/config/stepdown
     state: directory
     owner: springboot
     group: springboot
     mode: 0755
 
-- name: Create /var/log/gis-stepdown/ folder
+- name: Create /var/log/stepdown/ folder
   file:
-    path: /var/log/gis-stepdown
+    path: /var/log/stepdown
     state: directory
     owner: springboot
     group: springboot
@@ -45,8 +45,8 @@
 
 - name: "Install env to /usr/local/env/"
   template:
-    src: "env/gis-stepdown"
-    dest: "/usr/local/env/gis-stepdown"
+    src: "env/stepdown"
+    dest: "/usr/local/env/stepdown"
     owner: "springboot"
     group: "springboot"
     mode: 0755
