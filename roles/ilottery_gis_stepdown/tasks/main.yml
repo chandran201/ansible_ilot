@@ -1,0 +1,52 @@
+---
+- set_fact:
+    gis_stepdown_packages:
+      - "{{ config.siteName}}-gis-stepdown-application-rpm"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ gis_stepdown_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ gis_stepdown_packages }}"
+
+- name: Create /etc/gtech/pd/config/gis-stepdown folder
+  file:
+    path: /etc/gtech/pd/config/gis-stepdown
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create /var/log/gis-stepdown/ folder
+  file:
+    path: /var/log/gis-stepdown
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: create /usr/local/env
+  file:
+    path: "/usr/local/env"
+    state: directory
+    mode: 0755
+
+- name: "Install env to /usr/local/env/"
+  template:
+    src: "env/gis-stepdown"
+    dest: "/usr/local/env/gis-stepdown"
+    owner: "springboot"
+    group: "springboot"
+    mode: 0755
