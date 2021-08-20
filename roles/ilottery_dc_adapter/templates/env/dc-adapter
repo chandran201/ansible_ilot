@@ -40,3 +40,5 @@ SPRING_DATASOURCE_HIKARI_PASSWORD={{ db_password }}
 SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE={{ db_max_pool_size }}
 DCA_DATA_CONNECTOR_KAFKA_ENV = {{ siteID }}-{{ envID }}-dc.vip
 DCA_DATA_CONNECTOR_KAFKA_PORT = 9092
+
+TXPUSHENABLED={{ config.integration.dataconnector.txPushEnabled }}
