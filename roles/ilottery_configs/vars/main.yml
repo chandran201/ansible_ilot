@@ -153,6 +153,7 @@ config_defaults:
             PlayerVer: '900000'
           transfer:
             PlayerXfer: '900000'
+            TxLog: '900000'
         import:
           FinXfer: '360000'
           PlayerVer: '540000'
