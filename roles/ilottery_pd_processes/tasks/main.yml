@@ -6,6 +6,7 @@
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
     pd_processes_balancing_plugins_packages:
       - "{{ config.siteName}}-ilottery-balancing-plugins-application-rpm"
+    pd_processes_old_balancing_plugins_packages:
       - "{{ config.siteName}}-igaming-balancing-plugins-application-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
@@ -28,7 +29,7 @@
     name: "{{ item }}"
     state: removed
     disable_gpg_check: yes
-  with_items: "{{ pd_processes_packages + pd_processes_balancing_plugins_packages }}"
+  with_items: "{{ pd_processes_packages + pd_processes_balancing_plugins_packages + pd_processes_old_balancing_plugins_packages }}"
 
 - name: remove jboss autodeploy marker files
   shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
