@@ -138,13 +138,13 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
-- name: Patch esa-configuration-admin to remove gatekeeper auth on Duplex envs
-  when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz" or stage = "uatlnzcust1"
-  patch:
-    src: "esa-configuration-admin.xml.patch"
-    dest: "/etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
-    backup: yes
-  ignore_errors: yes
+  #- name: Patch esa-configuration-admin to remove gatekeeper auth on Duplex envs
+  #  when: stage == "cat2lnzcust" or stage == "pdclnz" or stage == "bdclnz" or stage = "uatlnzcust1"
+  #  patch:
+  #    src: "esa-configuration-admin.xml.patch"
+  #    dest: "/etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
+  #    backup: yes
+  #  ignore_errors: yes
 
 - name: Parsing pd-admin balancing templates
   when: install_app == "true"
