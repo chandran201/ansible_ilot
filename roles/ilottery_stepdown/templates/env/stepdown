@@ -1,13 +1,13 @@
 STEPDOWN_LOG_DIRECTORY={{ log_directory }}
 STEPDOWN_LOG_PATTERN={{ log_pattern }}
 
-ESA_LOGGING_REQUEST_BODY=true
-ESA_LOGGING_REQUEST_HEADERS=true
-ESA_LOGGING_RESPONSE_BODY=true
-ESA_LOGGING_RESPONSE_HEADERS=true
+ESA_LOGGING_REQUEST_BODY={{ config.applications.esa.logging.requestBody }}
+ESA_LOGGING_REQUEST_HEADERS={{ config.applications.esa.logging.requestHeaders }}
+ESA_LOGGING_RESPONSE_BODY={{ config.applications.esa.logging.responseBody }}
+ESA_LOGGING_RESPONSE_HEADERS={{ config.applications.esa.logging.responseHeaders }}
 
-SPRING_ACTIVEMQ_USER=defaultUser
-SPRING_ACTIVEMQ_PASSWORD=defaultPassword
+SPRING_ACTIVEMQ_USER={{ config.applications.broker.username }}
+SPRING_ACTIVEMQ_PASSWORD={{ config.applications.broker.password }}
 SPRING_ACTIVEMQ_SENDTIMEOUT=30000
 SPRING_ACTIVEMQ_BROKER_URL={{ config.applications.broker.url }}
 
