@@ -11,6 +11,8 @@ SPRING_ACTIVEMQ_PASSWORD={{ config.applications.broker.password }}
 SPRING_ACTIVEMQ_SENDTIMEOUT=30000
 SPRING_ACTIVEMQ_BROKER_URL={{ config.applications.broker.url }}
 
+WEBBROKER_URL={{ config.containers.webBroker.url }}
+
 SPRING_DATASOURCE_HIKARI_SCHEMA={{ db_schema }}
 SPRING_DATASOURCE_URL={{ db_url }}
 SPRING_DATASOURCE_HIKARI_DRIVER_CLASS_NAME={{ db_driver_class_name }}
