@@ -1,5 +1,3 @@
 ---
-box: "pd-gaming"
-log_directory: "/var/log/stepdown"
-file_path: /opt/igt/pd
-db_schema: "GIS"
+box: "pd-admin"
+log_directory: "/var/log/balancing"
