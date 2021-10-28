@@ -1,0 +1,62 @@
+---
+- set_fact:
+    pd_balancing_packages:
+      - "{{ config.siteName}}-balancing-application-rpm"
+      - "{{ config.siteName}}-balancing-config-rpm"
+
+- name: Remove application packages
+  yum:
+    name: "{{ item }}"
+    state: removed
+    disable_gpg_check: yes
+  with_items: "{{ pd_balancing_packages }}"
+
+- name: Launch yum clean all
+  shell: "yum clean all"
+  become: yes
+
+- name: Install application packages from yum repo
+  yum:
+    name: "{{ item }}-{{ config.ilottery_version}}"
+    state: present
+    disable_gpg_check: yes
+  with_items: "{{ pd_balancing_packages }}"
+
+- name: Create /etc/gtech/pd/config/balancing folder
+  file:
+    path: /etc/gtech/pd/config/balancing
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+- name: Create /var/log/balancing/ folder
+  file:
+    path: /var/log/balancing
+    state: directory
+    owner: springboot
+    group: springboot
+    mode: 0755
+
+#- name: create /usr/local/env
+#  file:
+#    path: "/usr/local/env"
+#    state: directory
+#    mode: 0755
+
+#- name: "Install env to /usr/local/env/"
+#  template:
+#    src: "env/stepdown"
+#    dest: "/usr/local/env/stepdown"
+#    owner: "springboot"
+#    group: "springboot"
+#    mode: 0755
+
+
+#################### TO BE FIXED SRC ${applicationName}  ###########################
+
+- name: Fetch balancing templates
+  template:
+    src: "/usr/local/gtech/\$\{applicationName\}/ref-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl"
+    dest: "/etc/gtech/pd/config/balancing/configuration.xml"
+    mode: 0644

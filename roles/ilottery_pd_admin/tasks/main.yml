@@ -7,9 +7,6 @@
       - "{{ config.siteName}}-batch-admin-application-rpm"
       - "{{ config.siteName}}-batch-admin-config-rpm"
       - "{{ config.siteName}}-pd-jboss-modules-rpm"
-    pd_balancing_packages:
-      - "{{ config.siteName}}-balancing-application-rpm"
-      - "{{ config.siteName}}-balancing-config-rpm"
     jboss_common_packages:
       - "jolokia-1.3.3-1.x86_64"
       - "nodejs-5.11.1-1nodesource.el7.centos.x86_64"
@@ -19,11 +16,6 @@
       - "hawtio-no-slf4j-1.4.65-1"
     pd_admin_main_tpls:
       - "{{ p_tmpdir }}/crm-connector-client.properties.tpl"
-    pd_admin_balancing_tpls:
-      - "{{ p_tmpdir }}/configuration.xml.tpl"
-      - "{{ p_tmpdir }}/hibernate.cfg.xml.tpl"
-      - "{{ p_tmpdir }}/esa-configuration-balancing.xml.tpl"
-      - "{{ p_tmpdir }}/balancing.properties.tpl"
     pd_admin_batch_tpls:
       - "{{ p_tmpdir }}/batch.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-batch.xml.tpl"
@@ -32,7 +24,7 @@
     pd_admin_admin_tpls:
       - "{{ p_tmpdir }}/admin-rest.properties.tpl"
       - "{{ p_tmpdir }}/esa-configuration-admin.xml.tpl"
-    first_pd_admin_host: "{{ hostvars[groups['pdadmin'][0]]['ansible_host']}}"
+
 
 - name: Install jboss common packages
   yum:
@@ -41,13 +33,7 @@
     disable_gpg_check: yes
   with_items: "{{ jboss_common_packages }}"
 
-- name: Remove application packages
-  when: install_app == "true"
-  yum:
-    name: "{{ item }}"
-    state: removed
-    disable_gpg_check: yes
-  with_items: "{{ pd_admin_packages + pd_balancing_packages }}"
+
 
 - name: remove jboss autodeploy marker files
   shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
@@ -64,13 +50,6 @@
     disable_gpg_check: yes
   with_items: "{{ pd_admin_packages }}"
 
-- name: Install balancing packages from yum repo
-  when: install_app == "true" and ansible_host == first_pd_admin_host
-  yum:
-    name: "{{ item }}-{{ config.ilottery_version}}"
-    state: present
-    disable_gpg_check: yes
-  with_items: "{{ pd_balancing_packages }}"
 
 - name: Fetch templates
   when: install_app == "true"
@@ -89,19 +68,6 @@
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/autopay-gameinfo-context.xml.tpl", dest: "{{ p_tmpdir }}" }
     - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-batch-admin-env-config/src/main/env-config/batch/gms-events.properties.tpl", dest: "{{ p_tmpdir }}" }
 
-- name: Fetch balancing templates
-  when: install_app == "true" and ansible_host == first_pd_admin_host
-  fetch:
-    src: "{{ item.src}}"
-    dest: "{{ item.dest }}/"
-    flat: yes
-  become: false
-  run_once: true
-  with_items:
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/balancing.properties.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/hibernate.cfg.xml.tpl", dest: "{{ p_tmpdir }}" }
-    - { src: "/usr/local/gtech/pd-admin/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/esa-configuration-balancing.xml.tpl", dest: "{{ p_tmpdir }}" }
 
 - name: Create /etc/gtech/pd/config/pd-admin/main folder
   file:
@@ -111,14 +77,6 @@
     group: jboss
     mode: 0755
 
-- name: Create /etc/gtech/pd/config/pd-admin/main/balancing folder
-  when: install_app == "true" and ansible_host == first_pd_admin_host
-  file:
-    path: /etc/gtech/pd/config/pd-admin/main/balancing
-    state: directory
-    owner: jboss
-    group: jboss
-    mode: 0755
 
 - name: Create /etc/gtech/pd/config/pd-admin/main/batch folder
   file:
@@ -145,13 +103,7 @@
     mode: 0644
   with_fileglob: "{{ pd_admin_main_tpls }}"
 
-- name: Parsing pd-admin balancing templates
-  when: install_app == "true" and ansible_host == first_pd_admin_host
-  template:
-    src: "{{ item }}"
-    dest: "/etc/gtech/pd/config/pd-admin/main/balancing/{{ item | basename | regex_replace('\\.tpl$', '') }}"
-    mode: 0644
-  with_fileglob: "{{ pd_admin_balancing_tpls }}"
+
 
 - name: Parsing pd-admin batch templates
   when: install_app == "true"
