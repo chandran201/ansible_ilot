@@ -1,3 +1,4 @@
 ---
 box: "pd-admin"
 log_directory: "/var/log/balancing"
+db_schema: "BALANCING"
