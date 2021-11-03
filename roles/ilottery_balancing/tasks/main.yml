@@ -57,6 +57,6 @@
 
 - name: Fetch balancing templates
   template:
-    src: "/usr/local/gtech/\${applicationName}/ref-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl"
+    src: "/usr/local/gtech/balancing/ref-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl"
     dest: "/etc/gtech/pd/config/balancing/configuration.xml"
     mode: 0644
