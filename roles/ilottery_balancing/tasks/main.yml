@@ -52,11 +52,16 @@
 #    group: "springboot"
 #    mode: 0755
 
-
-#################### TO BE FIXED SRC ${applicationName}  ###########################
-
 - name: Fetch balancing templates
+  fetch:
+    src: "/usr/local/gtech/balancing/{{ config.siteName }}-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl"
+    dest: "{{ p_tmpdir }}/"
+    flat: yes
+  become: false
+  run_once: true
+
+- name: Deploy balancing templates
   template:
-    src: "/usr/local/gtech/balancing/ref-balancing-env-config/src/main/env-config/balancing/configuration.xml.tpl"
+    src: "{{ p_tmpdir }}/configuration.xml.tpl"
     dest: "/etc/gtech/pd/config/balancing/configuration.xml"
     mode: 0644
