@@ -345,5 +345,5 @@
 
 - name: "Remove require-gatekeeper from /etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
   shell: sed -i '/require-gatekeeper/d' /etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml
-  when: esa.disable-require-gatekeeper
+  when: esa-disable-require-gatekeeper == true
   ignore_errors: yes
