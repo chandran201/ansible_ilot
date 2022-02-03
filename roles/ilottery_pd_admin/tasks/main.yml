@@ -344,6 +344,5 @@
     backup: yes
 
 - name: "Remove require-gatekeeper from /etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
-  command:
-    cmd: "sed -i '/require-gatekeeper/d' /etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml"
-    when: esa.require-gatekeeper.disable
+  shell: sed -i '/require-gatekeeper/d' /etc/gtech/pd/config/pd-admin/main/esa-configuration-admin.xml
+  when: esa.require-gatekeeper.disable
