@@ -365,6 +365,7 @@
           </timeout>
           <pool><min-pool-size>25</min-pool-size>
             <max-pool-size>200</max-pool-size>
+            <prefill>true</prefill>
           </pool>
           <security><user-name>{{ config.databases.jdbc.appUser }}</user-name>
             <password>{{ config.databases.jdbc.appPassword }}</password>
