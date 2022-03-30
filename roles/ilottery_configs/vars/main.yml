@@ -1154,8 +1154,7 @@ config_defaults:
     dataconnector:
       txPushEnabled: true
       autopaytEnabled: true
-      drawResultsEnabled: false
-      drawDetailsEnabled: false
+      drawResultEnabled: true
   jboss:
     home: /opt/jboss
   language:
