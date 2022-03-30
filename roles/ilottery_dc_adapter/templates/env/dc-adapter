@@ -42,3 +42,4 @@ DCA_DATA_CONNECTOR_KAFKA_ENV = {{ siteID }}-{{ envID }}-dc.vip
 DCA_DATA_CONNECTOR_KAFKA_PORT = 9092
 
 TXPUSHENABLED={{ config.integration.dataconnector.txPushEnabled }}
+AUTOPAYENABLED={{ config.integration.dataconnector.autopayEnabled }}
