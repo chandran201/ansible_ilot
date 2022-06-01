@@ -9,7 +9,7 @@
         port: "21122"
         #port: "{{ 7600 + jboss_node_port_offset|int }}"
       register: jgroups
-    
+
     - name: Generazione variabili per il cluster PDCORE
       set_fact:
         pd_core_nodes_list: "{{ jgroups.result }}"
@@ -82,6 +82,7 @@
 
 - name: remove jboss autodeploy marker files
   shell: 'find {{ jboss_server_path }}/{{ jboss_node_name }}/deployments/ -type f -regex ".*\.\(dodeploy\|skipdeploy\|isdeploying\|deployed\|failed\|isundeploying\|undeployed\|pending\)" -delete'
+  ignore_errors: yes
 
 - name: Install application packages from yum repo
   when: install_app == "true"
@@ -223,7 +224,7 @@
     mode: 0644
   with_fileglob: "{{ pd_core_proxy_oauth_tpl }}"
 
- # END products configurations 
+ # END products configurations
 
 - name: Install security limits
   template:
@@ -251,7 +252,7 @@
 
 # Check if jblogrotate.sh exist
 - name: Check if jblogrotate.sh exist
-  stat: 
+  stat:
     path: /etc/jbossas/jblogrotate.sh
   register: jblogrotate_stat
 
@@ -267,7 +268,7 @@
     name: "jboss logrotation jblogrotate.sh"
     state: absent
 
-# - name: Copying 
+# - name: Copying
 #   copy:
 #     src: "files/jbossas/jblogrotate.sh"
 #     dest: "/etc/jbossas/jblogrotate.sh"
@@ -329,7 +330,7 @@
   shell: echo "{{ jboss_management_user }}:ManagementRealm:{{ jboss_management_pass }}" | md5sum | cut -d ' ' -f 1
   register: md5jbosspwd
 
-- set_fact: 
+- set_fact:
     jboss_real_management_pass: "{{ md5jbosspwd.stdout }}"
 
 - name: Install mgmt-users.properties template
