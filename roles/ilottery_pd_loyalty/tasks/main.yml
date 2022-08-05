@@ -48,7 +48,7 @@
 - name: Install application packages from yum repo
   when: install_app == "true"
   yum:
-    name: "/root/lnz_rpms/{{ item }}-{{ config.ilottery_loyalty_version}}-1.noarch.rpm"
+    name: "{{ item }}-{{ config.ilottery_loyalty_version}}-1.noarch"
     state: present
     disable_gpg_check: yes
   with_items: "{{ pd_loyalty_packages }}"

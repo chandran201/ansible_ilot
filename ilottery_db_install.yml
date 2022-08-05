@@ -85,7 +85,7 @@
         state: present
         disable_gpg_check: yes
       with_items:
-        - "/root/lnz_rpms/{{ config.siteName }}-database-install-{{ config.ilottery_version }}-1.noarch.rpm"
+        - "{{ config.siteName }}-database-install-{{ config.ilottery_version }}-1"
         - "ric_esdb5_dbmaint"
         - "ant-1.9.4-2.el7"
 
