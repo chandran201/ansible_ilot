@@ -61,7 +61,7 @@
 - name: Install application packages from yum repo
   when: install_app == "true"
   yum:
-    name: "{{ item }}-{{ config.ilottery_version}}-1"
+    name: "{{ item }}-{{ config.ilottery_version}}"
     state: present
     disable_gpg_check: yes
   with_items: "{{ pd_sec_gateway_packages }}"
